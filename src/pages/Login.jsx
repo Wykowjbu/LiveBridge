@@ -19,11 +19,21 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f4f5f8] relative overflow-hidden font-display">
-      {/* Hiệu ứng nền tím (Purple background orbs) */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[rgba(116,54,242,0.15)] blur-[120px] opacity-60"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-[rgba(54,152,242,0.15)] blur-[120px] opacity-60"></div>
-        <div className="absolute top-[30%] right-[20%] w-[30vw] h-[30vw] rounded-full bg-[rgba(242,54,179,0.1)] blur-[100px] opacity-60"></div>
+      {/* ===== VIDEO BACKGROUND ===== */}
+      <div className="fixed inset-0 z-0">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={`/LiveBridge/Image/video_background.mp4`} type="video/mp4" />
+        </video>
+        {/* Dark overlay gradient để text dễ đọc */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        {/* Subtle color tint overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/30 via-transparent to-purple-900/20" />
       </div>
 
       {/* Card Đăng nhập chính (Login Card) */}

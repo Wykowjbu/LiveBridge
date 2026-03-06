@@ -48,7 +48,7 @@ const LandingPage = () => {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/Image/video_background.mp4" type="video/mp4" />
+          <source src={`/LiveBridge/Image/video_background.mp4`} type="video/mp4" />
         </video>
         {/* Dark overlay gradient để text dễ đọc */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
