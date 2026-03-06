@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LiveBridge AI Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7436f2",
+                        "background-light": "#f4f5f8",
+                        "surface-light": "#ffffff",
+                        "surface-glass": "rgba(255, 255, 255, 0.7)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+        .glass-panel-elevated {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                0 20px 50px -15px rgba(0, 0, 0, 0.1), 
+                inset 0 1px 0 rgba(255, 255, 255, 1),
+                inset 0 0 20px rgba(116, 54, 242, 0.03);
+        }
+        .neon-slider-track {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .neon-slider-fill {
+            background: linear-gradient(90deg, #9b6af6, #7436f2);
+            box-shadow: 0 0 15px rgba(116,54,242,0.3);
+        }
+        .neon-slider-thumb {
+            background: #ffffff;
+            border: 2px solid #7436f2;
+            box-shadow: 0 0 10px rgba(116,54,242,0.4), inset 0 2px 4px rgba(255,255,255,0.8);
+        }
+        .neon-toggle-checked {
+            background: rgba(116,54,242,0.15) !important;
+            border-color: rgba(116,54,242,0.3) !important;
+            box-shadow: inset 0 0 5px rgba(116,54,242,0.2) !important;
+        }
+        .neon-toggle-knob-checked {
+            background: #7436f2 !important;
+            box-shadow: 0 0 10px rgba(116,54,242,0.4) !important;
+            border-color: transparent !important;
+        }
+        .glass-upload {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            border: 2px dashed rgba(116, 54, 242, 0.2);
+        }
+        .glass-upload:hover {
+            background: rgba(116, 54, 242, 0.03);
+            border-color: rgba(116, 54, 242, 0.5);
+            box-shadow: inset 0 0 20px rgba(116, 54, 242, 0.05);
+        }
+        .doc-chip {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .bg-orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(116, 54, 242, 0.15); }
+        .bg-orb-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: rgba(54, 152, 242, 0.15); }
+        .bg-orb-3 { top: 40%; left: 40%; width: 30vw; height: 30vw; background: rgba(242, 54, 179, 0.1); }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.1); 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.2); 
+        }
+    </style>
+</head>
+<body class="bg-background-light text-slate-800 font-body min-h-screen flex overflow-hidden relative selection:bg-primary/20 selection:text-primary">
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+<aside class="w-64 flex-shrink-0 glass-panel border-r border-slate-200/50 flex flex-col justify-between h-screen sticky top-0 z-50">
+<div class="flex flex-col gap-6 p-6">
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 shrink-0 border border-slate-200 shadow-sm" data-alt="Abstract purple gradient logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAB1t3_M_rfUy5DE2dnL4lCZZQUj0X58mpBwBJaWU4JazSruuFt5d8rimg47iMSjB7DC3j_dkeWXCxEdFYkQ_sIxzl0PFMk0myLALefd4Jv5Lo7Zo04Pf5WdQX785QUzz1UnGJzOWi7SadhvFonDgV6u8BQ69eNt5JWOWX28vdIRhNejDozmbjzK4pGZALikYqST0C7DkHt60Yr3_a1DxRbqPokemdPOoq020x_6GT9oK66LKNJ9W2RDlfTGYP3AT4xIV8y-b4Cv-bo");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-slate-900 text-base font-bold leading-tight truncate tracking-wide">LiveBridge</h1>
+<p class="text-primary text-xs font-medium leading-normal truncate">Admin Console</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100/50 transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100/50 transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">emergency_recording</span>
+<span class="text-sm font-medium">Live Monitor</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white text-slate-900 border border-slate-200 shadow-sm relative overflow-hidden" href="#">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent"></div>
+<span class="material-symbols-outlined text-primary relative z-10" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="text-sm font-bold relative z-10">AI Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100/50 transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">bar_chart</span>
+<span class="text-sm font-medium">Sales Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100/50 transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+</nav>
+</div>
+<div class="p-6 border-t border-slate-200/50">
+<a class="flex items-center gap-3 px-3 py-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100/50 transition-all duration-300 mb-2" href="#">
+<span class="material-symbols-outlined text-slate-400">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<div class="flex items-center gap-3 px-3 py-2 rounded-xl bg-white border border-slate-200 mt-4 shadow-sm">
+<div class="size-8 rounded-full bg-gradient-to-tr from-primary to-purple-400 shadow-sm"></div>
+<div class="flex flex-col">
+<p class="text-slate-900 text-sm font-bold">Sarah Jenkins</p>
+<p class="text-slate-500 text-xs font-medium">Super Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto h-screen relative flex">
+<div class="flex-1 flex flex-col max-w-[1600px] mx-auto w-full p-8 pb-32">
+<div class="mb-10 pl-2">
+<h2 class="text-4xl font-black text-slate-900 tracking-tight mb-3 drop-shadow-sm">AI Personality &amp; Logic</h2>
+<p class="text-slate-500 text-lg max-w-2xl font-medium">Configure how your AI assistant interacts with customers, what it knows, and how it sells.</p>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
+<div class="xl:col-span-7 flex flex-col gap-8">
+<section class="glass-panel rounded-3xl p-8 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div class="flex items-center justify-between mb-8 relative z-10">
+<div class="flex items-center gap-4">
+<div class="bg-white border border-slate-200 p-2.5 rounded-xl text-primary shadow-sm backdrop-blur-md">
+<span class="material-symbols-outlined text-2xl">sentiment_satisfied</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 tracking-tight">Personality Traits</h3>
+</div>
+<div class="flex items-center gap-2 px-4 py-1.5 bg-green-50 border border-green-200 rounded-full backdrop-blur-md">
+<div class="size-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></div>
+<span class="text-green-600 text-xs font-bold tracking-wide uppercase">Active</span>
+</div>
+</div>
+<div class="mb-10 relative z-10">
+<div class="flex justify-between items-center mb-5">
+<span class="text-slate-500 font-bold text-sm uppercase tracking-wider">Tone</span>
+<span class="text-primary text-sm font-bold bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Energetic</span>
+</div>
+<div class="relative h-3 neon-slider-track rounded-full w-full">
+<div class="absolute top-0 left-0 h-full neon-slider-fill rounded-full" style="width: 75%;"></div>
+<div class="absolute top-1/2 -translate-y-1/2 size-6 rounded-full neon-slider-thumb cursor-pointer hover:scale-110 transition-transform" style="left: 75%;"></div>
+</div>
+<div class="flex justify-between mt-3 text-xs font-bold text-slate-400">
+<span>Formal</span>
+<span>Casual</span>
+<span>Energetic</span>
+</div>
+</div>
+<div class="mb-10 relative z-10">
+<div class="flex justify-between items-center mb-5">
+<span class="text-slate-500 font-bold text-sm uppercase tracking-wider">Sales Aggressiveness</span>
+<span class="text-primary text-sm font-bold bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Consultative</span>
+</div>
+<div class="relative h-3 neon-slider-track rounded-full w-full">
+<div class="absolute top-0 left-0 h-full neon-slider-fill rounded-full" style="width: 40%;"></div>
+<div class="absolute top-1/2 -translate-y-1/2 size-6 rounded-full neon-slider-thumb cursor-pointer hover:scale-110 transition-transform" style="left: 40%;"></div>
+</div>
+<div class="flex justify-between mt-3 text-xs font-bold text-slate-400">
+<span>Passive</span>
+<span>Consultative</span>
+<span>Pushy</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-6 mt-4 border-t border-slate-200 relative z-10">
+<div>
+<p class="text-slate-900 font-bold text-lg">Use Emoji &amp; Humor</p>
+<p class="text-slate-500 text-sm mt-1 font-medium">Allow the AI to use emojis and light jokes.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-slate-200 border border-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[3px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:neon-toggle-checked peer-checked:after:neon-toggle-knob-checked shadow-inner"></div>
+</label>
+</div>
+</section>
+<section class="glass-panel rounded-3xl p-8 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div class="flex items-center justify-between mb-8 relative z-10">
+<div class="flex items-center gap-4">
+<div class="bg-white border border-slate-200 p-2.5 rounded-xl text-blue-500 shadow-sm backdrop-blur-md">
+<span class="material-symbols-outlined text-2xl">schema</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 tracking-tight">Rules Engine</h3>
+</div>
+<button class="text-sm bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-xl border border-slate-200 shadow-sm transition-all duration-300 flex items-center gap-2 font-semibold">
+<span class="material-symbols-outlined text-sm">add</span> Add Rule
+                            </button>
+</div>
+<div class="space-y-4 relative z-10">
+<div class="bg-white/80 rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 backdrop-blur-sm">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-purple-100 text-purple-600 text-xs font-black px-3 py-1.5 rounded-md border border-purple-200 tracking-wider">IF</span>
+<span class="text-slate-600 text-[15px] font-medium">Customer asks about <span class="text-slate-900 font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-200">"Shipping Time"</span></span>
+</div>
+<div class="flex items-center gap-3 ml-6 relative">
+<div class="absolute -left-[26px] top-1/2 -translate-y-1/2 w-4 h-[2px] bg-slate-300"></div>
+<div class="absolute -left-[26px] -top-6 bottom-1/2 w-[2px] bg-slate-300"></div>
+<span class="bg-emerald-100 text-emerald-600 text-xs font-black px-3 py-1.5 rounded-md border border-emerald-200 tracking-wider">THEN</span>
+<span class="text-slate-600 text-[15px] font-medium">Reply with <span class="text-slate-900 font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-200">"Standard Shipping (3-5 Days)"</span></span>
+</div>
+</div>
+<div class="bg-white/80 rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 backdrop-blur-sm">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-purple-100 text-purple-600 text-xs font-black px-3 py-1.5 rounded-md border border-purple-200 tracking-wider">IF</span>
+<span class="text-slate-600 text-[15px] font-medium">Sentiment is <span class="text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded border border-red-200">Negative</span></span>
+</div>
+<div class="flex items-center gap-3 ml-6 relative">
+<div class="absolute -left-[26px] top-1/2 -translate-y-1/2 w-4 h-[2px] bg-slate-300"></div>
+<div class="absolute -left-[26px] -top-6 bottom-1/2 w-[2px] bg-slate-300"></div>
+<span class="bg-emerald-100 text-emerald-600 text-xs font-black px-3 py-1.5 rounded-md border border-emerald-200 tracking-wider">THEN</span>
+<span class="text-slate-600 text-[15px] font-medium">Escalate to <span class="text-amber-600 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Human Moderator</span></span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="xl:col-span-5 flex flex-col gap-8">
+<section class="glass-panel rounded-3xl p-8 relative overflow-hidden group flex-1">
+<div class="flex items-center gap-4 mb-8 relative z-10">
+<div class="bg-white border border-slate-200 p-2.5 rounded-xl text-fuchsia-500 shadow-sm backdrop-blur-md">
+<span class="material-symbols-outlined text-2xl">library_books</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 tracking-tight">Knowledge Base</h3>
+</div>
+<div class="glass-upload rounded-2xl p-10 flex flex-col items-center justify-center text-center cursor-pointer mb-8 transition-all duration-300 relative overflow-hidden group/upload">
+<div class="absolute inset-0 bg-white/40 opacity-0 group-hover/upload:opacity-100 transition-opacity duration-300"></div>
+<div class="size-16 rounded-full bg-white border border-slate-200 flex items-center justify-center mb-4 group-hover/upload:scale-110 transition-transform duration-300 shadow-sm backdrop-blur-md z-10">
+<span class="material-symbols-outlined text-3xl text-primary">cloud_upload</span>
+</div>
+<p class="text-slate-900 font-bold text-lg z-10 relative">Click to upload or drag &amp; drop</p>
+<p class="text-slate-500 text-sm mt-2 font-medium z-10 relative">PDF, DOCX, or TXT files (Max 10MB)</p>
+</div>
+<div class="space-y-3 relative z-10">
+<div class="doc-chip rounded-xl p-4 flex items-center justify-between hover:border-primary/30 transition-colors group/chip">
+<div class="flex items-center gap-4">
+<div class="bg-red-50 text-red-500 p-2.5 rounded-lg border border-red-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+</div>
+<div>
+<p class="text-[15px] font-bold text-slate-900 truncate max-w-[200px]">Summer_Collection_2024.pdf</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="text-xs text-slate-500 font-medium">2.4 MB</span>
+<span class="size-1 rounded-full bg-slate-300"></span>
+<span class="text-xs text-emerald-500 font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">check_circle</span> Processed</span>
+</div>
+</div>
+</div>
+<button class="text-slate-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-0 group-hover/chip:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="doc-chip rounded-xl p-4 flex items-center justify-between hover:border-primary/30 transition-colors group/chip">
+<div class="flex items-center gap-4">
+<div class="bg-blue-50 text-blue-500 p-2.5 rounded-lg border border-blue-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">description</span>
+</div>
+<div>
+<p class="text-[15px] font-bold text-slate-900 truncate max-w-[200px]">Return_Policy_FAQ.docx</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="text-xs text-slate-500 font-medium">1.1 MB</span>
+<span class="size-1 rounded-full bg-slate-300"></span>
+<span class="text-xs text-emerald-500 font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">check_circle</span> Processed</span>
+</div>
+</div>
+</div>
+<button class="text-slate-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors opacity-0 group-hover/chip:opacity-100 focus:opacity-100">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</section>
+<div class="glass-panel-elevated rounded-3xl flex flex-col h-[600px] overflow-hidden relative z-20">
+<div class="absolute inset-0 pointer-events-none rounded-3xl border border-white z-30" style="mask-image: linear-gradient(135deg, white, transparent 20%, transparent 80%, white); -webkit-mask-image: linear-gradient(135deg, white, transparent 20%, transparent 80%, white);"></div>
+<div class="p-5 bg-white/40 border-b border-slate-200/50 backdrop-blur-xl flex justify-between items-center relative z-20">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="absolute inset-0 bg-primary/20 blur-md rounded-full"></div>
+<span class="material-symbols-outlined text-white relative z-10 bg-gradient-to-br from-primary to-purple-500 rounded-full p-1.5 text-lg shadow-sm">smart_toy</span>
+</div>
+<h3 class="font-bold text-slate-900 tracking-wide">Test Preview</h3>
+</div>
+<button class="text-slate-500 hover:text-slate-900 bg-white p-2 rounded-lg border border-slate-200 hover:bg-slate-50 transition-all shadow-sm">
+<span class="material-symbols-outlined text-sm">refresh</span>
+</button>
+</div>
+<div class="flex-1 p-5 overflow-y-auto space-y-6 relative z-10" id="chat-container">
+<div class="flex gap-3 justify-end">
+<div class="flex flex-col items-end max-w-[85%]">
+<div class="bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tr-sm text-[15px] font-medium shadow-sm">
+                                            Does the Summer collection include sizes for petite women?
+                                        </div>
+<span class="text-[11px] text-slate-400 mt-1.5 px-1 font-bold tracking-wide">10:42 AM</span>
+</div>
+<div class="size-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-slate-500">person</span>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shrink-0 shadow-sm border border-white z-10">
+<span class="material-symbols-outlined text-[16px] text-white">smart_toy</span>
+</div>
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-primary/5 border border-primary/20 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-sm text-[15px] font-medium leading-relaxed shadow-sm">
+                                            Absolutely! 🎉 Our Summer Collection features a dedicated petite range with adjusted lengths and proportions. Check out the "Petite Floral Maxi" - it's a fan favorite! 🌸 Would you like to see it?
+                                        </div>
+<span class="text-[11px] text-slate-400 mt-1.5 px-1 font-bold tracking-wide">10:42 AM • AI Assistant</span>
+</div>
+</div>
+<div class="flex gap-3 justify-end">
+<div class="flex flex-col items-end max-w-[85%]">
+<div class="bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tr-sm text-[15px] font-medium shadow-sm">
+                                            How much is shipping?
+                                        </div>
+<span class="text-[11px] text-slate-400 mt-1.5 px-1 font-bold tracking-wide">10:43 AM</span>
+</div>
+<div class="size-8 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-slate-500">person</span>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shrink-0 shadow-sm border border-white z-10">
+<span class="material-symbols-outlined text-[16px] text-white">smart_toy</span>
+</div>
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-primary/5 border border-primary/20 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-sm text-[15px] font-medium leading-relaxed shadow-sm">
+                                            Standard shipping is free on orders over $50! Otherwise, it's a flat rate of $5.99. 🚚
+                                        </div>
+<span class="text-[11px] text-slate-400 mt-1.5 px-1 font-bold tracking-wide">10:43 AM • AI Assistant</span>
+</div>
+</div>
+</div>
+<div class="p-4 bg-white/40 border-t border-slate-200/50 backdrop-blur-xl relative z-20">
+<div class="relative flex items-center">
+<input class="w-full bg-white border border-slate-200 text-slate-900 font-medium text-[15px] rounded-full pl-5 pr-12 py-3.5 focus:ring-2 focus:ring-primary/50 focus:border-primary placeholder:text-slate-400 shadow-sm" placeholder="Type a message to test..." type="text"/>
+<button class="absolute right-2 p-2 bg-gradient-to-r from-primary to-purple-500 text-white rounded-full hover:shadow-[0_0_10px_rgba(116,54,242,0.4)] transition-all duration-300">
+<span class="material-symbols-outlined text-lg block">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-4 glass-panel rounded-2xl p-5 flex justify-between items-center relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -mr-10 -mt-10"></div>
+<div class="relative z-10">
+<p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Response Time</p>
+<div class="flex items-baseline gap-2">
+<p class="text-slate-900 text-2xl font-black drop-shadow-sm">0.4s</p>
+<span class="text-green-600 text-xs font-bold bg-green-100 px-2 py-0.5 rounded border border-green-200">-12%</span>
+</div>
+</div>
+<div class="h-10 w-[1px] bg-slate-200 relative z-10"></div>
+<div class="relative z-10">
+<p class="text-slate-500 text-xs uppercase tracking-widest font-bold mb-1">Accuracy</p>
+<p class="text-slate-900 text-2xl font-black drop-shadow-sm">98.2%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-8 right-8 left-64 z-40 flex justify-center pointer-events-none">
+<div class="glass-panel-elevated p-2 pl-6 rounded-full flex items-center gap-6 pointer-events-auto transform translate-y-0 transition-transform duration-500 hover:-translate-y-1">
+<span class="text-slate-800 font-bold text-[15px]">You have unsaved changes</span>
+<div class="flex items-center gap-2">
+<button class="px-5 py-2.5 text-[15px] font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-all">Discard</button>
+<button class="px-6 py-2.5 text-[15px] font-bold bg-primary text-white rounded-full shadow-[0_4px_15px_rgba(116,54,242,0.3)] hover:shadow-[0_6px_20px_rgba(116,54,242,0.4)] hover:bg-[#6222e0] transition-all duration-300">Save Changes</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

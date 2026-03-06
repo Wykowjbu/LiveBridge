@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LiveBridge Live Performance Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0ea5e9","secondary": "#14b8a6","accent": "#6366f1","background-light": "#f1f5f9",
+                        "glass-bg": "rgba(255, 255, 255, 0.6)",
+                        "glass-border": "rgba(255, 255, 255, 0.8)",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
+                        'glass-inset': 'inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 8px 32px 0 rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(14, 165, 233, 0.3), inset 0 0 15px rgba(14, 165, 233, 0.1)',
+                        'deep': '0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 10px 25px -5px rgba(0, 0, 0, 0.04)',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.1), transparent 30%),
+                              radial-gradient(circle at 85% 30%, rgba(20, 184, 166, 0.1), transparent 30%);
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            @apply bg-white/60 border border-white/80 backdrop-blur-xl shadow-glass-inset rounded-2xl;
+        }
+        .glass-cube {
+            @apply bg-gradient-to-br from-white/90 to-white/40 border border-white/80 backdrop-blur-xl shadow-glass rounded-xl relative overflow-hidden;
+        }
+        .glass-cube::before {
+            content: '';
+            @apply absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-80 pointer-events-none;
+        }
+        .chart-panel {
+            @apply bg-white/60 border border-white/80 backdrop-blur-2xl shadow-deep rounded-2xl relative z-10;
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        .neon-text-primary {
+            text-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+        }
+        .neon-text-secondary {
+            text-shadow: 0 0 15px rgba(20, 184, 166, 0.4);
+        }
+        .neon-text-accent {
+            text-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+        .neon-text-pink {
+            text-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+        }
+    </style>
+</head>
+<body class="font-display text-slate-800 antialiased overflow-x-hidden min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col">
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-slate-200/50 bg-white/40 backdrop-blur-2xl px-6 py-4 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-glow text-white">
+<span class="material-symbols-outlined text-xl">wifi_tethering</span>
+</div>
+<h2 class="text-xl font-black leading-tight tracking-widest text-slate-900 uppercase">LiveBridge</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-bold text-primary" href="#">Analytics</a>
+<a class="text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors" href="#">Products</a>
+<a class="text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors" href="#">Orders</a>
+<a class="text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-4 border-l border-slate-200 pl-6">
+<button class="relative text-slate-600 hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 h-2.5 w-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"></span>
+</button>
+<div class="h-10 w-10 overflow-hidden rounded-full border border-white shadow-sm" data-alt="User profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCj0Yj7TTfzi9FIMhK_GX9-iNJkS5zGoD4SI4zMo-aPXTixRTAxtj7sxRtR82ePwleP-E2pcrYfTicy8-ssAfN1BPoaNFSB6Z9W9eN6s8QupUBNnG_uZFlSkYrhzyPhoqA01Q-aAG-gi2KiLAazmvNBfzufk59vf8XYDCc_B6D8VgVOKFerTs-7qRt3_xaa3_1XemgQTMc6fKKeyS9wQhuFlZWC36eFBZazF5qkxCdDoGArMJCUy1kGENSMcDmzPulri_y1t0SHrP_N'); background-size: cover; background-position: center;">
+</div>
+</div>
+</div>
+</header>
+<div class="layout-container flex h-full grow flex-col">
+<div class="mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-4 md:px-8 py-10">
+<div class="flex flex-wrap items-end justify-between gap-4 pb-10">
+<div class="flex flex-col gap-2">
+<h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight text-slate-900">Live Performance Analytics</h1>
+<p class="text-slate-600 text-lg font-medium tracking-wide">Real-time insights for your current multi-platform stream.</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="glass-panel px-4 py-2 flex items-center gap-3">
+<span class="flex h-2.5 w-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]"></span>
+<span class="text-sm font-bold text-red-500 uppercase tracking-widest">Live Now • 00:42:15</span>
+</div>
+<button class="flex items-center gap-2 rounded-xl bg-white/60 border border-white/80 backdrop-blur-md px-5 py-2.5 text-sm font-bold text-slate-800 hover:bg-white/80 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+                        Share Report
+                    </button>
+<button class="flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-5 py-2.5 text-sm font-bold text-white hover:from-red-500 hover:to-red-400 transition-colors shadow-[0_4px_10px_rgba(239,68,68,0.3)] border border-red-400/50">
+<span class="material-symbols-outlined text-[18px]">stop_circle</span>
+                        End Stream
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mb-10">
+<div class="glass-cube p-6 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<p class="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Revenue</p>
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary/10 text-secondary border border-secondary/20 shadow-sm">
+<span class="material-symbols-outlined">attach_money</span>
+</div>
+</div>
+<p class="mt-2 text-4xl font-black text-slate-900 tracking-tighter neon-text-secondary">$12,450</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="flex items-center gap-1 bg-secondary/10 text-secondary px-2 py-0.5 rounded text-xs font-bold border border-secondary/20">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                        +15%
+                    </span>
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">vs last stream</span>
+</div>
+</div>
+<div class="glass-cube p-6 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<p class="text-sm font-bold text-slate-500 uppercase tracking-wider">Conversion Rate</p>
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary border border-primary/20 shadow-sm">
+<span class="material-symbols-outlined">shopping_cart_checkout</span>
+</div>
+</div>
+<p class="mt-2 text-4xl font-black text-slate-900 tracking-tighter neon-text-primary">4.2%</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="flex items-center gap-1 bg-secondary/10 text-secondary px-2 py-0.5 rounded text-xs font-bold border border-secondary/20">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                        +0.8%
+                    </span>
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">avg. 3.4%</span>
+</div>
+</div>
+<div class="glass-cube p-6 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<p class="text-sm font-bold text-slate-500 uppercase tracking-wider">Active Viewers</p>
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 text-accent border border-accent/20 shadow-sm">
+<span class="material-symbols-outlined">group</span>
+</div>
+</div>
+<p class="mt-2 text-4xl font-black text-slate-900 tracking-tighter neon-text-accent">2,845</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="flex items-center gap-1 bg-red-500/10 text-red-500 px-2 py-0.5 rounded text-xs font-bold border border-red-500/20">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                        -2%
+                    </span>
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wide">since 10m ago</span>
+</div>
+</div>
+<div class="glass-cube p-6 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<p class="text-sm font-bold text-slate-500 uppercase tracking-wider">Top Platform</p>
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500/10 text-pink-500 border border-pink-500/20 shadow-sm">
+<span class="material-symbols-outlined">podium</span>
+</div>
+</div>
+<p class="mt-2 text-3xl font-black text-slate-900 tracking-tight truncate neon-text-pink">TikTok Shop</p>
+<div class="flex items-center gap-1 mt-3">
+<div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+<div class="bg-pink-500 h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+<p class="text-xs font-bold text-slate-600 ml-2">65%</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+<div class="chart-panel lg:col-span-2 p-8">
+<div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+<div>
+<h3 class="text-xl font-black text-slate-900 tracking-wide">Sales over Stream Time</h3>
+<p class="text-sm font-medium text-slate-500 mt-1">Revenue trend across all active platforms</p>
+</div>
+<div class="flex items-center gap-4 bg-white/60 px-4 py-2 rounded-lg border border-white/80 shadow-sm">
+<span class="flex items-center gap-2 text-sm font-bold text-slate-800">
+<span class="h-3 w-3 rounded-full bg-primary shadow-sm"></span> Revenue
+                            </span>
+<span class="flex items-center gap-2 text-sm font-bold text-slate-800">
+<span class="h-3 w-3 rounded-full bg-accent shadow-sm"></span> Viewers
+                            </span>
+</div>
+</div>
+<div class="relative h-[320px] w-full">
+<div class="absolute inset-0 flex flex-col justify-between text-xs font-bold text-slate-400">
+<div class="w-full border-b border-dashed border-slate-200 pb-1 relative"><span class="absolute -top-3 left-0 bg-transparent px-1">$15k</span></div>
+<div class="w-full border-b border-dashed border-slate-200 pb-1 relative"><span class="absolute -top-3 left-0 bg-transparent px-1">$10k</span></div>
+<div class="w-full border-b border-dashed border-slate-200 pb-1 relative"><span class="absolute -top-3 left-0 bg-transparent px-1">$5k</span></div>
+<div class="w-full border-b border-solid border-slate-300 pb-1 relative"><span class="absolute -top-3 left-0 bg-transparent px-1">$0</span></div>
+</div>
+<svg class="absolute inset-0 h-full w-full overflow-visible ml-8" preserveAspectRatio="none" viewBox="0 0 100 100">
+<defs>
+<linearGradient id="chartGradientPrimary" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"></stop>
+</linearGradient>
+<filter id="glowPrimary">
+<feGaussianBlur result="coloredBlur" stdDeviation="1.5"></feGaussianBlur>
+<feMerge>
+<feMergeNode in="coloredBlur"></feMergeNode>
+<feMergeNode in="SourceGraphic"></feMergeNode>
+</feMerge>
+</filter>
+<filter id="glowAccent">
+<feGaussianBlur result="coloredBlur" stdDeviation="1"></feGaussianBlur>
+<feMerge>
+<feMergeNode in="coloredBlur"></feMergeNode>
+<feMergeNode in="SourceGraphic"></feMergeNode>
+</feMerge>
+</filter>
+</defs>
+<path d="M0,90 C10,90 10,70 20,65 C30,60 30,75 40,50 C50,25 50,40 60,35 C70,30 70,20 80,15 C90,10 90,25 100,5 L100,100 L0,100 Z" fill="url(#chartGradientPrimary)" stroke="none"></path>
+<path d="M0,80 C15,80 15,75 30,78 C45,81 45,70 60,72 C75,74 75,65 90,68 L100,65" fill="none" filter="url(#glowAccent)" stroke="#6366f1" stroke-dasharray="2,3" stroke-linecap="round" stroke-width="1.2" vector-effect="non-scaling-stroke"></path>
+<path d="M0,90 C10,90 10,70 20,65 C30,60 30,75 40,50 C50,25 50,40 60,35 C70,30 70,20 80,15 C90,10 90,25 100,5" fill="none" filter="url(#glowPrimary)" stroke="#0ea5e9" stroke-linecap="round" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<circle cx="60" cy="35" fill="#fff" filter="url(#glowPrimary)" r="2" stroke="#0ea5e9" stroke-width="1"></circle>
+<circle cx="20" cy="65" fill="#0ea5e9" r="1.5"></circle>
+<circle cx="40" cy="50" fill="#0ea5e9" r="1.5"></circle>
+<circle cx="80" cy="15" fill="#0ea5e9" r="1.5"></circle>
+</svg>
+<div class="absolute left-[calc(60%+2rem)] top-[25%] -translate-x-1/2 -translate-y-[120%] pb-2 z-20">
+<div class="rounded-xl bg-white/80 backdrop-blur-xl border border-white px-3 py-2 text-sm font-bold text-slate-900 shadow-sm">
+<span class="text-primary">$9,240</span> <span class="text-slate-500 text-xs ml-1 font-medium">@ 35m</span>
+</div>
+</div>
+</div>
+<div class="mt-4 flex justify-between text-xs font-bold text-slate-500 ml-8">
+<span>Start</span>
+<span>10m</span>
+<span>20m</span>
+<span>30m</span>
+<span>40m</span>
+<span>50m</span>
+<span>Now</span>
+</div>
+</div>
+<div class="chart-panel p-8 flex flex-col">
+<div class="mb-8">
+<h3 class="text-xl font-black text-slate-900 tracking-wide">Intent Distribution</h3>
+<p class="text-sm font-medium text-slate-500 mt-1">User actions &amp; engagement types</p>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-6">
+<div class="flex flex-1 items-end justify-around gap-6 px-2 h-[240px]">
+<div class="flex flex-col items-center gap-3 group w-full h-full justify-end">
+<div class="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[40%] overflow-hidden shadow-sm">
+<div class="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-primary to-primary/40 h-full"></div>
+</div>
+<span class="text-sm font-bold text-slate-800">Buy</span>
+</div>
+<div class="flex flex-col items-center gap-3 group w-full h-full justify-end">
+<div class="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[65%] overflow-hidden shadow-sm">
+<div class="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-accent to-accent/40 h-full"></div>
+</div>
+<span class="text-sm font-bold text-slate-800">Cart</span>
+</div>
+<div class="flex flex-col items-center gap-3 group w-full h-full justify-end">
+<div class="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[25%] overflow-hidden shadow-sm">
+<div class="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-secondary to-secondary/40 h-full"></div>
+</div>
+<span class="text-sm font-bold text-slate-800">Ask</span>
+</div>
+<div class="flex flex-col items-center gap-3 group w-full h-full justify-end">
+<div class="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[15%] overflow-hidden shadow-sm">
+<div class="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-pink-400 to-pink-400/40 h-full"></div>
+</div>
+<span class="text-sm font-bold text-slate-800">Share</span>
+</div>
+</div>
+<div class="flex items-center justify-between border-t border-slate-200 pt-6">
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Interactions</span>
+<span class="text-2xl font-black text-slate-900 mt-1">850</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-sm font-bold text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">+12%</span>
+<span class="text-xs font-medium text-slate-500 mt-1 uppercase tracking-wider">vs avg</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="glass-panel p-8">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-black text-slate-900 tracking-wide">Top Spenders</h3>
+<button class="text-sm font-bold text-primary hover:text-slate-900 transition-colors bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20">View All</button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between p-4 rounded-xl bg-white/60 border border-white/80 hover:bg-white/90 transition-colors cursor-pointer shadow-sm">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 overflow-hidden rounded-full border border-white shadow-sm" data-alt="Avatar of user Sarah J" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD9w9PaBFlDMMdVoHtBeOb--VFP5Rr30apDMXwukaWUNgBSnMDiqbhkvHEEPWZk7LhYmxrrfPth0-sRnKmnwW6NxKvTF9JF4v_IFxA5lsmcnQ1X8-awLsRyZh4S855JG_KARXKzAftdDaZYW8IP_i4E1vUZbJy-xwgFE_lslKywkzQH6t2LyuJx8A1OojaZS0Rq9qub9OYHW4ae8kb0hOOAMzKzaMJ21EK1UE9dRP1nKpglhHgk46u87azVsjfoJJTL0c9vEj3fFSU7'); background-size: cover;"></div>
+<div>
+<p class="text-base font-bold text-slate-900">Sarah Jenkins</p>
+<p class="text-xs font-medium text-primary mt-0.5">@sarah_j_style</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-black text-slate-900">$850.00</p>
+<p class="text-xs font-bold text-secondary bg-secondary/10 inline-block px-2 py-0.5 rounded mt-1 border border-secondary/20">3 Orders</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 rounded-xl bg-white/60 border border-white/80 hover:bg-white/90 transition-colors cursor-pointer shadow-sm">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 overflow-hidden rounded-full border border-white shadow-sm" data-alt="Avatar of user Mike R" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC5QdqUKEwdmSYRsr6Y5d6Czq7IuOP852V0L99biS4v1eCo5WyjSaWkstSA3jMnDkS1XAM1_pK2FlYNQUzEMIAauNKRuOoDMigx27RwYlSSN3AbGxl5RFvyhqWyv_XbauYuhhRAaksOrheQZVNU3rn7dLYZj4yqw7eeJcPI5LVKoK2AKnCFY6rX9D9Cy5zpGnrddeY1UHSzv1dp6UGVLbFuGyAfyaUn4lXPpb7KNc3konn8CGq6EbeXvxm1LWS903pvRaFNaneonJrB'); background-size: cover;"></div>
+<div>
+<p class="text-base font-bold text-slate-900">Mike Ross</p>
+<p class="text-xs font-medium text-slate-500 mt-0.5">@mikeross_vip</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-black text-slate-900">$620.50</p>
+<p class="text-xs font-bold text-secondary bg-secondary/10 inline-block px-2 py-0.5 rounded mt-1 border border-secondary/20">2 Orders</p>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 rounded-xl bg-white/60 border border-white/80 hover:bg-white/90 transition-colors cursor-pointer shadow-sm">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 overflow-hidden rounded-full border border-white shadow-sm" data-alt="Avatar of user Jessica L" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCW5PvelIlDPFfxu9VKE7MOUts7JMOATUHdccEGsh_afN0Xt7-JESg1W_D2GkdFhX7TRmfSW7c8WEoxv0xBkBbKKYHWjd2hu67dM_K8XxqXHBSpF0Hu6pfESezeyOHSO1qa19svyGnOesplfTMi9QiBdh8GP-IgHmlmZhIdTzbrNevWoSJFWuGjTCb_AxNH1lWZ1ZJqLg6ETLMrO_RaMq6J2FPXkruC68W1C5HL7XpWx1dlD_AycJVIg-__KegJogyfJIaLLIh58Ll6'); background-size: cover;"></div>
+<div>
+<p class="text-base font-bold text-slate-900">Jessica Lee</p>
+<p class="text-xs font-medium text-slate-500 mt-0.5">@jessylee_99</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-lg font-black text-slate-900">$455.00</p>
+<p class="text-xs font-bold text-secondary bg-secondary/10 inline-block px-2 py-0.5 rounded mt-1 border border-secondary/20">1 Order</p>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-8">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-black text-slate-900 tracking-wide">Most Requested Products</h3>
+<button class="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors bg-white/60 px-3 py-1.5 rounded-lg border border-white/80 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                            Filter
+                        </button>
+</div>
+<div class="flex flex-col gap-4">
+<div class="group relative flex items-center justify-between p-4 rounded-xl bg-white/60 border border-white/80 hover:border-primary/40 transition-all shadow-sm">
+<div class="flex items-center gap-4">
+<div class="h-14 w-14 rounded-lg border border-slate-200 bg-center bg-cover shadow-sm" data-alt="Image of Wireless Headphones" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCFeIdiH9SnySWdMycnrZXrDdDMahTxjVJpK_aGT5-R6x6p0TKnd0DSiBo96qI3PZaI4L1aM4VHm2bVloBxtEtVY1gNuwFvHeAWtnA3IBbfZcoLsBpnS49vFgiwgRCr2lzOwCggn4iNDJeT8h_7apC9C3B2fHNF-mEmaGoDDEjATak_4MNVekSwe76O39xxuuXbKUS6-rfyIFUWyJ5iVE0-hTEy3NjXYDi5ZT6dlHDmqJEvRmg03P8XqfOowRJyAXTds-ysAkVDUUGr');"></div>
+<div>
+<p class="text-base font-bold text-slate-900">Noise Cancel Headphones</p>
+<div class="mt-1.5">
+<span class="inline-flex items-center rounded-md bg-primary/10 border border-primary/20 px-2 py-0.5 text-xs font-bold text-primary">
+                                            In Stock: 45
+                                        </span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="flex items-center gap-1.5 text-accent font-black text-lg">
+<span class="material-symbols-outlined text-base">chat_bubble</span>
+                                    142
+                                </div>
+<span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Mentions</span>
+</div>
+<button class="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 bg-white backdrop-blur-md border border-slate-200 rounded-lg shadow-sm text-slate-600 hover:text-primary">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+</div>
+<div class="group relative flex items-center justify-between p-4 rounded-xl bg-white/60 border border-white/80 hover:border-accent/40 transition-all shadow-sm">
+<div class="flex items-center gap-4">
+<div class="h-14 w-14 rounded-lg border border-slate-200 bg-center bg-cover shadow-sm" data-alt="Image of Smart Watch" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB2ISWlttyS1v69zSEsPS-kUF1QYf5M7K8Na6JKJCe_Qu2zmUNXed_uC5ffPImtobd_6XFQOigvvK-1_lQYcQDvFWSY9LfBpNk5E1ARsYNtBMgJtR1oLodnfHDxA_3xYCyuQxT5KtumyA75_AuKGAZvg6RYcuSRN6vrst4BVUav1dFyNZwLTtw-nfC3ADaMKCg1-s8huxRu9mITEqzY5DmU66Kj3o_ZYBAJXAtPmXpwfLXWCb2z65Wirr-RH6zAM3syyB6so7dPbrw5');"></div>
+<div>
+<p class="text-base font-bold text-slate-900">Ultra Smart Watch 4</p>
+<div class="mt-1.5">
+<span class="inline-flex items-center rounded-md bg-red-500/10 border border-red-500/20 px-2 py-0.5 text-xs font-bold text-red-500">
+                                            Low Stock: 8
+                                        </span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="flex items-center gap-1.5 text-accent font-black text-lg">
+<span class="material-symbols-outlined text-base">chat_bubble</span>
+                                    98
+                                </div>
+<span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Mentions</span>
+</div>
+<button class="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 bg-white backdrop-blur-md border border-slate-200 rounded-lg shadow-sm text-slate-600 hover:text-accent">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+</div>
+<div class="group relative flex items-center justify-between p-4 rounded-xl bg-white/60 border border-white/80 hover:border-secondary/40 transition-all shadow-sm">
+<div class="flex items-center gap-4">
+<div class="h-14 w-14 rounded-lg border border-slate-200 bg-center bg-cover shadow-sm" data-alt="Image of Skin Care Kit" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA553YSoP-ZPPUmXsw16pmgYNaXmSzfG-aXwv7iz2X2SEWOwfD4ava-Xo54GTKIE-QSCmc--Xlzj9IBLSQVwzFbGnihNDrseiM424bOBX0pZ-mEanuJP_2wIz0XvT_q2dJq2d_cbQ7cJzGgHpmvw4BxY2i_Izyd_Ch6XE-Bl1hpL1BrxgwhbQjzYykqHFwhhE5GqhvH1HBglTyit3iysyntnCYfSH8Gn4HbHY1RqswJmJN9hYNE39ZGM1vuHsGMuVrBSJSEFuuOfmoI');"></div>
+<div>
+<p class="text-base font-bold text-slate-900">Glow Skin Care Kit</p>
+<div class="mt-1.5">
+<span class="inline-flex items-center rounded-md bg-primary/10 border border-primary/20 px-2 py-0.5 text-xs font-bold text-primary">
+                                            In Stock: 120
+                                        </span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="flex items-center gap-1.5 text-accent font-black text-lg">
+<span class="material-symbols-outlined text-base">chat_bubble</span>
+                                    76
+                                </div>
+<span class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Mentions</span>
+</div>
+<button class="absolute right-4 top-4 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 bg-white backdrop-blur-md border border-slate-200 rounded-lg shadow-sm text-slate-600 hover:text-secondary">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

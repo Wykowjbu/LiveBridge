@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LiveBridge Advanced Multi-Platform Order Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --primary-color: #7436f2;
+            --bg-deep: #f8fafc;
+            --surface-glass: rgba(255, 255, 255, 0.6);
+            --surface-glass-heavy: rgba(255, 255, 255, 0.8);
+            --border-glass: rgba(255, 255, 255, 0.8);
+            --border-glass-light: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+            --shopee: #EE4D2D;
+            --tiktok: #000000;
+            --zalo: #0068FF;
+            --tiki: #1A94FF;
+        }
+        @layer base {
+            body {
+                @apply bg-slate-50 text-slate-800 font-['Inter',sans-serif];
+                background-image: 
+                    radial-gradient(circle at 15% 50%, rgba(116, 54, 242, 0.15), transparent 25%),
+                    radial-gradient(circle at 85% 30%, rgba(0, 104, 255, 0.15), transparent 25%),
+                    linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            }
+        }
+        .liquid-glass {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            box-shadow: var(--glass-shadow);
+        }
+        .liquid-glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.5) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass-light);
+            border-top: 1px solid rgba(255,255,255,0.9);
+            border-left: 1px solid rgba(255,255,255,0.9);
+            box-shadow: 0 4px 24px -1px rgba(0,0,0,0.08);
+        }
+        .liquid-glass-drawer {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-left: 1px solid rgba(255,255,255,0.8);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.1), inset 1px 0 0 rgba(255,255,255,0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+        }
+        .platform-icon-glass {
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+        .shopee-badge { background-color: rgba(238, 77, 45, 0.1); color: var(--shopee); border-color: rgba(238, 77, 45, 0.3); }
+        .tiktok-badge { background-color: rgba(0, 0, 0, 0.05); color: var(--tiktok); border-color: rgba(0,0,0,0.1); }
+        .zalo-badge { background-color: rgba(0, 104, 255, 0.1); color: var(--zalo); border-color: rgba(0, 104, 255, 0.3); }
+        .tiki-badge { background-color: rgba(26, 148, 255, 0.1); color: var(--tiki); border-color: rgba(26, 148, 255, 0.3); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-hidden">
+<div class="h-8 liquid-glass border-b-0 flex items-center justify-center px-6 shrink-0 relative z-40 rounded-b-xl mx-4 mt-2">
+<div class="flex items-center gap-2">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></span>
+</span>
+<span class="text-[10px] uppercase tracking-[0.2em] font-bold text-emerald-600">Live Real-time Syncing Active • 4 Platforms Linked</span>
+</div>
+</div>
+<header class="flex items-center justify-between px-8 py-4 shrink-0 liquid-glass rounded-2xl mx-4 mt-4 relative z-30">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-3">
+<div class="size-8 text-[var(--primary-color)] bg-white/50 p-1 rounded-xl border border-white/80 shadow-inner shadow-black/5">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4L44 24L24 44L4 24L24 4Z" stroke="currentColor" stroke-linejoin="round" stroke-width="3"></path>
+<path d="M14 24H34M24 14V34" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-800 drop-shadow-sm">LiveBridge</h1>
+</div>
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-slate-400 text-lg">search</span>
+<input class="bg-white/40 backdrop-blur-md border border-white/60 rounded-full pl-10 pr-4 py-2 text-xs w-64 focus:w-80 transition-all outline-none focus:border-white/90 focus:bg-white/70 focus:ring-0 placeholder:text-slate-500 text-slate-800 shadow-inner shadow-black/5" placeholder="Search orders, customers, or SKUs..." type="text"/>
+</div>
+</div>
+<nav class="flex items-center gap-8">
+<div class="flex items-center gap-6">
+<a class="text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors" href="#">Dashboard</a>
+<a class="text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors" href="#">Live Stream</a>
+<a class="text-xs font-bold text-slate-800 relative after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-[var(--primary-color)] after:rounded-full after:shadow-[0_0_8px_var(--primary-color)]" href="#">Orders</a>
+<a class="text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors" href="#">Products</a>
+</div>
+<div class="h-4 w-px bg-slate-300 mx-2"></div>
+<button class="bg-gradient-to-r from-[var(--primary-color)] to-purple-500 hover:brightness-110 text-white px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-[0_4px_16px_rgba(116,54,242,0.3)] border border-purple-400/30">
+            Go Live
+        </button>
+<div class="size-9 rounded-full border border-white/80 bg-cover bg-center shadow-lg shadow-black/10" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhO7eHM6nHm8c425cOwpUxEThAE6yZk00QeMlBlAjFjCOtq8ftu8rMh95teB9eQ8gsQ40UC23G-pw0LAA9sIQo3-5H3AjW4GGLiRbPUgWfooaY5eEuBdCBad2gTcL3Ur-ZT_QBE4MIWwhilLcqA6nPcVy4p5wkSPS2Mqq7BSqcczj_9ffmiU8V-jYFUa3iDJDi_op5p_8A2g_Z3_Hu9vOrjWTPVdXCctOhS4Sa5fT3uNzqmCk-pqSh067XS53QFf3ghBFubfQFJngF');"></div>
+</nav>
+</header>
+<div class="flex flex-1 overflow-hidden relative mt-4 mx-4 mb-4">
+<main class="flex-1 flex flex-col h-full overflow-hidden w-full pr-[420px]">
+<div class="px-4 py-2 shrink-0">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="text-2xl font-semibold text-slate-800 tracking-tight drop-shadow-sm">Order Management</h2>
+<p class="text-xs text-slate-500 mt-1">Manage cross-platform sales from a unified command center.</p>
+</div>
+<div class="flex gap-3">
+<button class="liquid-glass px-4 py-2 rounded-xl text-xs font-medium text-slate-600 flex items-center gap-2 hover:bg-white/80 transition-colors">
+<span class="material-symbols-outlined text-base">filter_list</span>
+                        Filter
+                    </button>
+<button class="liquid-glass px-4 py-2 rounded-xl text-xs font-medium text-slate-600 flex items-center gap-2 hover:bg-white/80 transition-colors">
+<span class="material-symbols-outlined text-base">file_download</span>
+                        Export
+                    </button>
+</div>
+</div>
+<div class="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+<button class="flex items-center gap-2 px-5 py-2 rounded-full bg-slate-800 backdrop-blur-sm text-white text-xs font-bold shadow-[0_2px_10px_rgba(0,0,0,0.1)]">
+                    All Channels
+                </button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-full liquid-glass text-slate-600 text-xs font-medium hover:border-slate-300 hover:bg-white/80 transition-all">
+<div class="size-2.5 rounded-full bg-slate-800 shadow-[0_0_5px_rgba(0,0,0,0.2)]"></div> TikTok
+                </button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-full liquid-glass text-slate-600 text-xs font-medium hover:border-[var(--shopee)]/50 hover:bg-[var(--shopee)]/5 transition-all">
+<div class="size-2.5 rounded-full bg-[var(--shopee)] shadow-[0_0_5px_var(--shopee)]"></div> Shopee
+                </button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-full liquid-glass text-slate-600 text-xs font-medium hover:border-[var(--zalo)]/50 hover:bg-[var(--zalo)]/5 transition-all">
+<div class="size-2.5 rounded-full bg-[var(--zalo)] shadow-[0_0_5px_var(--zalo)]"></div> Zalo
+                </button>
+<button class="flex items-center gap-2 px-5 py-2 rounded-full liquid-glass text-slate-600 text-xs font-medium hover:border-[var(--tiki)]/50 hover:bg-[var(--tiki)]/5 transition-all">
+<div class="size-2.5 rounded-full bg-[var(--tiki)] shadow-[0_0_5px_var(--tiki)]"></div> Tiki
+                </button>
+</div>
+</div>
+<div class="flex-1 overflow-x-auto overflow-y-hidden px-4 pb-4 custom-scrollbar">
+<div class="flex h-full gap-6 min-w-max">
+<div class="flex flex-col w-[340px] h-full rounded-[24px] liquid-glass p-1">
+<div class="p-4 flex items-center justify-between border-b border-white/40 bg-white/20 rounded-t-[20px]">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.4)]"></div>
+<span class="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Pending Payment</span>
+</div>
+<span class="bg-white/60 backdrop-blur-md text-[10px] px-2.5 py-1 rounded-full text-slate-800 font-bold border border-white/80">4</span>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
+<div class="liquid-glass-card p-4 rounded-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-11 rounded-xl bg-cover bg-center border border-white/60 shadow-inner shadow-black/5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvschqju4-poPkufUEOxXs8k9qRBYWBlGaYJP0zuOcaSvXwJX4CY_z_5avgWeyyuNTx5wzz8uF_OGtClQ_V3uXwXRBxXvWEpqbAsY2iC-XL0rVOWyUxM24kyWaGnLWXKdre9bSdMMB7uN1hutRqOT4vkMr_IelsoVGyoMOeEElXBXA_TAESfLEWc63J34JQNHuNCLf0-6u6llmaQi5HGfhrWR--n4c3L908pXK1Zkq2pl6LxBQrvmvETthUYRnMLL5S6Vp9OvPVDW6');"></div>
+<div>
+<h4 class="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">Smart Watch Series 7</h4>
+<p class="text-[11px] text-slate-500 font-medium mt-0.5">Sarah Jenkins</p>
+</div>
+</div>
+<div class="platform-icon-glass shopee-badge size-7 rounded-lg flex items-center justify-center shrink-0">
+<span class="text-[10px] font-black">S</span>
+</div>
+</div>
+<div class="flex items-end justify-between pt-2 border-t border-slate-200">
+<div>
+<p class="text-[10px] text-slate-500 font-mono mb-0.5">ID: #3024</p>
+<span class="text-sm font-bold text-slate-800">$249.00</span>
+</div>
+<span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-orange-100 text-orange-600 border border-orange-200 uppercase tracking-wider backdrop-blur-md shadow-sm">Unpaid</span>
+</div>
+</div>
+<div class="liquid-glass-card p-4 rounded-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer group border-purple-300 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-purple-100/50 to-transparent pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="flex items-center gap-3">
+<div class="size-11 rounded-xl bg-cover bg-center border border-white/60 shadow-inner shadow-black/5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyqWkZvInvFhZBV4iBABi-DrmyfmOmr3zLwlH53Jws3Et22UPTRnEQlmKHX7f4gqMRoZDX_NqXIOFqLOUdyY07jl2NZ4j8MW3NWysk98gsRvFB7Q163pclMRj2CepsWQyCYHVSvYyy45g75v5wnsandVEQGDQo3e3b27dHU9g8VhrRJUH16mqKVjVepMc-2DjEpoGhcQiR3EwZpnkd9-Cr22ZLVh1wkgteRsXd1b_eFnWFWUmnSP2g9lqC_e6fAWb5tNfMi_N4MjV_');"></div>
+<div>
+<h4 class="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">Nike Air Max 90</h4>
+<p class="text-[11px] text-slate-500 font-medium mt-0.5">Michael Chen</p>
+</div>
+</div>
+<div class="platform-icon-glass tiktok-badge size-7 rounded-lg flex items-center justify-center shrink-0">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z"></path></svg>
+</div>
+</div>
+<div class="flex items-end justify-between pt-2 border-t border-slate-200 relative z-10">
+<div>
+<p class="text-[10px] text-slate-500 font-mono mb-0.5">ID: #3021</p>
+<span class="text-sm font-bold text-slate-800">$129.50</span>
+</div>
+<span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-orange-100 text-orange-600 border border-orange-200 uppercase tracking-wider backdrop-blur-md shadow-sm">Unpaid</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col w-[340px] h-full rounded-[24px] liquid-glass p-1">
+<div class="p-4 flex items-center justify-between border-b border-white/40 bg-white/20 rounded-t-[20px]">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.4)]"></div>
+<span class="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Processing</span>
+</div>
+<span class="bg-white/60 backdrop-blur-md text-[10px] px-2.5 py-1 rounded-full text-slate-800 font-bold border border-white/80">2</span>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
+<div class="liquid-glass-card p-4 rounded-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-11 rounded-xl bg-cover bg-center border border-white/60 shadow-inner shadow-black/5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsu2onB3wYHOovXY7pundOWtjxk6xF6GLQKk_aCjI8T011-PwRLotWJEzdSCC9XhSalWrnW2NgZYJTsYg3hG0YxSsJvVKx3yNCf6zqCG1xduGAaxFJvcajamm700BbwLNH6nwvqvTNuUhEVd707YW7kJgvDNQYBZE41k5KzgZQ3qYfFy9jFsA-mEcERJh0w6SkJtDXLNdZ-BP0MKPpvMP5C0k-ugt1F5Ewvhe5BQojDQ3FHzQr799XMOZnAOjGjgjELH1PcDd83f86');"></div>
+<div>
+<h4 class="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">iPhone 13 Case</h4>
+<p class="text-[11px] text-slate-500 font-medium mt-0.5">Emma Wilson</p>
+</div>
+</div>
+<div class="platform-icon-glass zalo-badge size-7 rounded-lg flex items-center justify-center shrink-0">
+<span class="text-[10px] font-black">Z</span>
+</div>
+</div>
+<div class="flex items-end justify-between pt-2 border-t border-slate-200">
+<div>
+<p class="text-[10px] text-slate-500 font-mono mb-0.5">ID: #3018</p>
+<span class="text-sm font-bold text-slate-800">$35.00</span>
+</div>
+<span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-blue-100 text-blue-600 border border-blue-200 uppercase tracking-wider backdrop-blur-md shadow-sm">Paid</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col w-[340px] h-full rounded-[24px] liquid-glass p-1">
+<div class="p-4 flex items-center justify-between border-b border-white/40 bg-white/20 rounded-t-[20px]">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.4)]"></div>
+<span class="text-[11px] font-bold text-slate-600 uppercase tracking-widest">Ready to Ship</span>
+</div>
+<span class="bg-white/60 backdrop-blur-md text-[10px] px-2.5 py-1 rounded-full text-slate-800 font-bold border border-white/80">5</span>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
+<div class="liquid-glass-card p-4 rounded-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="size-11 rounded-xl bg-cover bg-center border border-white/60 shadow-inner shadow-black/5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAXDS1kkY0WhhXpQDzb_i8sEC_2qG14yggiXaJB6ewHbQhH6gtuA9dIp9FWrIKbvyahSgzlILk1wjtyr9nDF_qM2mS69XUE35J-iOLzAnkTuksCKnPviHO5oNsi3pmxkJ1qtOzKuHn9DxN1DEwWeOHW6Gvi2IZPkJ8oHR5JMITxYMBtWQVezLdcwPSq_1GAjGrDD_i58cjgAStb0RDTuOfYdtLhwnDwaOuWYVzHb-CLJLJUTZ8lp4QdT7vW3DS6sUtEgk34-up1YHt3');"></div>
+<div>
+<h4 class="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">Analog Classic Watch</h4>
+<p class="text-[11px] text-slate-500 font-medium mt-0.5">David Lee</p>
+</div>
+</div>
+<div class="platform-icon-glass tiki-badge size-7 rounded-lg flex items-center justify-center shrink-0">
+<span class="text-[10px] font-black">T</span>
+</div>
+</div>
+<div class="flex items-end justify-between pt-2 border-t border-slate-200">
+<div>
+<p class="text-[10px] text-slate-500 font-mono mb-0.5">ID: #3015</p>
+<span class="text-sm font-bold text-slate-800">$199.00</span>
+</div>
+<span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-purple-100 text-purple-600 border border-purple-200 uppercase tracking-wider backdrop-blur-md shadow-sm">Packed</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="fixed top-0 right-0 h-full w-[420px] liquid-glass-drawer z-50 flex flex-col transform translate-x-0 transition-transform duration-500 rounded-l-[32px] overflow-hidden">
+<div class="px-8 pt-10 pb-6 flex items-start justify-between relative z-10">
+<div class="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent pointer-events-none"></div>
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h3 class="text-2xl font-bold text-slate-800 tracking-tight drop-shadow-sm">Order #3021</h3>
+<span class="text-[10px] font-bold px-2.5 py-1 rounded-md bg-orange-100 text-orange-600 border border-orange-200 uppercase tracking-wider backdrop-blur-md shadow-sm">Unpaid</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="platform-icon-glass shopee-badge rounded-full px-3 py-1 text-[10px] font-bold flex items-center gap-1.5">
+<span class="size-1.5 rounded-full bg-[var(--shopee)] shadow-[0_0_4px_var(--shopee)]"></span>
+                        Shopee Store
+                    </div>
+<span class="text-slate-500 text-[11px] font-medium tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                        Oct 24, 2023 • 4:32 PM
+                    </span>
+</div>
+</div>
+<button class="size-9 flex items-center justify-center rounded-xl bg-white/50 border border-white/80 hover:bg-white/80 transition-colors shadow-inner shadow-black/5 backdrop-blur-md">
+<span class="material-symbols-outlined text-slate-500 text-lg">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto px-8 space-y-8 custom-scrollbar pb-40 relative z-10">
+<section class="liquid-glass-card p-5 rounded-2xl relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 size-24 bg-[var(--shopee)]/10 rounded-full blur-2xl group-hover:bg-[var(--shopee)]/20 transition-all duration-500"></div>
+<h4 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">storefront</span>
+                    Platform Origin
+                </h4>
+<div class="flex items-center justify-between relative z-10">
+<div class="flex items-center gap-4">
+<div class="platform-icon-glass shopee-badge size-10 rounded-xl flex items-center justify-center shadow-sm">
+<span class="text-sm font-black text-[var(--shopee)]">S</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-800 drop-shadow-sm">Linked via Shopee API v3</p>
+<p class="text-[11px] text-slate-500 font-mono mt-0.5">Sync ID: SP-99201-B2</p>
+</div>
+</div>
+<div class="size-8 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-emerald-600 text-sm">verified</span>
+</div>
+</div>
+</section>
+<section>
+<h4 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">inventory_2</span>
+                    Order Items (1)
+                </h4>
+<div class="liquid-glass-card p-5 rounded-2xl">
+<div class="flex gap-5">
+<div class="size-20 rounded-xl bg-cover bg-center border border-white/60 shrink-0 shadow-sm" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCfAdKiISVsuy_fldOHx0LuMSf2WKLJ1lWGhoOBbUCcuZ7lP1udYLq4QTTD_bDt_sgEERsWkZDDd4kFZS7HMRseJp9oWXTPlB9cY-ySVbN353qgLXbMsmSvMRfPWsaWRajwahZB7leNOByJFfCGC4IkyBR3ct_473nS77IATNEz6NvBOYJYm4gPcTiukJ8kzOV5w15jQSe0jplslaZDl4SYNC3bZ9ZtE6eLM62VIV7Z6LTNAeUgWVLf9I9hhT3LRiWRuyoEtfjtr3yk');"></div>
+<div class="flex-1 min-w-0 flex flex-col justify-center">
+<div class="flex justify-between items-start mb-1">
+<h5 class="text-sm font-bold text-slate-800 truncate drop-shadow-sm">Nike Air Max 90</h5>
+<span class="text-sm font-bold text-slate-800 bg-white/60 px-2 py-0.5 rounded-md border border-white/80 shadow-sm">$129.50</span>
+</div>
+<p class="text-[11px] text-slate-500 font-mono mb-3">SKU: NK-AM90-RW-10</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-white/60 backdrop-blur-md border border-white/80 rounded-md px-2.5 py-1 text-[10px] text-slate-600 font-medium shadow-sm">Size: US 10</span>
+<span class="bg-white/60 backdrop-blur-md border border-white/80 rounded-md px-2.5 py-1 text-[10px] text-slate-600 font-medium shadow-sm">Variant: Red/White</span>
+<span class="bg-slate-800 backdrop-blur-md border border-slate-700 rounded-md px-2.5 py-1 text-[10px] text-white font-bold shadow-sm">Qty: 1</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h4 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">local_shipping</span>
+                    Shipping Info
+                </h4>
+<div class="liquid-glass-card p-5 rounded-2xl space-y-5">
+<div class="flex items-start gap-4">
+<div class="size-8 rounded-full bg-white/60 border border-white/80 flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-slate-600 text-sm">person</span>
+</div>
+<div class="text-sm">
+<p class="font-bold text-slate-800 drop-shadow-sm">Michael Chen</p>
+<p class="text-slate-500 mt-1 text-[12px] font-mono">+1 (555) 902-1244</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="size-8 rounded-full bg-white/60 border border-white/80 flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-slate-600 text-sm">location_on</span>
+</div>
+<div class="text-sm">
+<p class="text-slate-600 leading-relaxed text-[13px]">4521 Sunset Boulevard, Apt 4B<br/>Los Angeles, CA 90028<br/>United States</p>
+</div>
+</div>
+<div class="h-32 w-full rounded-xl overflow-hidden border border-white/80 relative shadow-sm">
+<div class="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-multiply" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHimqmKSESeXlMID1U_rpMigJVyeMApNIAv53wLu-0pgzQLWLTOpTfJL1b5Hr4cpFoUQ7woUazSQWIufBxjoOl5ZMRB1sctDuX9bD1sOPuj3Ahfixsuo8zp8obSCkrAqcyapyUDQQ8f3TOnCGVDvqmuR-DnBml-nA0jfZV6VVPGSrMAl09u42GKZGunv0-2LxWFF6hd79KyMfT7kHUfchReb7LyRtQElDiI9YuKDZd3qhpPuU3GTuhIhcE3C4wBU9aX1fecLfPx4lB');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-white/90 via-white/40 to-transparent"></div>
+<div class="absolute bottom-3 left-3 bg-white/80 backdrop-blur-md border border-white/90 rounded-md px-2.5 py-1.5 flex items-center gap-2 shadow-sm">
+<span class="size-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)] relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+</span>
+<span class="text-[10px] font-bold text-slate-800 uppercase tracking-wider">Verified Destination</span>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h4 class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-5 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+                    Order Log
+                </h4>
+<div class="space-y-6 pl-2 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-px before:bg-slate-300">
+<div class="relative pl-8">
+<div class="absolute left-[7px] top-1.5 size-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.4)] ring-4 ring-white border border-emerald-200"></div>
+<p class="text-[12px] font-bold text-slate-800 mb-0.5 drop-shadow-sm">10:45 AM: Order pushed from Shopee</p>
+<p class="text-[10px] text-slate-500 bg-white/60 inline-block px-2 py-0.5 rounded border border-slate-200">Webhook received from shopee-lb-bridge-v3</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-[7px] top-1.5 size-2.5 rounded-full bg-slate-300 border border-slate-400 ring-4 ring-white"></div>
+<p class="text-[12px] font-medium text-slate-600 mb-0.5">10:46 AM: AI validated stock levels</p>
+<p class="text-[10px] text-slate-500">Internal system check completed</p>
+</div>
+<div class="relative pl-8 pb-2">
+<div class="absolute left-[7px] top-1.5 size-2.5 rounded-full bg-slate-200 border border-slate-300 ring-4 ring-white"></div>
+<p class="text-[12px] font-medium text-slate-500">10:48 AM: Invoice generated</p>
+</div>
+</div>
+</section>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-6 bg-white/80 backdrop-blur-2xl border-t border-white/80 space-y-3 z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+<button class="w-full bg-slate-800 backdrop-blur-md text-white h-12 rounded-xl text-sm font-bold hover:bg-slate-700 transition-all flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
+<span class="material-symbols-outlined text-lg">receipt_long</span>
+                Send Platform Invoice
+            </button>
+<div class="grid grid-cols-2 gap-3">
+<button class="liquid-glass h-11 rounded-xl text-xs font-bold text-slate-700 hover:bg-white/90 hover:border-slate-300 transition-all shadow-sm">
+                    Mark as Paid
+                </button>
+<button class="bg-red-50/80 backdrop-blur-md border border-red-200 h-11 rounded-xl text-xs font-bold text-red-600 hover:bg-red-100/80 hover:border-red-300 transition-all shadow-sm">
+                    Cancel Order
+                </button>
+</div>
+</div>
+</aside>
+</div>
+</body></html>
