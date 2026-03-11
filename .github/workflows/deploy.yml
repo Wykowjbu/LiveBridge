@@ -7,8 +7,8 @@ on:
 
 env:
   REGION: asia-southeast1
-  REPO_NAME: react-repo
-  SERVICE_NAME: react-frontend-app
+  REPO_NAME: livebridge-repo
+  SERVICE_NAME: livebridge-service
 
 jobs:
   deploy:
