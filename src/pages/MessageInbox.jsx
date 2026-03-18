@@ -7,40 +7,40 @@ const MessageInbox = () => {
     {
       id: 1,
       sender: 'Sarah Jenkins',
-      time: '2m ago',
+      time: '2 phút trước',
       avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-isua0d4bD_Poy0xNmdIqcsIGlpVZHDLuGCVRSY-rJx66A9jsz8Nv9EejqVuzE3F14UdJnRDEzYTjeGx60qIa-5ef3y9ID3aV4CbfRQyDlwAfjVGtp5KJksnv7we28IE_WwvCdcz2cKY64agWxf40aPj4LPSI44lBaFqLrJ_xsqhzOaVia2s7HnZ2OJAv0KFW0qj1of4yBLogxLhMeco_5zkkI6wqcbBcjdk4-9lBh7ZCGRi51bFjvrerRr7eifv_safCw_R-kaHu',
       platform: 'TikTok',
       platformIcon: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCY85FBWNatZrMKLHs-UZnWx__N7E2Pvb1xa1vfnKicrTRMDRfM1BNxkwqFOjMfeCeufnJYRpelgWQhhG5uoFxaTOtud1SVb1zag338Kixw3NLgHxlK5oITUA5GmTJU5byCSaUQ6iLd_hXm0-wGncAlmgbFg3zk-aNalE8gMLh0oNau5R-uFjh-9V3bzvk6ynC0hlcHwikGHXOvxegfzn48c2rspuLkoMbH4tqGzQ3jQeWjOYAX5rINamyX8ar6duwFVjyJdEglncMU',
       isVip: true,
-      text: 'Is this available in red size M? Also do you ship to Canada?',
-      intent: 'Buying Interest',
-      aiReply: 'Yes, red M is in stock!',
+      text: 'Mẫu này có màu đỏ size M không shop? Có giao hỏa tốc không?',
+      intent: 'Hỏi Mua',
+      aiReply: 'Dạ có sẵn màu Đỏ size M ạ!',
       active: true,
     },
     {
       id: 2,
       sender: 'Nguyen Van A',
-      time: '3m ago',
+      time: '3 phút trước',
       avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBdEXcmYY5m0z59XB500gbBtziImDIR7lvoHJb20LUnLG43ZgCkY3VPfDFU6eHpB6XIiJNWW3TIPncREMc_AKg4LruwVD6FASXN-JZowC4wGcr6MBiOORvs71aZFnG9t2PalYa_hJf7QtUus09CvD6ESHCsd6etXODKJVmnfj7S-2UZA7zU9xYJxFI1V1X6IKNVjSXYRo9gB55S8D4rlanEqJa7nL4Qx_03OgAe6lY0S-sP0-VVr1FdjaadUJDZ-cPS81iwzMjbBzMc',
       isShopee: true,
-      text: 'When will my order #SPX88291 be shipped? I need it by Friday.',
-      intent: 'Order Status',
-      aiReply: 'Packed & Ready',
+      text: 'Đơn hàng #SPX88291 bao giờ giao vậy shop? Mình cần gấp.',
+      intent: 'Trạng thái đơn',
+      aiReply: 'Đã đóng gói',
     },
     {
       id: 3,
       sender: 'Minh Tu',
-      time: '8m ago',
+      time: '8 phút trước',
       avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBKvAgi5tz9anEkvbQkQV-FirfBA_6EZ_39HytRKVru4garM9uI0cy-D92yksoRIB8SDNGxEMnM-taEafYDyKQgmDn0lgk14umvAhxwXOaeKkTeoV8ucJOQAOVAXJ8X-8P1BT0GR5I1vUeyZk3pyI_tb2WBQDU_TX3HS4dhOqokFlHinj2GuPJkTgaY-pt3q_5eZ6AzPgsbNVeuYlhdqlOppHwBpgmUn8hkpeFcc30zpQRaAxk0SYEoasLxg_TkMLgk0dy1m7BZ18FD',
       isZalo: true,
-      text: 'Does this combo come with the serum? Price inbox pls.',
-      intent: 'Product Inquiry',
+      text: 'Combo này có kèm serum không? Xin giá inbox.',
+      intent: 'Hỏi Sản Phẩm',
     }
   ];
 
   return (
     <div className="flex flex-col h-full w-full">
-      <Header title="Inbox" />
+      <Header title="Hộp thư" />
       
       <div className="flex-1 flex overflow-hidden">
         {/* Danh sách tin nhắn (Messages List) */}
@@ -48,9 +48,9 @@ const MessageInbox = () => {
           <div className="mb-5 flex items-center justify-between">
             <h3 className="text-sm font-bold text-slate-600 uppercase tracking-wider flex items-center gap-2">
               <span className="size-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.5)]"></span>
-              Priority Attention Required
+              Cần Xử Lý Gấp
             </h3>
-            <span className="text-xs text-slate-400">Sorted by Priority Score</span>
+            <span className="text-xs text-slate-400">Sắp xếp theo ưu tiên</span>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -84,7 +84,7 @@ const MessageInbox = () => {
                     </span>
                     {msg.aiReply && (
                       <span className="flex items-center gap-1 text-xs text-sky-700 bg-sky-50 px-2.5 py-1 rounded-lg border border-sky-200">
-                        <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>smart_toy</span> Suggested: {msg.aiReply}
+                        <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>smart_toy</span> Gợi ý: {msg.aiReply}
                       </span>
                     )}
                   </div>
@@ -129,24 +129,24 @@ const MessageInbox = () => {
              <div className="flex gap-4">
                <div className="size-10 flex-shrink-0 rounded-full bg-cover bg-center shadow-md ring-2 ring-white" style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdEXcmYY5m0z59XB500gbBtziImDIR7lvoHJb20LUnLG43ZgCkY3VPfDFU6eHpB6XIiJNWW3TIPncREMc_AKg4LruwVD6FASXN-JZowC4wGcr6MBiOORvs71aZFnG9t2PalYa_hJf7QtUus09CvD6ESHCsd6etXODKJVmnfj7S-2UZA7zU9xYJxFI1V1X6IKNVjSXYRo9gB55S8D4rlanEqJa7nL4Qx_03OgAe6lY0S-sP0-VVr1FdjaadUJDZ-cPS81iwzMjbBzMc")' }}></div>
                <div className="glass-card text-slate-700 text-sm p-4 rounded-tl-none max-w-[85%] leading-relaxed bg-white/60">
-                 Is this available in red size M? Also do you ship to Canada?
+                 Mẫu này có màu đỏ size M không shop? Có giao hỏa tốc không?
                </div>
              </div>
              
              {/* Gợi ý AI (AI Suggestion Frame) */}
-             <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.18} overLight={true} className="p-5 border-sky-200 shadow-[0_8px_32px_rgba(14,165,233,0.05)] relative overflow-hidden group bg-gradient-to-br from-white/80 to-white/40">
+             <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.18} overLight={true} className="p-5 border-sky-200 shadow-[0_8px_32px_rgba(14,165,233,0.05)] relative overflow-hidden group bg-gradient-to-br from-white/80 to-white/40">
                <p className="text-xs text-sky-600 font-bold mb-3 uppercase tracking-widest relative z-10 flex items-center gap-2">
-                 <span className="size-1.5 rounded-full bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.4)]"></span> AI Suggested Reply
+                 <span className="size-1.5 rounded-full bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.4)]"></span> AI Gợi Ý Phản Hồi
                </p>
                <p className="text-sm text-slate-700 mb-5 leading-relaxed relative z-10">
-                 Hey Sarah! Yes, we have the Red M in stock! 🛍️ And we definitely ship to Canada. Shipping usually takes 5-7 business days. <br/><br/>
+                 Chào bạn! Cửa hàng vẫn còn sẵn màu Đỏ size M nhé! 🛍️ Shop có hỗ trợ giao hỏa tốc nhận trong ngày ạ. <br/><br/>
                  <a className="inline-flex items-center gap-1 text-sky-600 bg-sky-50 hover:bg-sky-100 px-2 py-1 rounded-lg border border-sky-200 transition-colors text-xs font-medium mt-1" href="#">
-                     <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>link</span> [Shopee: Red Dress M - Buy Now]
+                     <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>link</span> [Shopee: Váy Đỏ size M - Mua Ngay]
                  </a>
                </p>
                <div className="flex gap-3 relative z-10">
                  <button className="flex-1 bg-gradient-to-r from-sky-400 to-blue-500 text-white text-sm font-bold py-2.5 px-4 rounded-xl transition-all hover:brightness-105 flex items-center justify-center gap-2">
-                     <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>send</span> Send
+                     <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>send</span> Gửi
                  </button>
                </div>
              </LiquidGlass>
@@ -155,7 +155,7 @@ const MessageInbox = () => {
           {/* Box nhập liệu chữ (Input Box) */}
           <div className="p-5 border-t border-white/60 glass-header relative z-10">
              <div className="glass-input rounded-2xl p-3 focus-within:ring-2 focus-within:ring-sky-400/50 focus-within:border-sky-300 transition-all bg-white/60">
-                <textarea className="w-full bg-transparent text-sm text-slate-800 placeholder:text-slate-400 border-none focus:ring-0 resize-none px-2 py-1" placeholder="Type your reply manually..." rows="2"></textarea>
+                <textarea className="w-full bg-transparent text-sm text-slate-800 placeholder:text-slate-400 border-none focus:ring-0 resize-none px-2 py-1" placeholder="Nhập tin nhắn phản hồi thủ công..." rows="2"></textarea>
                 <div className="flex justify-between items-center mt-3 pt-3 border-t border-slate-200/50">
                   <div className="flex gap-3 text-slate-400">
                     <span className="material-symbols-outlined cursor-pointer hover:text-sky-500" style={{ fontSize: '22px' }}>image</span>

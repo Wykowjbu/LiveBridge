@@ -51,9 +51,7 @@ const Login = () => {
         >
           {/* Logo & Tiêu đề */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 mb-5 shadow-[0_8px_25px_rgba(14,165,233,0.3)] border border-white/40">
-              <span className="material-symbols-outlined text-white text-3xl">leak_add</span>
-            </div>
+            <img src="/logo.png" alt="LiveBridge Logo" className="w-16 h-16 rounded-2xl mb-5 shadow-[0_8px_25px_rgba(14,165,233,0.3)] border border-white/40 object-cover" />
             <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">LiveBridge</h1>
             <p className="text-slate-500 text-sm font-medium">
               Nền tảng Trợ lý AI Hỗ trợ Bán hàng qua Livestream

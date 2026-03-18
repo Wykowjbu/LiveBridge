@@ -6,17 +6,17 @@ const PlatformConnect = () => {
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
 
-      <Header title="Settings & Integrations" />
+      <Header title="Cài đặt & Tích hợp" />
       
       <div className="flex-1 w-full max-w-6xl mx-auto pb-10 overflow-y-auto p-6 z-10 custom-scrollbar">
           <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="mb-12 p-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
                   <div>
-                      <h2 className="text-3xl font-extrabold tracking-tight text-slate-800 mb-2">Platform Connections</h2>
-                      <p className="text-slate-500 text-sm font-medium">Manage your social media integrations and API keys for seamless multi-streaming.</p>
+                      <h2 className="text-3xl font-extrabold tracking-tight text-slate-800 mb-2">Kết Nối Nền Tảng</h2>
+                      <p className="text-slate-500 text-sm font-medium">Quản lý kết nối mạng xã hội và mã API để phát mượt mà đa nền tảng.</p>
                   </div>
                   <button className="flex items-center gap-2 px-5 py-2.5 bg-white/70 border border-white shadow-[0_4px_15px_-3px_rgba(0,0,0,0.05),inset_0_1px_0_0_rgba(255,255,255,1)] rounded-xl text-sm font-bold text-slate-800 transition-all hover:bg-white/90">
-                      <span className="material-symbols-outlined text-[18px]">add</span> Add Platform
+                      <span className="material-symbols-outlined text-[18px]">add</span> Thêm Nền Tảng
                   </button>
               </div>
 
@@ -30,14 +30,14 @@ const PlatformConnect = () => {
                               </svg>
                           </div>
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200 shadow-sm">
-                              <span className="size-2.5 rounded-full bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)] animate-pulse"></span> Connected
+                              <span className="size-2.5 rounded-full bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)] animate-pulse"></span> Đã kết nối
                           </span>
                       </div>
                       <h3 className="text-slate-800 text-xl font-extrabold mb-1">TikTok Shop</h3>
-                      <p className="text-slate-500 text-xs mb-5 font-semibold">Last synced: 2 mins ago</p>
+                      <p className="text-slate-500 text-xs mb-5 font-semibold">Cập nhật: 2 phút trước</p>
                       
                       <div className="bg-[#f1f5f999] backdrop-blur-md border border-white/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-2xl p-3.5 mb-5">
-                          <p className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5">API Key</p>
+                          <p className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5">Mã API</p>
                           <div className="flex items-center justify-between">
                               <code className="text-sm text-slate-700 font-mono font-bold tracking-wide">tk_live_••••••••92</code>
                               <button className="text-slate-400 hover:text-purple-600 transition-colors bg-white shadow-sm border border-slate-200 p-1.5 rounded-lg"><span className="material-symbols-outlined text-[16px]">content_copy</span></button>
@@ -45,7 +45,7 @@ const PlatformConnect = () => {
                       </div>
                       
                       <div className="flex items-center justify-between pt-4 border-t border-slate-200/60">
-                          <span className="text-sm font-semibold text-slate-700">Sync Inventory</span>
+                          <span className="text-sm font-semibold text-slate-700">Đồng bộ Kho hàng</span>
                           <label className="relative inline-flex items-center cursor-pointer">
                               <input defaultChecked type="checkbox" className="sr-only peer" />
                               <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500 shadow-inner"></div>
@@ -66,7 +66,7 @@ const PlatformConnect = () => {
                           </span>
                       </div>
                       <h3 className="text-slate-800 text-xl font-extrabold mb-1">Facebook Live</h3>
-                      <p className="text-slate-500 text-xs mb-5 font-semibold">Last synced: 1 hour ago</p>
+                      <p className="text-slate-500 text-xs mb-5 font-semibold">Cập nhật: 1 giờ trước</p>
                       
                       <div className="bg-[#f1f5f999] backdrop-blur-md border border-white/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-2xl p-3.5 mb-5">
                           <p className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5">API Key</p>
@@ -77,7 +77,7 @@ const PlatformConnect = () => {
                       </div>
                       
                       <div className="flex items-center justify-between pt-4 border-t border-slate-200/60">
-                          <span className="text-sm font-semibold text-slate-700">Sync Comments</span>
+                          <span className="text-sm font-semibold text-slate-700">Đồng bộ Bình luận</span>
                           <label className="relative inline-flex items-center cursor-pointer">
                               <input defaultChecked type="checkbox" className="sr-only peer" />
                               <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#1877F2] shadow-inner"></div>
@@ -98,7 +98,7 @@ const PlatformConnect = () => {
                           </span>
                       </div>
                       <h3 className="text-slate-800 text-xl font-extrabold mb-1">Shopee</h3>
-                      <p className="text-slate-500 text-xs mb-5 font-semibold">Last synced: 15 mins ago</p>
+                      <p className="text-slate-500 text-xs mb-5 font-semibold">Cập nhật: 15 phút trước</p>
                       
                        <div className="bg-[#f1f5f999] backdrop-blur-md border border-white/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-2xl p-3.5 mb-5">
                           <p className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5">API Key</p>
@@ -109,7 +109,7 @@ const PlatformConnect = () => {
                       </div>
                       
                       <div className="flex items-center justify-between pt-4 border-t border-slate-200/60">
-                          <span className="text-sm font-semibold text-slate-700">Sync Products</span>
+                          <span className="text-sm font-semibold text-slate-700">Đồng bộ Sản phẩm</span>
                           <label className="relative inline-flex items-center cursor-pointer">
                               <input defaultChecked type="checkbox" className="sr-only peer" />
                               <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#EE4D2D] shadow-inner"></div>

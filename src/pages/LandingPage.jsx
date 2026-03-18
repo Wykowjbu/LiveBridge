@@ -198,9 +198,7 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-500/30 border border-white/20">
-              <span className="material-symbols-outlined text-white text-xl">leak_add</span>
-            </div>
+            <img src="/logo.png" alt="LiveBridge Logo" className="w-10 h-10 rounded-xl shadow-lg shadow-sky-500/30 border border-white/20 object-cover" />
             <span className="text-xl font-black tracking-tight text-white drop-shadow-lg">LiveBridge</span>
           </div>
 
@@ -667,9 +665,7 @@ const LandingPage = () => {
             {/* Cột 1: Logo + Mô tả */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center border border-white/20">
-                  <span className="material-symbols-outlined text-white text-lg">leak_add</span>
-                </div>
+                <img src="/logo.png" alt="LiveBridge Logo" className="w-10 h-10 rounded-xl border border-white/20 object-cover" />
                 <span className="text-lg font-black text-white">LiveBridge</span>
               </div>
               <p className="text-white/50 text-sm leading-relaxed font-medium">
