@@ -35,18 +35,18 @@ const LiveStudioDashboard = () => {
   /* ---- Mock data cho AI Suggestions (Dữ liệu mẫu cho gợi ý AI) ---- */
   const aiSuggestions = [
     {
-      type: 'Suggestion',
+      type: 'Gợi ý',
       icon: 'lightbulb',
       color: 'text-amber-500',
-      action: 'APPLY',
-      content: 'Engagement is dropping. Consider running a "Lightning Poll" about the next product color.',
+      action: 'ÁP DỤNG',
+      content: 'Tương tác đang giảm. Cân nhắc mở "Bình chọn" về màu sắc sản phẩm tiếp theo.',
     },
     {
-      type: 'Pitch',
+      type: 'Chốt Sale',
       icon: 'campaign',
       color: 'text-emerald-500',
-      action: 'SAY THIS',
-      content: '"We only have 8 jackets left at this price! Once they\'re gone, the discount ends."',
+      action: 'NÓI CÂU NÀY',
+      content: '"Chỉ còn 8 chiếc váy với mức giá sale này! Hết hôm nay giá sẽ quay về gốc nhé."',
       isItalic: true,
     }
   ];
@@ -79,7 +79,7 @@ const LiveStudioDashboard = () => {
                   value={tiktokId}
                   onChange={(e) => setTiktokId(e.target.value)}
                   disabled={isConnected}
-                  placeholder="username"
+                  placeholder="tên người dùng tiktok"
                   onKeyDown={(e) => e.key === 'Enter' && handleToggleConnect()}
                   className="w-full bg-white/70 border border-slate-200 rounded-xl py-2.5 pl-8 pr-3 text-sm text-slate-800 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400/50 focus:border-sky-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-inner backdrop-blur-sm"
                 />
@@ -167,14 +167,14 @@ const LiveStudioDashboard = () => {
           {/* Chỉ số nhanh (Key Metrics) */}
           <div className="grid grid-cols-2 gap-4">
             <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-4 flex flex-col">
-              <span className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Revenue</span>
-              <span className="text-slate-800 text-xl font-bold">$3,240</span>
+              <span className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Doanh thu</span>
+              <span className="text-slate-800 text-xl font-bold">12.540.000đ</span>
               <span className="text-emerald-700 text-xs font-medium flex items-center mt-2 bg-emerald-100 px-2 py-1 rounded-full w-fit border border-emerald-200">
                 <span className="material-symbols-outlined text-[14px] mr-1">trending_up</span> +8%
               </span>
             </LiquidGlass>
             <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-4 flex flex-col">
-              <span className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Orders</span>
+              <span className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Đơn hàng</span>
               <span className="text-slate-800 text-xl font-bold">142</span>
               <span className="text-emerald-700 text-xs font-medium flex items-center mt-2 bg-emerald-100 px-2 py-1 rounded-full w-fit border border-emerald-200">
                 <span className="material-symbols-outlined text-[14px] mr-1">trending_up</span> +5%
@@ -190,10 +190,10 @@ const LiveStudioDashboard = () => {
           {/* Header CommentBox */}
           <div className="h-16 border-b border-slate-200 flex items-center justify-between px-6 bg-white/40 backdrop-blur-md sticky top-0 z-10 shadow-sm">
             <div className="flex items-center gap-3">
-              <h3 className="text-slate-800 font-bold text-lg">Live Chat</h3>
+              <h3 className="text-slate-800 font-bold text-lg">Khung Chat</h3>
               {isConnected && (
                 <span className="glass-capsule bg-indigo-50 border-indigo-200 text-indigo-700 text-xs px-3 py-1 shadow-sm">
-                  {messages.length} comments
+                  {messages.length} bình luận
                 </span>
               )}
             </div>
@@ -253,7 +253,7 @@ const LiveStudioDashboard = () => {
             <div className="relative">
               <input 
                 className="w-full glass-capsule pl-5 pr-14 py-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-inner" 
-                placeholder="Type a message to all platforms..." 
+                placeholder="Nhập tin nhắn để gửi đến tất cả nền tảng..." 
                 type="text" 
               />
               <button className="absolute right-2 top-2 p-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full text-white hover:opacity-90 transition-opacity flex items-center justify-center border border-white/40 shadow-sm">
@@ -270,20 +270,20 @@ const LiveStudioDashboard = () => {
           {/* Sản phẩm đang ghim (Now Pinned) */}
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center px-1">
-              <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest">Now Pinned</h3>
-              <span className="text-xs text-indigo-600 font-bold cursor-pointer">Change Product</span>
+              <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest">Đang ghim</h3>
+              <span className="text-xs text-indigo-600 font-bold cursor-pointer">Đổi sản phẩm</span>
             </div>
             <div className="rounded-2xl border border-indigo-100 p-4 shadow-sm relative overflow-hidden bg-indigo-50/80">
                <div className="absolute top-3 right-3 z-10">
-                 <span className="glass-capsule bg-red-100 border-red-200 text-red-600 text-[10px] font-bold px-2.5 py-1 animate-pulse">8 LEFT</span>
+                 <span className="glass-capsule bg-red-100 border-red-200 text-red-600 text-[10px] font-bold px-2.5 py-1 animate-pulse">CÒN 8</span>
                </div>
                <div className="flex gap-4 relative z-10">
                  <div className="w-24 h-24 bg-cover bg-center rounded-xl shrink-0 border border-white" style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuApgnwkjsu3dJ95-eCPSyvGnodjqT69-VMX5D-8_0c3m0-_jkszAYVZP8N4yiu0gIz1SoANOf_KbYBa5lC-0BWtK7c1Y-3BkU_4MFRjoLYTGEzgxPBoiF8YjrISTe4h51WSFRSh6ywaF6h23LGsWNnF9mMX5ZutM03tbkWsKFlLxZFBN6QzkHsKbdk5yRwOnL1Ot-8t2ne5cW92J9HHhRus0L3wJR4mpOjx3I1JzHuujTbSevrYlSA3TwYLTSREA2LLCFXTCVeMDr01")' }}></div>
                  <div className="flex flex-col justify-center">
-                   <h4 className="text-slate-800 font-bold text-sm leading-snug mb-1">Vintage Wash Denim Jacket</h4>
+                   <h4 className="text-slate-800 font-bold text-sm leading-snug mb-1">Áo khoác Denim Vintage Wash</h4>
                    <p className="text-slate-500 text-xs font-mono">SKU: DJ-042-BLU</p>
                    <div className="flex items-end gap-2 mt-2">
-                     <span className="text-slate-800 font-black text-xl">$89.00</span>
+                     <span className="text-slate-800 font-black text-xl">450.000đ</span>
                    </div>
                  </div>
                </div>
@@ -293,7 +293,7 @@ const LiveStudioDashboard = () => {
           {/* Gợi ý AI (AI Assistant) */}
           <div className="flex flex-col gap-3 flex-1 min-h-0">
              <div className="flex justify-between items-center px-1">
-               <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest">AI Assistant</h3>
+               <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest">Trợ lý AI</h3>
              </div>
              <div className="rounded-2xl p-4 flex flex-col gap-3 flex-1 overflow-y-auto bg-white/50 border border-white/80">
                 {aiSuggestions.map((sug, i) => (

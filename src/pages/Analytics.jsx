@@ -5,25 +5,25 @@ import LiquidGlass from '../components/LiquidGlassPanel';
 const Analytics = () => {
   return (
     <div className="flex flex-col h-full w-full">
-      <Header title="Analytics" />
+      <Header title="Phân tích dữ liệu" />
       
       <div className="flex-1 overflow-y-auto w-full max-w-[1440px] mx-auto p-6 custom-scrollbar">
         
         <div className="flex flex-wrap items-end justify-between gap-4 pb-10">
             <div className="flex flex-col gap-2">
-                <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight text-slate-900">Live Performance Analytics</h1>
-                <p className="text-slate-600 text-lg font-medium tracking-wide">Real-time insights for your current multi-platform stream.</p>
+                <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight text-slate-900">Phân Tích Hiệu Suất Live</h1>
+                <p className="text-slate-600 text-lg font-medium tracking-wide">Dữ liệu thời gian thực cho buổi phát đa nền tảng đang diễn ra.</p>
             </div>
             <div className="flex items-center gap-4">
                 <div className="bg-white/60 border border-white/80 backdrop-blur-xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),0_8px_32px_0_rgba(0,0,0,0.05)] rounded-2xl px-4 py-2 flex items-center gap-3">
                     <span className="flex h-2.5 w-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)] animate-pulse"></span>
-                    <span className="text-sm font-bold text-red-500 uppercase tracking-widest">Live Now • 00:42:15</span>
+                    <span className="text-sm font-bold text-red-500 uppercase tracking-widest">Đang Live • 00:42:15</span>
                 </div>
                 <button className="flex items-center gap-2 rounded-xl bg-white/60 border border-white/80 backdrop-blur-md px-5 py-2.5 text-sm font-bold text-slate-800 hover:bg-white/80 transition-colors shadow-sm">
-                    <span className="material-symbols-outlined text-[18px]">share</span> Share Report
+                    <span className="material-symbols-outlined text-[18px]">share</span> Chia sẻ Báo cáo
                 </button>
                 <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-5 py-2.5 text-sm font-bold text-white hover:from-red-500 hover:to-red-400 transition-colors shadow-[0_4px_10px_rgba(239,68,68,0.3)] border border-red-400/50">
-                    <span className="material-symbols-outlined text-[18px]">stop_circle</span> End Stream
+                    <span className="material-symbols-outlined text-[18px]">stop_circle</span> Kết thúc Live
                 </button>
             </div>
         </div>
@@ -34,7 +34,7 @@ const Analytics = () => {
             <LiquidGlass cornerRadius={20} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="relative overflow-hidden p-6 flex flex-col gap-2">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-80 pointer-events-none"></div>
                 <div className="relative z-10 flex items-center justify-between">
-                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Total Revenue</p>
+                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Tổng Doanh Thu</p>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/10 text-teal-500 border border-teal-500/20 shadow-sm">
                         <span className="material-symbols-outlined">attach_money</span>
                     </div>
@@ -44,7 +44,7 @@ const Analytics = () => {
                     <span className="flex items-center gap-1 bg-teal-500/10 text-teal-500 px-2 py-0.5 rounded text-xs font-bold border border-teal-500/20">
                         <span className="material-symbols-outlined text-sm">trending_up</span> +15%
                     </span>
-                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">vs last stream</span>
+                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">so với live trước</span>
                 </div>
             </LiquidGlass>
 
@@ -52,7 +52,7 @@ const Analytics = () => {
             <LiquidGlass cornerRadius={20} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="relative overflow-hidden p-6 flex flex-col gap-2">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-80 pointer-events-none"></div>
                 <div className="relative z-10 flex items-center justify-between">
-                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Conversion Rate</p>
+                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Tỉ lệ chuyển đổi</p>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sky-500/10 text-sky-500 border border-sky-500/20 shadow-sm">
                         <span className="material-symbols-outlined">shopping_cart_checkout</span>
                     </div>
@@ -62,7 +62,7 @@ const Analytics = () => {
                     <span className="flex items-center gap-1 bg-teal-500/10 text-teal-500 px-2 py-0.5 rounded text-xs font-bold border border-teal-500/20">
                         <span className="material-symbols-outlined text-sm">trending_up</span> +0.8%
                     </span>
-                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">avg. 3.4%</span>
+                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">TB: 3.4%</span>
                 </div>
             </LiquidGlass>
 
@@ -70,7 +70,7 @@ const Analytics = () => {
             <LiquidGlass cornerRadius={20} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="relative overflow-hidden p-6 flex flex-col gap-2">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-80 pointer-events-none"></div>
                 <div className="relative z-10 flex items-center justify-between">
-                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Active Viewers</p>
+                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Người xem Trực tiếp</p>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 shadow-sm">
                         <span className="material-symbols-outlined">group</span>
                     </div>
@@ -80,7 +80,7 @@ const Analytics = () => {
                     <span className="flex items-center gap-1 bg-red-500/10 text-red-500 px-2 py-0.5 rounded text-xs font-bold border border-red-500/20">
                         <span className="material-symbols-outlined text-sm">trending_down</span> -2%
                     </span>
-                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">since 10m ago</span>
+                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">so với 10ph trước</span>
                 </div>
             </LiquidGlass>
 
@@ -88,7 +88,7 @@ const Analytics = () => {
             <LiquidGlass cornerRadius={20} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="relative overflow-hidden p-6 flex flex-col gap-2">
                 <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-80 pointer-events-none"></div>
                 <div className="relative z-10 flex items-center justify-between">
-                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Top Platform</p>
+                    <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Nền tảng Top 1</p>
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-pink-500/10 text-pink-500 border border-pink-500/20 shadow-sm">
                         <span className="material-symbols-outlined">podium</span>
                     </div>
@@ -109,8 +109,8 @@ const Analytics = () => {
             <LiquidGlass cornerRadius={20} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="relative z-10 lg:col-span-2 p-8">
                 <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
                     <div>
-                        <h3 className="text-xl font-black text-slate-900 tracking-wide">Sales over Stream Time</h3>
-                        <p className="text-sm font-medium text-slate-500 mt-1">Revenue trend across all active platforms</p>
+                        <h3 className="text-xl font-black text-slate-900 tracking-wide">Doanh thu theo thời gian</h3>
+                        <p className="text-sm font-medium text-slate-500 mt-1">Biểu đồ lợi nhuận trên tất cả nền tảng đang kích hoạt</p>
                     </div>
                 </div>
                 <div className="relative h-[320px] w-full">
@@ -145,15 +145,15 @@ const Analytics = () => {
                     </div>
                 </div>
                 <div className="mt-4 flex justify-between text-xs font-bold text-slate-500 ml-8">
-                    <span>Start</span><span>10m</span><span>20m</span><span>30m</span><span>40m</span><span>50m</span><span>Now</span>
+                    <span>Bắt đầu</span><span>10m</span><span>20m</span><span>30m</span><span>40m</span><span>50m</span><span>Hiện tại</span>
                 </div>
             </LiquidGlass>
 
             {/* Phân bổ tương tác (Distribution) */}
             <LiquidGlass cornerRadius={20} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="relative z-10 p-8 flex flex-col">
                 <div className="mb-8">
-                    <h3 className="text-xl font-black text-slate-900 tracking-wide">Intent Distribution</h3>
-                    <p className="text-sm font-medium text-slate-500 mt-1">User actions & engagement types</p>
+                    <h3 className="text-xl font-black text-slate-900 tracking-wide">Phân bổ tương tác</h3>
+                    <p className="text-sm font-medium text-slate-500 mt-1">Hành vi & mức độ tương tác của người dùng</p>
                 </div>
                 <div className="flex-1 flex flex-col justify-end gap-6">
                     <div className="flex flex-1 items-end justify-around gap-6 px-2 h-[240px]">
@@ -161,35 +161,35 @@ const Analytics = () => {
                             <div className="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[40%] overflow-hidden shadow-sm">
                                 <div className="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-sky-500 to-sky-500/40 h-full"></div>
                             </div>
-                            <span className="text-sm font-bold text-slate-800">Buy</span>
+                            <span className="text-sm font-bold text-slate-800">Mua</span>
                         </div>
                         <div className="flex flex-col items-center gap-3 group w-full h-full justify-end">
                             <div className="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[65%] overflow-hidden shadow-sm">
                                 <div className="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-indigo-500 to-indigo-500/40 h-full"></div>
                             </div>
-                            <span className="text-sm font-bold text-slate-800">Cart</span>
+                            <span className="text-sm font-bold text-slate-800">Giỏ hàng</span>
                         </div>
                         <div className="flex flex-col items-center gap-3 group w-full h-full justify-end">
                             <div className="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[25%] overflow-hidden shadow-sm">
                                 <div className="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-teal-500 to-teal-500/40 h-full"></div>
                             </div>
-                            <span className="text-sm font-bold text-slate-800">Ask</span>
+                            <span className="text-sm font-bold text-slate-800">Hỏi đáp</span>
                         </div>
                          <div className="flex flex-col items-center gap-3 group w-full h-full justify-end">
                             <div className="relative w-full rounded-t-xl bg-slate-100 border border-slate-200 border-b-0 h-[15%] overflow-hidden shadow-sm">
                                 <div className="absolute bottom-0 w-full rounded-t-xl bg-gradient-to-t from-pink-400 to-pink-400/40 h-full"></div>
                             </div>
-                            <span className="text-sm font-bold text-slate-800">Share</span>
+                            <span className="text-sm font-bold text-slate-800">Chia sẻ</span>
                         </div>
                     </div>
                      <div className="flex items-center justify-between border-t border-slate-200 pt-6">
                         <div className="flex flex-col">
-                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Interactions</span>
+                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Tổng Tương Tác</span>
                             <span className="text-2xl font-black text-slate-900 mt-1">850</span>
                         </div>
                         <div className="flex flex-col items-end">
                             <span className="text-sm font-bold text-teal-600 bg-teal-500/10 px-2 py-0.5 rounded border border-teal-500/20">+12%</span>
-                            <span className="text-xs font-medium text-slate-500 mt-1 uppercase tracking-wider">vs avg</span>
+                            <span className="text-xs font-medium text-slate-500 mt-1 uppercase tracking-wider">so với TB</span>
                         </div>
                     </div>
                 </div>

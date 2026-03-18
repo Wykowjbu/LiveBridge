@@ -5,13 +5,13 @@ import LiquidGlass from './LiquidGlassPanel';
 const Sidebar = () => {
   /* Danh sách menu điều hướng (Navigation menu items) */
   const navItems = [
-    { name: 'Dashboard', path: '/app/dashboard', icon: 'dashboard' },
-    { name: 'Inbox', path: '/app/inbox', icon: 'inbox', badge: 36 },
-    { name: 'Orders', path: '/app/orders', icon: 'local_shipping' },
-    { name: 'Products', path: '/app/products', icon: 'inventory_2' },
-    { name: 'Analytics', path: '/app/analytics', icon: 'analytics' },
-    { name: 'AI Settings', path: '/app/ai-settings', icon: 'psychology' },
-    { name: 'Connections', path: '/app/platform-connect', icon: 'hub' },
+    { name: 'Tổng quan', path: '/app/dashboard', icon: 'dashboard' },
+    { name: 'Hộp thư', path: '/app/inbox', icon: 'inbox', badge: 36 },
+    { name: 'Đơn hàng', path: '/app/orders', icon: 'local_shipping' },
+    { name: 'Sản phẩm', path: '/app/products', icon: 'inventory_2' },
+    { name: 'Phân tích', path: '/app/analytics', icon: 'analytics' },
+    { name: 'Cài đặt AI', path: '/app/ai-settings', icon: 'psychology' },
+    { name: 'Kết nối', path: '/app/platform-connect', icon: 'hub' },
   ];
 
   return (
@@ -30,7 +30,7 @@ const Sidebar = () => {
         <img src="/logo.png" alt="LiveBridge Logo" className="h-9 w-9 rounded-xl object-contain" />
         <div className="flex flex-col">
           <h1 className="text-slate-800 text-base font-bold leading-none tracking-tight">LiveBridge</h1>
-          <p className="text-slate-500 text-xs font-medium mt-1">Unified Command</p>
+          <p className="text-slate-500 text-xs font-medium mt-1">Quản lý Tập trung</p>
         </div>
       </div>
       
@@ -55,14 +55,14 @@ const Sidebar = () => {
           </div>
           <div className="flex flex-col overflow-hidden">
             <p className="text-slate-800 text-sm font-semibold truncate">Alex Morgan</p>
-            <p className="text-slate-500 text-xs truncate">Stream Host</p>
+            <p className="text-slate-500 text-xs truncate">Người phát Live</p>
           </div>
         </LiquidGlass>
       </div>
 
       {/* Menu Điều hướng (Navigation) */}
       <nav className="flex-1 overflow-y-auto px-4 space-y-1.5 custom-scrollbar">
-        <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-2">Menu</p>
+        <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-2">Menu Chính</p>
         
         {navItems.map((item) => (
           <NavLink
@@ -113,7 +113,7 @@ const Sidebar = () => {
           className="flex w-full items-center justify-center gap-2 h-12 bg-gradient-to-r from-sky-400 to-blue-500 hover:brightness-105 text-white text-sm font-bold shadow-[0_4px_10px_rgba(14,165,233,0.3)] transition-all border border-white/40 cursor-pointer"
         >
           <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>podcasts</span>
-          <span>Go Live</span>
+          <span>Phát Live</span>
         </LiquidGlass>
       </div>
     </LiquidGlass>
