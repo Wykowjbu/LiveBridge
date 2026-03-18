@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LiquidGlass from '../components/LiquidGlassPanel';
+import ThemeToggle from '../components/ThemeToggle';
+import DynamicBackground from '../components/DynamicBackground';
 
 /* ============================================================
    Trang Đăng nhập (Login Page)
@@ -21,20 +23,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f4f5f8] relative overflow-hidden font-display">
+    <div className="min-h-screen flex items-center justify-center bg-[#f4f5f8] dark:bg-slate-900 relative overflow-hidden font-display">
       {/* ===== VIDEO BACKGROUND ===== */}
       <div className="fixed inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src={`/LiveBridge/Image/video_background.mp4`} type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/30 via-transparent to-purple-900/20" />
+        <DynamicBackground />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95 dark:from-black/60 dark:via-black/40 dark:to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 via-transparent to-indigo-500/10 dark:from-indigo-900/30 dark:via-transparent dark:to-purple-900/20" />
       </div>
 
       {/* Card Đăng nhập chính */}
@@ -52,8 +46,8 @@ const Login = () => {
           {/* Logo & Tiêu đề */}
           <div className="text-center mb-8">
             <img src="/logo.png" alt="LiveBridge Logo" className="w-16 h-16 rounded-2xl mb-5 shadow-[0_8px_25px_rgba(14,165,233,0.3)] border border-white/40 object-cover" />
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">LiveBridge</h1>
-            <p className="text-slate-500 text-sm font-medium">
+            <h1 className="text-3xl font-black text-black dark:text-white tracking-tight mb-2">LiveBridge</h1>
+            <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">
               Nền tảng Trợ lý AI Hỗ trợ Bán hàng qua Livestream
             </p>
           </div>
@@ -63,7 +57,7 @@ const Login = () => {
             {/* Facebook */}
             <button
               onClick={handleSocialLogin}
-              className="login-social-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-300 hover:scale-[1.02] active:scale-95"
+              className="login-social-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-full font-bold text-sm text-white transition-all duration-300 hover:scale-[1.02] active:scale-95"
               style={{ background: 'linear-gradient(135deg, #1877f2, #0d5dbf)' }}
             >
               <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="white">
@@ -75,7 +69,7 @@ const Login = () => {
             {/* TikTok */}
             <button
               onClick={handleSocialLogin}
-              className="login-social-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-300 hover:scale-[1.02] active:scale-95"
+              className="login-social-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-full font-bold text-sm text-white transition-all duration-300 hover:scale-[1.02] active:scale-95"
               style={{ background: 'linear-gradient(135deg, #010101, #2d2d2d)' }}
             >
               <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="white">
@@ -87,7 +81,7 @@ const Login = () => {
             {/* Google */}
             <button
               onClick={handleSocialLogin}
-              className="login-social-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold text-sm text-slate-700 bg-white border border-slate-200 transition-all duration-300 hover:scale-[1.02] hover:shadow-md active:scale-95"
+              className="login-social-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-full font-bold text-sm text-gray-900 dark:text-gray-50 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-md active:scale-95"
             >
               <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -109,27 +103,27 @@ const Login = () => {
           {/* Form đăng nhập */}
           <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Email</label>
+              <label className="block text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-wider mb-2">Email</label>
               <input
                 type="email"
                 defaultValue="admin@livebridge.vn"
-                className="w-full bg-white/60 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-800 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400/50 focus:border-sky-300 transition-all backdrop-blur-sm shadow-inner"
+                className="w-full bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-full px-4 py-3.5 text-sm text-black dark:text-white font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400/50 focus:border-sky-300 transition-all backdrop-blur-sm shadow-inner"
                 placeholder="email@cua-ban.com"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Mật khẩu</label>
+              <label className="block text-xs font-bold text-gray-800 dark:text-gray-200 uppercase tracking-wider mb-2">Mật khẩu</label>
               <input
                 type="password"
                 defaultValue="password123"
-                className="w-full bg-white/60 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-800 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400/50 focus:border-sky-300 transition-all backdrop-blur-sm shadow-inner"
+                className="w-full bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/50 rounded-full px-4 py-3.5 text-sm text-black dark:text-white font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400/50 focus:border-sky-300 transition-all backdrop-blur-sm shadow-inner"
                 placeholder="••••••••"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full h-12 bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white font-bold rounded-xl shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:shadow-[0_6px_20px_rgba(14,165,233,0.4)] transition-all border border-white/40 flex items-center justify-center gap-2 text-sm"
+              className="w-full h-12 bg-gradient-to-r from-sky-400 to-blue-500 hover:from-sky-500 hover:to-blue-600 text-white font-bold rounded-full shadow-[0_4px_15px_rgba(14,165,233,0.3)] hover:shadow-[0_6px_20px_rgba(14,165,233,0.4)] transition-all border border-white/40 flex items-center justify-center gap-2 text-sm"
             >
               <span className="material-symbols-outlined text-lg">login</span>
               Đăng nhập
@@ -137,7 +131,7 @@ const Login = () => {
           </form>
 
           {/* Ghi chú */}
-          <div className="mt-6 pt-5 border-t border-slate-200/60 text-center">
+          <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-700/50/60 text-center">
             <p className="text-[11px] text-slate-400 font-medium">
               Chưa có tài khoản?{' '}
               <a href="#" onClick={(e) => { e.preventDefault(); navigate('/login'); }} className="text-sky-500 font-bold hover:underline">
@@ -150,25 +144,26 @@ const Login = () => {
         {/* Feature highlights bên dưới card */}
         <div className="mt-8 grid grid-cols-3 gap-4">
           <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-4 text-center">
-            <div className="w-10 h-10 rounded-xl bg-sky-100 border border-sky-200 flex items-center justify-center mx-auto mb-2">
+            <div className="w-10 h-10 rounded-full bg-sky-100 dark:bg-sky-500/20 border border-sky-200 dark:border-sky-500/30 flex items-center justify-center mx-auto mb-2">
               <span className="material-symbols-outlined text-sky-500 text-lg">videocam</span>
             </div>
-            <span className="text-[11px] text-slate-600 font-semibold">Livestream AI</span>
+            <span className="text-[11px] text-gray-800 dark:text-gray-100 font-semibold">Livestream AI</span>
           </LiquidGlass>
           <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-4 text-center">
-            <div className="w-10 h-10 rounded-xl bg-indigo-100 border border-indigo-200 flex items-center justify-center mx-auto mb-2">
+            <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/30 flex items-center justify-center mx-auto mb-2">
               <span className="material-symbols-outlined text-indigo-500 text-lg">chat</span>
             </div>
-            <span className="text-[11px] text-slate-600 font-semibold">Trả lời tự động</span>
+            <span className="text-[11px] text-gray-800 dark:text-gray-100 font-semibold">Trả lời tự động</span>
           </LiquidGlass>
           <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-4 text-center">
-            <div className="w-10 h-10 rounded-xl bg-purple-100 border border-purple-200 flex items-center justify-center mx-auto mb-2">
+            <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-500/20 border border-purple-200 dark:border-purple-500/30 flex items-center justify-center mx-auto mb-2">
               <span className="material-symbols-outlined text-purple-500 text-lg">smart_toy</span>
             </div>
-            <span className="text-[11px] text-slate-600 font-semibold">AI Thông minh</span>
+            <span className="text-[11px] text-gray-800 dark:text-gray-100 font-semibold">AI Thông minh</span>
           </LiquidGlass>
         </div>
       </div>
+      <ThemeToggle />
     </div>
   );
 };
