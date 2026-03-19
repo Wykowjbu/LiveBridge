@@ -285,13 +285,13 @@ const AILogic = () => {
                     
                     <h3 className="text-xl font-black text-slate-900 mb-2 mt-2">Gói Pro</h3>
                     <div className="flex items-end gap-1 mb-4">
-                       <span className="text-3xl font-black bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">649k</span>
+                       <span className="text-3xl font-black bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">499k</span>
                        <span className="text-slate-400 text-sm font-semibold mb-1">/tháng</span>
                     </div>
                     <ul className="space-y-3 mb-6 flex-1 text-sm text-slate-600 font-medium">
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> 500 tin nhắn AI / ngày</li>
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> Tùy biến AI Persona</li>
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> Báo cáo chuyên sâu</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> 2.000 tin nhắn AI / ngày</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> Tự động xử lý Inbox</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> Huấn luyện AI riêng biệt</li>
                     </ul>
                     <button className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white font-bold text-sm shadow-md hover:shadow-lg transition-transform hover:-translate-y-0.5">Nâng cấp Pro</button>
                  </div>
@@ -300,13 +300,13 @@ const AILogic = () => {
                  <div className="bg-slate-50 rounded-2xl border border-slate-200 p-6 flex flex-col hover:border-slate-300 transition-colors">
                     <h3 className="text-xl font-black text-slate-900 mb-2 mt-2">Business</h3>
                     <div className="flex items-end gap-1 mb-4">
-                       <span className="text-3xl font-black text-slate-700">1.999k</span>
+                       <span className="text-3xl font-black text-slate-700">1.299k</span>
                        <span className="text-slate-400 text-sm font-semibold mb-1">/tháng</span>
                     </div>
                     <ul className="space-y-3 mb-6 flex-1 text-sm text-slate-600 font-medium">
                        <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Không giới hạn tin AI</li>
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Upload 100 tài liệu Knowledge</li>
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Hỗ trợ Zalo 24/7</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> AI Agent độc quyền</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Hỗ trợ Zalo VIP 24/7</li>
                     </ul>
                     <button className="w-full py-3 rounded-xl bg-white text-slate-700 border border-slate-300 font-bold text-sm hover:bg-slate-100 transition-colors">Liên hệ tư vấn</button>
                  </div>
@@ -318,9 +318,9 @@ const AILogic = () => {
                        <span className="text-2xl font-black text-slate-700">Nạp bao nhiêu xài bấy nhiêu</span>
                     </div>
                     <ul className="space-y-3 mb-6 flex-1 text-sm text-slate-600 font-medium">
-                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-sky-600">50.000đ</span> → 4.000 tin</li>
-                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-sky-600">200.000đ</span> → 12.500 tin</li>
-                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-sky-600">700.000đ</span> → 50.000 tin</li>
+                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-rose-500">50.000đ</span> → 1.000 tin</li>
+                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-rose-500">200.000đ</span> → 5.000 tin</li>
+                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-rose-500">700.000đ</span> → 20.000 tin</li>
                     </ul>
                     <button className="w-full py-3 rounded-xl bg-slate-800 text-white font-bold text-sm shadow-md hover:bg-slate-900 transition-colors">Nạp Tiền Ngay</button>
                  </div>
