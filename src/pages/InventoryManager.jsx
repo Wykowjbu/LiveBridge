@@ -71,7 +71,7 @@ const InventoryManager = () => {
                       <div className="flex items-center gap-4">
                           <div className="h-12 w-12 rounded-xl bg-cover bg-center border border-white shadow-md ring-1 ring-black/5" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUihVEMbioSVmLsDTsGUyWrKKktk88PGBXcAR9-TWM_u7gUprXtXEZZ-4PtSwB9NBvPPziY1bBUc_4n0-tfSGj_b-n-ZhhPuIfI0sOqsF1tHkZ0YzwaIAanchCx20D2dyKRConX79KcvUEnBSzBd2CPCkdYo35GmG93znMUIQMBaZh07wQzL5phTRPTRpELD6Fe-EC0GONJyveX32mW_kAYGuNqn1V-kwA3dyC3E-MKOd7srdiPORtjZARrQ4-EqBZmtojP-ox9uaK')" }}></div>
                           <div>
-                              <div className="font-bold text-slate-800 text-sm">Neon Runner X1</div>
+                              <div className="font-bold text-slate-800 text-sm">Giày thể thao Neon X1</div>
                               <div className="text-[11px] text-slate-500 mt-0.5 font-medium">Cập nhật 2 phút trước</div>
                           </div>
                       </div>
@@ -124,17 +124,17 @@ const InventoryManager = () => {
                       <div className="flex items-center gap-4">
                           <div className="h-12 w-12 rounded-xl bg-cover bg-center border border-white shadow-md ring-1 ring-black/5" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCaJUPtPAYoadMww13hw2Te5oL2z75SShn1cVeKAbovG68M72TUYlP6XHfTYXX2jqOCEdXzjsau3S0B5s_3-fir1t_AI0DG4TEW-PDBlTdY0JKuzP1Y_cORLg0Gu56ZGHsRh6SgZwiO47sRYY3mdXXlbvHsb_LmyBHmLjA7ALMgGDbEdMU9CCQULKVoiMCqdwvzpeMvuYjPEnDisnUWFKLmHiyex_l93kBhLPt7QWdvCnR4QXjVmefN6hqv2jBWpaTg4gd1iRcrQ3b9')" }}></div>
                           <div>
-                              <div className="font-bold text-slate-800 text-sm">Smart Watch Series 5</div>
-                              <div className="text-[11px] text-slate-500 mt-0.5 font-medium">Updated 1h ago</div>
+                              <div className="font-bold text-slate-800 text-sm">Đồng hồ thông minh Series 5</div>
+                              <div className="text-[11px] text-slate-500 mt-0.5 font-medium">Cập nhật 1 giờ trước</div>
                           </div>
                       </div>
                   </div>
                   <div className="col-span-2">
                       <div className="text-xs text-slate-700 font-mono bg-slate-100 px-2 py-1 rounded-md inline-block border border-slate-200/60 shadow-inner">SW-SER5-WHT</div>
-                      <div className="mt-1"><span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 border border-blue-200">Electronics</span></div>
+                      <div className="mt-1"><span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 border border-blue-200">Thiết bị điện tử</span></div>
                   </div>
                   <div className="col-span-1 text-right">
-                      <div className="text-sm font-bold text-slate-800">$299.00</div>
+                      <div className="text-sm font-bold text-slate-800">7.200.000₫</div>
                   </div>
                   <div className="col-span-2 pl-4">
                       <div className="flex flex-col gap-1.5">
@@ -183,7 +183,7 @@ const InventoryManager = () => {
                       <span className="text-[10px] font-bold text-cyan-700 bg-cyan-100 border border-cyan-200 px-2 py-0.5 rounded-full shadow-sm tracking-wider uppercase">Đang sửa</span>
                       <span className="text-xs text-slate-500 font-mono bg-white/80 px-2 py-0.5 rounded-md border border-slate-200 shadow-sm">#NR-2024-RED</span>
                   </div>
-                  <h2 className="text-2xl font-bold text-slate-800">Neon Runner X1</h2>
+                  <h2 className="text-2xl font-bold text-slate-800">Giày thể thao Neon X1</h2>
               </div>
               <button className="h-8 w-8 rounded-full bg-white/80 hover:bg-white text-slate-500 hover:text-slate-800 transition-all border border-slate-200 hover:border-slate-300 flex items-center justify-center backdrop-blur-md shadow-sm">
                   <span className="material-symbols-outlined text-[18px]">close</span>
@@ -223,7 +223,7 @@ const InventoryManager = () => {
                   <div className="space-y-4">
                       <div>
                           <label className="block text-xs font-bold text-slate-500 mb-2">Điểm Bán Hàng (AI sử dụng khi Live)</label>
-                          <textarea className="w-full h-24 bg-white/80 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 p-4 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 resize-none shadow-inner backdrop-blur-sm" defaultValue="Lightweight breathable mesh material.&#10;Sole glows in the dark after light exposure.&#10;Limited edition 2024 colorway."></textarea>
+                          <textarea className="w-full h-24 bg-white/80 border border-slate-200 rounded-xl text-sm font-medium text-slate-700 p-4 focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 resize-none shadow-inner backdrop-blur-sm" defaultValue={"Chất liệu lưới thoáng khí siêu nhẹ.\nĐế giày phát sáng trong bóng tối.\nPhiên bản màu giới hạn 2024."}></textarea>
                       </div>
                   </div>
               </section>

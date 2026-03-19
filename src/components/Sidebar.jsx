@@ -54,7 +54,7 @@ const Sidebar = () => {
             <div className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white shadow-[0_0_8px_rgba(34,197,94,0.3)]"></div>
           </div>
           <div className="flex flex-col overflow-hidden">
-            <p className="text-slate-800 text-sm font-semibold truncate">Alex Morgan</p>
+            <p className="text-slate-800 text-sm font-semibold truncate">Lê Văn Dương</p>
             <p className="text-slate-500 text-xs truncate">Người phát Live</p>
           </div>
         </LiquidGlass>

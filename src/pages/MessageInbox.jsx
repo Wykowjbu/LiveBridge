@@ -6,11 +6,10 @@ const MessageInbox = () => {
   const messages = [
     {
       id: 1,
-      sender: 'Sarah Jenkins',
+      sender: 'Nguyễn Thị Hoa',
       time: '2 phút trước',
-      avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-isua0d4bD_Poy0xNmdIqcsIGlpVZHDLuGCVRSY-rJx66A9jsz8Nv9EejqVuzE3F14UdJnRDEzYTjeGx60qIa-5ef3y9ID3aV4CbfRQyDlwAfjVGtp5KJksnv7we28IE_WwvCdcz2cKY64agWxf40aPj4LPSI44lBaFqLrJ_xsqhzOaVia2s7HnZ2OJAv0KFW0qj1of4yBLogxLhMeco_5zkkI6wqcbBcjdk4-9lBh7ZCGRi51bFjvrerRr7eifv_safCw_R-kaHu',
-      platform: 'TikTok',
-      platformIcon: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCY85FBWNatZrMKLHs-UZnWx__N7E2Pvb1xa1vfnKicrTRMDRfM1BNxkwqFOjMfeCeufnJYRpelgWQhhG5uoFxaTOtud1SVb1zag338Kixw3NLgHxlK5oITUA5GmTJU5byCSaUQ6iLd_hXm0-wGncAlmgbFg3zk-aNalE8gMLh0oNau5R-uFjh-9V3bzvk6ynC0hlcHwikGHXOvxegfzn48c2rspuLkoMbH4tqGzQ3jQeWjOYAX5rINamyX8ar6duwFVjyJdEglncMU',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+      platform: 'facebook',
       isVip: true,
       text: 'Mẫu này có màu đỏ size M không shop? Có giao hỏa tốc không?',
       intent: 'Hỏi Mua',
@@ -19,20 +18,20 @@ const MessageInbox = () => {
     },
     {
       id: 2,
-      sender: 'Nguyen Van A',
+      sender: 'Nguyễn Văn A',
       time: '3 phút trước',
-      avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBdEXcmYY5m0z59XB500gbBtziImDIR7lvoHJb20LUnLG43ZgCkY3VPfDFU6eHpB6XIiJNWW3TIPncREMc_AKg4LruwVD6FASXN-JZowC4wGcr6MBiOORvs71aZFnG9t2PalYa_hJf7QtUus09CvD6ESHCsd6etXODKJVmnfj7S-2UZA7zU9xYJxFI1V1X6IKNVjSXYRo9gB55S8D4rlanEqJa7nL4Qx_03OgAe6lY0S-sP0-VVr1FdjaadUJDZ-cPS81iwzMjbBzMc',
-      isShopee: true,
+      avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+      platform: 'shopee',
       text: 'Đơn hàng #SPX88291 bao giờ giao vậy shop? Mình cần gấp.',
       intent: 'Trạng thái đơn',
       aiReply: 'Đã đóng gói',
     },
     {
       id: 3,
-      sender: 'Minh Tu',
+      sender: 'Minh Tú',
       time: '8 phút trước',
-      avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBKvAgi5tz9anEkvbQkQV-FirfBA_6EZ_39HytRKVru4garM9uI0cy-D92yksoRIB8SDNGxEMnM-taEafYDyKQgmDn0lgk14umvAhxwXOaeKkTeoV8ucJOQAOVAXJ8X-8P1BT0GR5I1vUeyZk3pyI_tb2WBQDU_TX3HS4dhOqokFlHinj2GuPJkTgaY-pt3q_5eZ6AzPgsbNVeuYlhdqlOppHwBpgmUn8hkpeFcc30zpQRaAxk0SYEoasLxg_TkMLgk0dy1m7BZ18FD',
-      isZalo: true,
+      avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+      platform: 'tiktok',
       text: 'Combo này có kèm serum không? Xin giá inbox.',
       intent: 'Hỏi Sản Phẩm',
     }
@@ -61,10 +60,22 @@ const MessageInbox = () => {
                 {/* Avatar & Platform Icon */}
                 <div className="flex-shrink-0 relative z-10">
                   <div className="size-14 rounded-full bg-cover bg-center ring-2 ring-white shadow-md" style={{ backgroundImage: `url("${msg.avatar}")` }}></div>
-                  <div className="absolute -bottom-1 -right-1 bg-white backdrop-blur-sm rounded-full p-1 border border-slate-100 shadow-sm">
-                    {msg.platformIcon && <img alt={msg.platform} className="w-4 h-4" src={msg.platformIcon} />}
-                    {msg.isShopee && <span className="w-4 h-4 text-[#EE4D2D] font-bold text-[10px] flex items-center justify-center">S</span>}
-                    {msg.isZalo && <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white">Z</div>}
+                  <div className="absolute -bottom-1 -right-1 bg-white backdrop-blur-sm rounded-full p-1 border border-slate-100 shadow-sm flex flex-col items-center justify-center size-6 ring-2 ring-white">
+                    {msg.platform === 'facebook' && (
+                        <svg fill="#1877F2" height="15" viewBox="0 0 24 24" width="15" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+                        </svg>
+                    )}
+                    {msg.platform === 'shopee' && (
+                        <svg fill="#EE4D2D" height="15" viewBox="0 0 24 24" width="15" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19.387 7.031c.325.758.325 1.708.325 1.708s1.616-.271 1.616-.832c0-2.484-3.525-4.52-7.85-4.52-4.325 0-7.85 2.036-7.85 4.52 0 .561 1.616.832 1.616.832s0-.95.325-1.708c.575-1.34 3.016-2.27 5.909-2.27 2.893 0 5.334.93 5.909 2.27zm.983 2.96c-.475-.084-2.85-.312-2.85-.312s-.758 1.628-2.616 1.628c-1.858 0-2.616-1.628-2.616-1.628s-2.375.228-2.85.312c-2.85.498-3.083 2.534-3.083 2.534-.233 2.534 2.125 4.392 3.842 4.392.367 0 .733-.036 1.1-.108v-2.09c-.583-.156-1.008-.684-1.008-1.308 0-.75.608-1.356 1.358-1.356.75 0 1.358.606 1.358 1.356 0 .624-.425 1.152-1.008 1.308v2.09c.367.072.733.108 1.1.108 1.717 0 4.075-1.858 3.842-4.392 0 0-.233-2.036-3.083-2.534z"></path>
+                        </svg>
+                    )}
+                    {msg.platform === 'tiktok' && (
+                        <svg fill="black" height="15" viewBox="0 0 24 24" width="15" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19.589 6.686a4.793 4.793 0 0 1-1.29-.181 5.378 5.378 0 0 1-.958-.354c-.31-.17-.61-.39-.897-.648a5.275 5.275 0 0 1-.724-.871 4.316 4.316 0 0 1-.502-1.02A4.908 4.908 0 0 1 15 2.185V2.18h-3.41v12.213a3.546 3.546 0 0 1-.362 1.547 3.546 3.546 0 0 1-1.026 1.258 3.546 3.546 0 0 1-1.468.685 3.546 3.546 0 0 1-3.32-.685 3.546 3.546 0 0 1-1.258-1.258 3.546 3.546 0 0 1-.462-1.547c0-1.95 1.583-3.535 3.535-3.535.485 0 .96.096 1.405.283V7.527a6.953 6.953 0 0 0-1.405-.141C3.385 7.386 0 10.771 0 14.945c0 4.175 3.385 7.56 7.56 7.56 4.175 0 7.56-3.385 7.56-7.56V8.583c1.07.766 2.36 1.218 3.75 1.233v-3.414a5.617 5.617 0 0 1-.281.284z"></path>
+                        </svg>
+                    )}
                   </div>
                 </div>
                 
@@ -110,15 +121,15 @@ const MessageInbox = () => {
           
           <div className="p-6 pb-4 border-b border-white/60 relative z-10">
              <div className="flex gap-2 mb-2">
-                 <h2 className="text-2xl font-bold text-slate-800 tracking-wide">Sarah Jenkins</h2>
+                 <h2 className="text-2xl font-bold text-slate-800 tracking-wide">Nguyễn Thị Hoa</h2>
              </div>
              <div className="flex gap-3 mt-4">
                 <LiquidGlass cornerRadius={20} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="flex-1 p-3 text-center">
-                   <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">LTV</p>
-                   <p className="text-lg font-bold text-green-600">$450.00</p>
+                   <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">Giá trị</p>
+                   <p className="text-lg font-bold text-green-600">11.500.000₫</p>
                 </LiquidGlass>
                 <LiquidGlass cornerRadius={20} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="flex-1 p-3 text-center bg-purple-50">
-                   <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">Status</p>
+                   <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold mb-1">Hạng</p>
                    <p className="text-lg font-bold text-purple-600">VIP</p>
                 </LiquidGlass>
              </div>
@@ -127,7 +138,7 @@ const MessageInbox = () => {
           {/* Lịch sử chat (Chat History) */}
           <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 relative z-10">
              <div className="flex gap-4">
-               <div className="size-10 flex-shrink-0 rounded-full bg-cover bg-center shadow-md ring-2 ring-white" style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdEXcmYY5m0z59XB500gbBtziImDIR7lvoHJb20LUnLG43ZgCkY3VPfDFU6eHpB6XIiJNWW3TIPncREMc_AKg4LruwVD6FASXN-JZowC4wGcr6MBiOORvs71aZFnG9t2PalYa_hJf7QtUus09CvD6ESHCsd6etXODKJVmnfj7S-2UZA7zU9xYJxFI1V1X6IKNVjSXYRo9gB55S8D4rlanEqJa7nL4Qx_03OgAe6lY0S-sP0-VVr1FdjaadUJDZ-cPS81iwzMjbBzMc")' }}></div>
+               <div className="size-10 flex-shrink-0 rounded-full bg-cover bg-center shadow-md ring-2 ring-white" style={{ backgroundImage: 'url("https://randomuser.me/api/portraits/women/44.jpg")' }}></div>
                <div className="glass-card text-slate-700 text-sm p-4 rounded-tl-none max-w-[85%] leading-relaxed bg-white/60">
                  Mẫu này có màu đỏ size M không shop? Có giao hỏa tốc không?
                </div>
