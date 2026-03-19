@@ -12,76 +12,59 @@ import DynamicBackground from '../components/DynamicBackground';
 const pricingPlans = [
   {
     name: 'Starter',
-    price: '299.000',
-    oldPrice: '399.000',
-    badge: 'Miễn phí tháng đầu',
+    price: '199.000',
+    oldPrice: '299.000',
+    badge: 'Khởi đầu',
     badgeColor: 'from-emerald-400 to-teal-500',
     color: 'from-sky-400 to-blue-600',
     shadow: 'shadow-sky-500/20',
     features: [
-      '200 tin nhắn AI/ngày',
-      'Tự động trả lời comment livestream',
-      'Tự động trả lời inbox',
-      'Huấn luyện AI theo shop',
-      'Dashboard quản lý',
+      '200 tin nhắn AI / ngày',
+      'Trả lời bình luận Livestream',
+      'Không hỗ trợ Inbox tự động',
+      'AI theo cấu hình cơ bản',
+      'Báo cáo & Phân tích tiêu chuẩn',
     ],
-    cta: 'Dùng thử ngay',
+    cta: 'Bắt đầu dùng thử',
     highlight: false,
   },
   {
     name: 'Pro',
-    price: '649.000',
-    oldPrice: '899.000',
+    price: '499.000',
+    oldPrice: '649.000',
     badge: 'Phổ biến nhất',
-    badgeTrial: 'Miễn phí tháng đầu',
+    badgeTrial: 'Dùng thử 7 ngày',
     badgeColor: 'from-violet-500 to-purple-600',
     color: 'from-violet-500 to-purple-600',
     shadow: 'shadow-violet-500/30',
     features: [
-      '500 tin nhắn AI/ngày',
-      'AI phản hồi comment livestream',
-      'AI inbox tự động',
-      'Custom AI training',
-      'Dashboard analytics',
+      '1.000 tin nhắn AI / ngày',
+      'Trả lời bình luận Livestream',
+      'Tự động xử lý Inbox 24/7',
+      'Huấn luyện AI riêng (Persona)',
+      'Báo cáo & Phân tích chi tiết',
     ],
-    cta: 'Chọn gói Pro',
+    cta: 'Mua gói Pro',
     highlight: true,
   },
   {
     name: 'Business',
-    price: '1.999.000',
-    oldPrice: '2.499.000',
+    price: '1.299.000',
+    oldPrice: '1.999.000',
     badge: null,
     badgeColor: '',
     color: 'from-amber-400 to-orange-500',
     shadow: 'shadow-amber-500/20',
     features: [
       'Không giới hạn tin nhắn AI',
-      'AI livestream auto reply',
-      'AI inbox automation',
-      'Custom AI agent',
-      'Hỗ trợ ưu tiên 24/7',
+      'Trả lời bình luận Livestream',
+      'Tự động xử lý Inbox 24/7',
+      'AI Agent độc quyền theo ngành',
+      'Báo cáo tích hợp VIP',
     ],
     cta: 'Liên hệ tư vấn',
     highlight: false,
-  },
-  {
-    name: 'Pay As You Go',
-    price: null,
-    oldPrice: null,
-    badge: 'Linh hoạt',
-    badgeColor: 'from-rose-400 to-pink-500',
-    color: 'from-rose-400 to-pink-500',
-    shadow: 'shadow-rose-500/20',
-    paygo: [
-      { amount: '50.000đ', messages: '4.000 tin nhắn AI' },
-      { amount: '200.000đ', messages: '12.500 tin nhắn AI' },
-      { amount: '700.000đ', messages: '50.000 tin nhắn AI' },
-    ],
-    features: ['Không cần đăng ký gói tháng', 'Nạp khi cần dùng', 'Không hết hạn số dư'],
-    cta: 'Mua ngay',
-    highlight: false,
-  },
+  }
 ];
 
 const reviews = [
@@ -388,7 +371,7 @@ const LandingPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-3 max-w-6xl mx-auto gap-6 items-start">
             {pricingPlans.map((plan, i) => (
               <div
                 key={i}
@@ -449,14 +432,16 @@ const LandingPage = () => {
 
                   {/* Features */}
                   <ul className="space-y-3 flex-1 mb-6">
-                    {plan.features.map((f, fi) => (
-                      <li key={fi} className="flex items-start gap-2.5 text-sm text-gray-800 dark:text-white/75 font-medium">
-                        <span className={`mt-0.5 w-4 h-4 rounded-full bg-gradient-to-br ${plan.color} flex items-center justify-center flex-shrink-0`}>
-                          <span className="material-symbols-outlined text-black dark:text-white text-[10px]">check</span>
+                    {plan.features.map((f, fi) => {
+                      const isExcluded = f.startsWith('Không hỗ trợ');
+                      return (
+                      <li key={fi} className={`flex items-start gap-2.5 text-sm font-medium ${isExcluded ? 'text-gray-400 dark:text-white/40' : 'text-gray-800 dark:text-white/75'}`}>
+                        <span className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${isExcluded ? 'bg-gray-200 dark:bg-white/10' : 'bg-gradient-to-br ' + plan.color}`}>
+                          <span className={`material-symbols-outlined text-[10px] ${isExcluded ? 'text-gray-400 dark:text-white/40' : 'text-white'}`}>{isExcluded ? 'close' : 'check'}</span>
                         </span>
                         {f}
                       </li>
-                    ))}
+                    )})}
                   </ul>
 
                   {/* CTA */}
@@ -465,7 +450,7 @@ const LandingPage = () => {
                     className={`w-full py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 active:scale-95 ${
                       plan.highlight
                         ? `bg-gradient-to-r ${plan.color} text-black dark:text-white shadow-lg shadow-violet-500/30 border border-slate-900/10 dark:border-white/20`
-                        : 'landing-glass-btn-outline text-white'
+                        : 'landing-glass-btn-outline text-black dark:text-white'
                     }`}
                   >
                     {plan.cta}
@@ -473,6 +458,23 @@ const LandingPage = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Nạp tiền theo nhu cầu (Pay As You Go) */}
+          <div className="max-w-4xl mx-auto mt-12 landing-fade-up">
+            <LiquidGlass cornerRadius={24} blurAmount={0.02} saturation={120} displacementScale={5} aberrationIntensity={1} elasticity={0.2} overLight={false} className="p-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-r from-rose-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <div className="relative z-10 flex-1">
+                 <div className="flex items-center gap-3 mb-2">
+                   <h3 className="text-xl font-black text-black dark:text-white">Thanh toán linh hoạt (Pay As You Go)</h3>
+                   <span className="px-2.5 py-1 rounded-full text-[10px] font-bold text-white bg-gradient-to-r from-rose-400 to-pink-500">Mới</span>
+                 </div>
+                 <p className="text-gray-600 dark:text-white/60 text-sm font-medium">Không bắt buộc đăng ký gói tháng. Chỉ nạp tiền khi cần với giá từ: <span className="font-bold text-rose-500">50.000đ</span> (tương đương 1.000 tin nhắn AI).</p>
+              </div>
+              <button onClick={() => navigate('/login')} className="relative z-10 flex-shrink-0 px-6 py-3 bg-white dark:bg-slate-800 text-rose-500 font-bold rounded-full border border-rose-200 dark:border-rose-900 shadow-[0_4px_15px_rgba(244,63,94,0.15)] hover:shadow-[0_6px_20px_rgba(244,63,94,0.25)] hover:border-rose-300 transition-all active:scale-95 text-sm">
+                 Nạp ngay
+              </button>
+            </LiquidGlass>
           </div>
         </div>
       </section>
@@ -553,14 +555,14 @@ const LandingPage = () => {
             {/* Platform icons */}
             <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
               {[
-                { label: 'Shopee', color: 'from-orange-400 to-red-500' },
-                { label: 'TikTok Shop', color: 'from-slate-700 to-slate-900' },
-                { label: 'Facebook', color: 'from-blue-500 to-blue-700' },
-                { label: 'Zalo', color: 'from-blue-400 to-cyan-500' },
-                { label: 'Website', color: 'from-violet-500 to-purple-600' },
-                { label: 'Hệ thống ERP', color: 'from-emerald-500 to-teal-600' },
+                { label: 'Shopee' },
+                { label: 'TikTok Shop' },
+                { label: 'Facebook' },
+                { label: 'Zalo' },
+                { label: 'Website' },
+                { label: 'Hệ thống ERP' },
               ].map((p, i) => (
-                <div key={i} className={`px-4 py-2 rounded-full bg-gradient-to-r ${p.color} text-black dark:text-white text-sm font-bold border border-slate-900/10 dark:border-white/20 shadow-lg`}>
+                <div key={i} className="px-6 py-3 rounded-full bg-white/70 dark:bg-slate-800/70 backdrop-blur-md text-gray-800 dark:text-gray-100 text-sm font-bold border border-slate-200 dark:border-slate-700 shadow-[0_4px_10px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_15px_rgba(14,165,233,0.15)] hover:border-sky-300 dark:hover:border-sky-500 transition-all cursor-default">
                   {p.label}
                 </div>
               ))}
