@@ -39,7 +39,7 @@ const Analytics = () => {
                         <span className="material-symbols-outlined">attach_money</span>
                     </div>
                 </div>
-                <p className="relative z-10 mt-2 text-4xl font-black text-slate-900 tracking-tighter" style={{ textShadow: '0 0 15px rgba(20, 184, 166, 0.4)' }}>$12,450</p>
+                <p className="relative z-10 mt-2 text-4xl font-black text-slate-900 tracking-tighter" style={{ textShadow: '0 0 15px rgba(20, 184, 166, 0.4)' }}>315.000.000₫</p>
                 <div className="relative z-10 flex items-center gap-2 mt-2">
                     <span className="flex items-center gap-1 bg-teal-500/10 text-teal-500 px-2 py-0.5 rounded text-xs font-bold border border-teal-500/20">
                         <span className="material-symbols-outlined text-sm">trending_up</span> +15%
@@ -116,10 +116,10 @@ const Analytics = () => {
                 <div className="relative h-[320px] w-full">
                      {/* Dummy Chart Background lines */}
                     <div className="absolute inset-0 flex flex-col justify-between text-xs font-bold text-slate-400">
-                        <div className="w-full border-b border-dashed border-slate-200 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">$15k</span></div>
-                        <div className="w-full border-b border-dashed border-slate-200 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">$10k</span></div>
-                        <div className="w-full border-b border-dashed border-slate-200 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">$5k</span></div>
-                        <div className="w-full border-b border-solid border-slate-300 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">$0</span></div>
+                        <div className="w-full border-b border-dashed border-slate-200 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">380Tr</span></div>
+                        <div className="w-full border-b border-dashed border-slate-200 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">250Tr</span></div>
+                        <div className="w-full border-b border-dashed border-slate-200 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">120Tr</span></div>
+                        <div className="w-full border-b border-solid border-slate-300 pb-1 relative"><span className="absolute -top-3 left-0 bg-transparent px-1">0₫</span></div>
                     </div>
                     {/* SVG Chart Placeholder */}
                     <svg className="absolute inset-0 h-full w-full overflow-visible ml-8" preserveAspectRatio="none" viewBox="0 0 100 100">
@@ -140,7 +140,7 @@ const Analytics = () => {
                     
                     <div className="absolute left-[calc(60%+2rem)] top-[25%] -translate-x-1/2 -translate-y-[120%] pb-2 z-20">
                         <div className="rounded-xl bg-white/80 backdrop-blur-xl border border-white px-3 py-2 text-sm font-bold text-slate-900 shadow-sm">
-                            <span className="text-sky-500">$9,240</span> <span className="text-slate-500 text-xs ml-1 font-medium">@ 35m</span>
+                            <span className="text-sky-500">235.000.000₫</span> <span className="text-slate-500 text-xs ml-1 font-medium">@ 35m</span>
                         </div>
                     </div>
                 </div>

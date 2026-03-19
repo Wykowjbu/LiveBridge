@@ -27,8 +27,8 @@ const OrderManagerConsole = () => {
                   <div className="flex items-center gap-3">
                     <div className="size-11 rounded-xl bg-cover bg-center border border-white/60" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBvschqju4-poPkufUEOxXs8k9qRBYWBlGaYJP0zuOcaSvXwJX4CY_z_5avgWeyyuNTx5wzz8uF_OGtClQ_V3uXwXRBxXvWEpqbAsY2iC-XL0rVOWyUxM24kyWaGnLWXKdre9bSdMMB7uN1hutRqOT4vkMr_IelsoVGyoMOeEElXBXA_TAESfLEWc63J34JQNHuNCLf0-6u6llmaQi5HGfhrWR--n4c3L908pXK1Zkq2pl6LxBQrvmvETthUYRnMLL5S6Vp9OvPVDW6')" }}></div>
                     <div>
-                      <h4 className="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">Smart Watch Series 7</h4>
-                      <p className="text-[11px] text-slate-500 font-medium mt-0.5">Sarah Jenkins</p>
+                      <h4 className="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">Đồng hồ thông minh Series 7</h4>
+                      <p className="text-[11px] text-slate-500 font-medium mt-0.5">Nguyễn Thị Hoa</p>
                     </div>
                   </div>
                   <div className="platform-icon-glass shopee-badge size-7 rounded-lg flex items-center justify-center shrink-0">
@@ -38,7 +38,7 @@ const OrderManagerConsole = () => {
                 <div className="flex items-end justify-between pt-2 border-t border-slate-200">
                   <div>
                     <p className="text-[10px] text-slate-500 font-mono mb-0.5">ID: #3024</p>
-                    <span className="text-sm font-bold text-slate-800">$249.00</span>
+                    <span className="text-sm font-bold text-slate-800">5.900.000₫</span>
                   </div>
                   <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-orange-100 text-orange-600 border border-orange-200 uppercase tracking-wider backdrop-blur-md shadow-sm">Chưa xử lý</span>
                 </div>
@@ -62,8 +62,8 @@ const OrderManagerConsole = () => {
                   <div className="flex items-center gap-3">
                     <div className="size-11 rounded-xl bg-cover bg-center border border-white/60" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCsu2onB3wYHOovXY7pundOWtjxk6xF6GLQKk_aCjI8T011-PwRLotWJEzdSCC9XhSalWrnW2NgZYJTsYg3hG0YxSsJvVKx3yNCf6zqCG1xduGAaxFJvcajamm700BbwLNH6nwvqvTNuUhEVd707YW7kJgvDNQYBZE41k5KzgZQ3qYfFy9jFsA-mEcERJh0w6SkJtDXLNdZ-BP0MKPpvMP5C0k-ugt1F5Ewvhe5BQojDQ3FHzQr799XMOZnAOjGjgjELH1PcDd83f86')" }}></div>
                     <div>
-                      <h4 className="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">iPhone 13 Case</h4>
-                      <p className="text-[11px] text-slate-500 font-medium mt-0.5">Emma Wilson</p>
+                      <h4 className="text-sm font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-1">Ốp lưng iPhone 13</h4>
+                      <p className="text-[11px] text-slate-500 font-medium mt-0.5">Trần Văn Sơn</p>
                     </div>
                   </div>
                   <div className="platform-icon-glass zalo-badge size-7 rounded-lg flex items-center justify-center shrink-0">
@@ -73,7 +73,7 @@ const OrderManagerConsole = () => {
                 <div className="flex items-end justify-between pt-2 border-t border-slate-200">
                   <div>
                     <p className="text-[10px] text-slate-500 font-mono mb-0.5">ID: #3018</p>
-                    <span className="text-sm font-bold text-slate-800">$35.00</span>
+                    <span className="text-sm font-bold text-slate-800">850.000₫</span>
                   </div>
                   <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-blue-100 text-blue-600 border border-blue-200 uppercase tracking-wider backdrop-blur-md shadow-sm">Đã thanh toán</span>
                 </div>
@@ -96,7 +96,7 @@ const OrderManagerConsole = () => {
                     Shopee Store
                   </div>
                   <span className="text-slate-500 text-[11px] font-medium tracking-wide flex items-center gap-1">
-                    <span className="material-symbols-outlined text-[14px]">schedule</span> Oct 24, 2023 • 4:32 PM
+                    <span className="material-symbols-outlined text-[14px]">schedule</span> 24 Thg 10, 2023 • 16:32
                   </span>
                 </div>
               </div>
@@ -111,8 +111,8 @@ const OrderManagerConsole = () => {
                   <div className="size-20 rounded-xl bg-cover bg-center border border-white/60 shrink-0 shadow-sm" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCfAdKiISVsuy_fldOHx0LuMSf2WKLJ1lWGhoOBbUCcuZ7lP1udYLq4QTTD_bDt_sgEERsWkZDDd4kFZS7HMRseJp9oWXTPlB9cY-ySVbN353qgLXbMsmSvMRfPWsaWRajwahZB7leNOByJFfCGC4IkyBR3ct_473nS77IATNEz6NvBOYJYm4gPcTiukJ8kzOV5w15jQSe0jplslaZDl4SYNC3bZ9ZtE6eLM62VIV7Z6LTNAeUgWVLf9I9hhT3LRiWRuyoEtfjtr3yk')" }}></div>
                   <div className="flex-1 min-w-0 flex flex-col justify-center">
                     <div className="flex justify-between items-start mb-1">
-                      <h5 className="text-sm font-bold text-slate-800 truncate drop-shadow-sm">Nike Air Max 90</h5>
-                      <span className="text-sm font-bold text-slate-800 bg-white/60 px-2 py-0.5 rounded-md border border-white/80 shadow-sm">$129.50</span>
+                      <h5 className="text-sm font-bold text-slate-800 truncate drop-shadow-sm">Giày Nike Air Max 90</h5>
+                      <span className="text-sm font-bold text-slate-800 bg-white/60 px-2 py-0.5 rounded-md border border-white/80 shadow-sm">3.200.000₫</span>
                     </div>
                     <p className="text-[11px] text-slate-500 font-mono mb-3">SKU: NK-AM90-RW-10</p>
                     <div className="flex flex-wrap gap-2">
@@ -132,8 +132,8 @@ const OrderManagerConsole = () => {
                       <span className="material-symbols-outlined text-slate-600 text-sm">person</span>
                     </div>
                     <div className="text-sm">
-                      <p className="font-bold text-slate-800 drop-shadow-sm">Michael Chen</p>
-                      <p className="text-slate-500 mt-1 text-[12px] font-mono">+1 (555) 902-1244</p>
+                      <p className="font-bold text-slate-800 drop-shadow-sm">Lê Minh Đức</p>
+                      <p className="text-slate-500 mt-1 text-[12px] font-mono">090 123 4567</p>
                     </div>
                   </div>
                 </LiquidGlass>
