@@ -192,7 +192,7 @@ const AILogic = () => {
                <div className="mb-6">
                   <div className="flex justify-between items-end mb-2">
                     <span className="text-sm font-semibold text-slate-700">Mức sử dụng AI hôm nay</span>
-                    <span className="text-xs font-bold text-slate-500"><span className="text-slate-800 text-sm">120</span> / 200 tin</span>
+                    <span className="text-xs font-bold text-slate-500"><span className="text-slate-800 text-sm">60</span> / 100 tin</span>
                   </div>
                   
                   {/* Progress Bar */}
@@ -289,7 +289,8 @@ const AILogic = () => {
                        <span className="text-slate-400 text-sm font-semibold mb-1">/tháng</span>
                     </div>
                     <ul className="space-y-3 mb-6 flex-1 text-sm text-slate-600 font-medium">
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> 2.000 tin nhắn AI / ngày</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> 300 tin nhắn AI / ngày</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> Phí vượt gói: 50đ/tin</li>
                        <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> Tự động xử lý Inbox</li>
                        <li className="flex gap-2"><span className="material-symbols-outlined text-base text-purple-500">check_circle</span> Huấn luyện AI riêng biệt</li>
                     </ul>
@@ -304,9 +305,10 @@ const AILogic = () => {
                        <span className="text-slate-400 text-sm font-semibold mb-1">/tháng</span>
                     </div>
                     <ul className="space-y-3 mb-6 flex-1 text-sm text-slate-600 font-medium">
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Không giới hạn tin AI</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> 1.500 tin AI / ngày</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Phí vượt gói: 50đ/tin</li>
                        <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> AI Agent độc quyền</li>
-                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Hỗ trợ Zalo VIP 24/7</li>
+                       <li className="flex gap-2"><span className="material-symbols-outlined text-base text-slate-400">check_circle</span> Xử lý ưu tiên (Priority)</li>
                     </ul>
                     <button className="w-full py-3 rounded-xl bg-white text-slate-700 border border-slate-300 font-bold text-sm hover:bg-slate-100 transition-colors">Liên hệ tư vấn</button>
                  </div>
@@ -320,7 +322,7 @@ const AILogic = () => {
                     <ul className="space-y-3 mb-6 flex-1 text-sm text-slate-600 font-medium">
                        <li className="flex gap-2 items-center"><span className="w-16 font-bold text-rose-500">50.000đ</span> → 1.000 tin</li>
                        <li className="flex gap-2 items-center"><span className="w-16 font-bold text-rose-500">200.000đ</span> → 5.000 tin</li>
-                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-rose-500">700.000đ</span> → 20.000 tin</li>
+                       <li className="flex gap-2 items-center"><span className="w-16 font-bold text-rose-500">500.000đ</span> → 15.000 tin</li>
                     </ul>
                     <button className="w-full py-3 rounded-xl bg-slate-800 text-white font-bold text-sm shadow-md hover:bg-slate-900 transition-colors">Nạp Tiền Ngay</button>
                  </div>
