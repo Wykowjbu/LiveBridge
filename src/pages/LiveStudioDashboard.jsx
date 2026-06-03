@@ -220,29 +220,34 @@ const LiveStudioDashboard = () => {
             ) : (
               /* Danh sách bình luận realtime (Realtime comment list) */
               <>
-                {messages.map((msg, idx) => (
+                {messages.map((msg, idx) => {
+                  const displayName = msg.nickname || msg.uniqueId || 'Anonymous';
+                  const avatarChar = displayName.charAt(0).toUpperCase();
+                  const commentText = msg.comment || '(sticker / gift)';
+                  return (
                   <div key={idx} className="flex gap-3 group animate-[fadeIn_0.3s_ease-out]">
                     {/* Avatar */}
                     <div className="size-10 rounded-full flex-shrink-0 bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center shadow-sm border-2 border-white">
-                      <span className="text-white text-xs font-bold">
-                        {(msg.nickname || msg.uniqueId || '?').charAt(0).toUpperCase()}
-                      </span>
+                      <span className="text-white text-xs font-bold">{avatarChar}</span>
                     </div>
-                    
-                    {/* Nội dung bình luận (Comment content) */}
+
+                    {/* Nội dung bình luận */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-slate-800 text-sm font-bold truncate">{msg.nickname || msg.uniqueId || 'Anonymous'}</span>
-                        {msg.uniqueId && (
+                        <span className="text-slate-800 text-sm font-bold truncate">{displayName}</span>
+                        {msg.uniqueId && msg.uniqueId !== displayName && (
                           <span className="text-[10px] text-slate-400 font-medium">@{msg.uniqueId}</span>
                         )}
                       </div>
                       <div className="message-glass p-3 rounded-tr-2xl rounded-br-2xl rounded-bl-sm rounded-tl-2xl">
-                        <p className="text-slate-700 text-sm leading-relaxed break-words">{msg.comment}</p>
+                        <p className={`text-sm leading-relaxed break-words ${msg.comment ? 'text-slate-700' : 'text-slate-400 italic'}`}>
+                          {commentText}
+                        </p>
                       </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
                 <div ref={messagesEndRef} />
               </>
             )}
