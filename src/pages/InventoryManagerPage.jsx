@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from '../components/Header';
-import LiquidGlass from '../components/LiquidGlassPanel';
+import Header from '@components/layout/Header';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
-const InventoryManager = () => {
+const InventoryManagerPage = () => {
   return (
     <div className="flex flex-col h-full w-full">
       <Header title="Quản lý Kho & Sản phẩm" />
-      
+
       <div className="flex flex-1 overflow-hidden relative p-6 gap-6">
         {/* Khu vực nội dung chính (Main Content Area) */}
         <LiquidGlass cornerRadius={16} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="flex-1 flex flex-col h-full overflow-hidden relative border border-white/60">
@@ -174,7 +174,7 @@ const InventoryManager = () => {
               </div>
           </div>
         </LiquidGlass>
-        
+
         {/* Ngăn kéo bên phải (Right Drawer) */}
         <aside className="w-[420px] rounded-2xl glass-drawer flex flex-col relative z-30 transition-transform duration-300 transform translate-x-0 overflow-hidden border border-white/80">
           <div className="px-6 py-6 border-b border-black/5 flex justify-between items-start relative z-10 bg-white/40">
@@ -189,7 +189,7 @@ const InventoryManager = () => {
                   <span className="material-symbols-outlined text-[18px]">close</span>
               </button>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto p-6 space-y-8 relative z-10 custom-scrollbar">
               <section>
                   <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
@@ -228,7 +228,7 @@ const InventoryManager = () => {
                   </div>
               </section>
           </div>
-          
+
           <div className="p-6 border-t border-white bg-white/70 relative z-10 backdrop-blur-xl shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
               <div className="flex gap-4">
                   <button className="flex-1 h-12 rounded-xl border border-slate-300 text-slate-600 font-bold text-sm hover:bg-white hover:text-slate-800 transition-all backdrop-blur-sm shadow-sm bg-white/50">Hủy</button>
@@ -242,4 +242,4 @@ const InventoryManager = () => {
   );
 };
 
-export default InventoryManager;
+export default InventoryManagerPage;

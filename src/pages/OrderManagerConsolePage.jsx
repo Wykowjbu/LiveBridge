@@ -1,15 +1,15 @@
 import React from 'react';
-import Header from '../components/Header';
-import LiquidGlass from '../components/LiquidGlassPanel';
+import Header from '@components/layout/Header';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
-const OrderManagerConsole = () => {
+const OrderManagerConsolePage = () => {
   return (
     <div className="flex flex-col h-full w-full">
       <Header title="Quản lý Đơn hàng" />
-      
+
       <div className="flex-1 overflow-x-auto overflow-y-hidden p-6 custom-scrollbar">
         <div className="flex h-full gap-6 min-w-max">
-          
+
           {/* View Pending Payment (Chờ thanh toán) */}
           <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="flex flex-col w-[340px] h-full p-1">
             <div className="p-4 flex items-center justify-between border-b border-white/40 bg-white/20 rounded-t-[20px]">
@@ -19,7 +19,7 @@ const OrderManagerConsole = () => {
               </div>
               <span className="bg-white/60 backdrop-blur-md text-[10px] px-2.5 py-1 rounded-full text-slate-800 font-bold border border-white/80">2</span>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
               {/* Order Card */}
               <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-4 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
@@ -55,7 +55,7 @@ const OrderManagerConsole = () => {
               </div>
               <span className="bg-white/60 backdrop-blur-md text-[10px] px-2.5 py-1 rounded-full text-slate-800 font-bold border border-white/80">1</span>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
               <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-4 hover:-translate-y-1 transition-transform duration-300 cursor-pointer group">
                 <div className="flex justify-between items-start mb-4">
@@ -80,7 +80,7 @@ const OrderManagerConsole = () => {
               </LiquidGlass>
             </div>
           </LiquidGlass>
-          
+
           {/* Order Details Panel (Chi tiết Đơn hàng) */}
           <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="w-[420px] shrink-0 h-full flex flex-col overflow-hidden ml-6 relative z-50">
             <div className="px-8 pt-10 pb-6 flex items-start justify-between relative z-10">
@@ -101,7 +101,7 @@ const OrderManagerConsole = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto px-8 space-y-8 custom-scrollbar pb-10 relative z-10">
               <LiquidGlass cornerRadius={16} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-5 relative overflow-hidden group">
                 <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
@@ -121,7 +121,7 @@ const OrderManagerConsole = () => {
                   </div>
                 </div>
               </LiquidGlass>
-              
+
               <section>
                 <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                   <span className="material-symbols-outlined text-[16px]">local_shipping</span> Thông tin Giao hàng
@@ -139,7 +139,7 @@ const OrderManagerConsole = () => {
                 </LiquidGlass>
               </section>
             </div>
-            
+
             <div className="w-full p-6 bg-white/80 backdrop-blur-2xl border-t border-white/80 space-y-3 z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
               <button className="w-full bg-slate-800 backdrop-blur-md text-white h-12 rounded-xl text-sm font-bold hover:bg-slate-700 transition-all flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
                   <span className="material-symbols-outlined text-lg">receipt_long</span> Gửi hóa đơn nền tảng
@@ -152,4 +152,4 @@ const OrderManagerConsole = () => {
   );
 };
 
-export default OrderManagerConsole;
+export default OrderManagerConsolePage;

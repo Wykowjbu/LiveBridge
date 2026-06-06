@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
-import MainLayout from './components/MainLayout';
-import LandingPage from './pages/LandingPage';
-import Login from './pages/Login';
-import LiveStudioDashboard from './pages/LiveStudioDashboard';
-import MessageInbox from './pages/MessageInbox';
-import OrderManagerConsole from './pages/OrderManagerConsole';
-import InventoryManager from './pages/InventoryManager';
-import Analytics from './pages/Analytics';
-import PlatformConnect from './pages/PlatformConnect';
-import AILogic from './pages/AILogic';
+import MainLayout from '@components/layout/MainLayout';
+import LandingPage from '@pages/LandingPage';
+import LoginPage from '@pages/LoginPage';
+import LiveStudioDashboardPage from '@pages/LiveStudioDashboardPage';
+import MessageInboxPage from '@pages/MessageInboxPage';
+import OrderManagerConsolePage from '@pages/OrderManagerConsolePage';
+import InventoryManagerPage from '@pages/InventoryManagerPage';
+import AnalyticsPage from '@pages/AnalyticsPage';
+import PlatformConnectPage from '@pages/PlatformConnectPage';
+import AILogicPage from '@pages/AILogicPage';
 
 /* ============================================================
    Cấu hình Routing chính (Main Routing Configuration)
@@ -21,19 +21,19 @@ function App() {
     <Routes>
       {/* Landing Page - Trang giới thiệu sản phẩm */}
       <Route path="/" element={<LandingPage />} />
-      
+
       {/* Trang Login riêng biệt, không dùng MainLayout */}
-      <Route path="/login" element={<Login />} />
-      
+      <Route path="/login" element={<LoginPage />} />
+
       {/* Các trang chính có layout chung (Sidebar + Header) */}
       <Route path="/app" element={<MainLayout />}>
-        <Route path="dashboard" element={<LiveStudioDashboard />} />
-        <Route path="inbox" element={<MessageInbox />} />
-        <Route path="orders" element={<OrderManagerConsole />} />
-        <Route path="products" element={<InventoryManager />} />
-        <Route path="analytics" element={<Analytics />} />
-        <Route path="platform-connect" element={<PlatformConnect />} />
-        <Route path="ai-settings" element={<AILogic />} />
+        <Route path="dashboard" element={<LiveStudioDashboardPage />} />
+        <Route path="inbox" element={<MessageInboxPage />} />
+        <Route path="orders" element={<OrderManagerConsolePage />} />
+        <Route path="products" element={<InventoryManagerPage />} />
+        <Route path="analytics" element={<AnalyticsPage />} />
+        <Route path="platform-connect" element={<PlatformConnectPage />} />
+        <Route path="ai-settings" element={<AILogicPage />} />
       </Route>
     </Routes>
   );

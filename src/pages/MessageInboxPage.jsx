@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../components/Header';
-import LiquidGlass from '../components/LiquidGlassPanel';
+import Header from '@components/layout/Header';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
-const MessageInbox = () => {
+const MessageInboxPage = () => {
   const messages = [
     {
       id: 1,
@@ -40,7 +40,7 @@ const MessageInbox = () => {
   return (
     <div className="flex flex-col h-full w-full">
       <Header title="Hộp thư" />
-      
+
       <div className="flex-1 flex overflow-hidden">
         {/* Danh sách tin nhắn (Messages List) */}
         <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
@@ -56,7 +56,7 @@ const MessageInbox = () => {
             {messages.map((msg) => (
               <LiquidGlass key={msg.id} cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.18} overLight={true} className={`group flex flex-col sm:flex-row items-start sm:items-center gap-4 p-5 ${msg.id === 1 ? 'neon-glow-high' : 'neon-glow-medium'} hover:border-sky-300 transition-all cursor-pointer relative overflow-hidden`}>
                 <div className={`absolute inset-0 bg-gradient-to-r ${msg.id === 1 ? 'from-red-50' : 'from-amber-50'} to-transparent pointer-events-none`}></div>
-                
+
                 {/* Avatar & Platform Icon */}
                 <div className="flex-shrink-0 relative z-10">
                   <div className="size-14 rounded-full bg-cover bg-center ring-2 ring-white shadow-md" style={{ backgroundImage: `url("${msg.avatar}")` }}></div>
@@ -78,7 +78,7 @@ const MessageInbox = () => {
                     )}
                   </div>
                 </div>
-                
+
                 {/* Nội dung tin nhắn (Message Content) */}
                 <div className="flex-1 min-w-0 z-10">
                   <div className="flex items-center gap-2 mb-1">
@@ -87,7 +87,7 @@ const MessageInbox = () => {
                     <span className="text-xs text-slate-400 ml-auto">{msg.time}</span>
                   </div>
                   <p className="text-slate-600 text-sm truncate pr-4">{msg.text}</p>
-                  
+
                   {/* Labels / AI Suggestions */}
                   <div className="flex items-center gap-2 mt-3 block">
                     <span className="flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-lg bg-green-50 text-green-600 border border-green-200 backdrop-blur-md">
@@ -118,7 +118,7 @@ const MessageInbox = () => {
         {/* Khung chat chi tiết (Conversation Thread Detail) */}
         <LiquidGlass cornerRadius={0} blurAmount={0.01} saturation={120} displacementScale={3} aberrationIntensity={1} elasticity={0.12} overLight={true} className="w-[400px] flex-shrink-0 flex flex-col z-20 hidden lg:flex relative">
           <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-transparent pointer-events-none"></div>
-          
+
           <div className="p-6 pb-4 border-b border-white/60 relative z-10">
              <div className="flex gap-2 mb-2">
                  <h2 className="text-2xl font-bold text-slate-800 tracking-wide">Nguyễn Thị Hoa</h2>
@@ -134,7 +134,7 @@ const MessageInbox = () => {
                 </LiquidGlass>
              </div>
           </div>
-          
+
           {/* Lịch sử chat (Chat History) */}
           <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 relative z-10">
              <div className="flex gap-4">
@@ -143,7 +143,7 @@ const MessageInbox = () => {
                  Mẫu này có màu đỏ size M không shop? Có giao hỏa tốc không?
                </div>
              </div>
-             
+
              {/* Gợi ý AI (AI Suggestion Frame) */}
              <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.18} overLight={true} className="p-5 border-sky-200 shadow-[0_8px_32px_rgba(14,165,233,0.05)] relative overflow-hidden group bg-gradient-to-br from-white/80 to-white/40">
                <p className="text-xs text-sky-600 font-bold mb-3 uppercase tracking-widest relative z-10 flex items-center gap-2">
@@ -162,7 +162,7 @@ const MessageInbox = () => {
                </div>
              </LiquidGlass>
           </div>
-          
+
           {/* Box nhập liệu chữ (Input Box) */}
           <div className="p-5 border-t border-white/60 glass-header relative z-10">
              <div className="glass-input rounded-2xl p-3 focus-within:ring-2 focus-within:ring-sky-400/50 focus-within:border-sky-300 transition-all bg-white/60">
@@ -184,4 +184,4 @@ const MessageInbox = () => {
   );
 };
 
-export default MessageInbox;
+export default MessageInboxPage;

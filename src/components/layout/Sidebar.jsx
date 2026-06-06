@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import LiquidGlass from './LiquidGlassPanel';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
 const Sidebar = () => {
   /* Danh sách menu điều hướng (Navigation menu items) */
@@ -33,7 +33,7 @@ const Sidebar = () => {
           <p className="text-slate-500 text-xs font-medium mt-1">Quản lý Tập trung</p>
         </div>
       </div>
-      
+
       {/* Thông tin user (User Info) */}
       <div className="px-4 py-6">
         <LiquidGlass
@@ -47,8 +47,8 @@ const Sidebar = () => {
           className="flex items-center gap-3 p-3"
         >
           <div className="relative">
-            <div 
-              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white" 
+            <div
+              className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white"
               style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAk7vOeBV9k_2-I4tKGPs0PBjPJTRNVysRoVvX1FdaTVAT6kDHBBMlflGQPHfZYRqV4h8Eik5EMNUDR8TXGHThU1Uqdla1jaGs-bBnyBTzp-l1xkVOYS3c0QD9geYIyLGMHXe0wSPP8IB1I2JTS3AFoZelqliPJfDSxoMO0Qm-SQcsdXGlx_XxoDS_b9U1paIMivTp--ZnrtBNrASVqyp0w-HMqs1qbkIh5pmy3onDTs9umbGIotmxLlXPWBC6r2S7GT92OQOXLApka")' }}
             ></div>
             <div className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white shadow-[0_0_8px_rgba(34,197,94,0.3)]"></div>
@@ -63,25 +63,25 @@ const Sidebar = () => {
       {/* Menu Điều hướng (Navigation) */}
       <nav className="flex-1 overflow-y-auto px-4 space-y-1.5 custom-scrollbar">
         <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-2">Menu Chính</p>
-        
+
         {navItems.map((item) => (
           <NavLink
             key={item.name}
             to={item.path}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 group ${
-                isActive 
-                  ? 'bg-gradient-to-r from-sky-500/10 to-blue-500/5 text-sky-700 border border-white/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)]' 
+                isActive
+                  ? 'bg-gradient-to-r from-sky-500/10 to-blue-500/5 text-sky-700 border border-white/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8)]'
                   : 'text-slate-600 hover:bg-white/50 hover:text-slate-900'
               }`
             }
           >
             {({ isActive }) => (
               <>
-                <span 
+                <span
                   className={`material-symbols-outlined transition-colors ${
                     isActive ? 'text-sky-500 fill-1' : 'group-hover:text-sky-500'
-                  }`} 
+                  }`}
                   style={{ fontSize: '20px' }}
                 >
                   {item.icon}

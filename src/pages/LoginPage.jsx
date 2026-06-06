@@ -1,8 +1,8 @@
+import DynamicBackground from '@components/ui/DynamicBackground';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
+import ThemeToggle from '@components/ui/ThemeToggle';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import LiquidGlass from '../components/LiquidGlassPanel';
-import ThemeToggle from '../components/ThemeToggle';
-import DynamicBackground from '../components/DynamicBackground';
 
 /* ============================================================
    Trang Đăng nhập (Login Page)
@@ -10,7 +10,7 @@ import DynamicBackground from '../components/DynamicBackground';
    - Nhấn "Đăng nhập" sẽ chuyển thẳng đến Dashboard
    - Hỗ trợ đăng nhập qua Facebook, TikTok, Google
    ============================================================ */
-const Login = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -168,4 +168,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -1,8 +1,8 @@
 import React, { Suspense, lazy } from 'react';
-import useTheme from '../hooks/useTheme';
+import useTheme from '@hooks/useTheme';
 
 // Dùng Lazy load để tối ưu dung lượng
-const ColorBends = lazy(() => import('./ColorBends/ColorBends'));
+const ColorBends = lazy(() => import('../colorBends/ColorBends'));
 
 const DynamicBackground = () => {
   const isDark = useTheme();
@@ -17,7 +17,7 @@ const DynamicBackground = () => {
         ) : (
           // Nền sáng (Light Mode): Color Bends
           <div className="absolute inset-0 w-full h-full opacity-0 animate-[fadeIn_1s_ease-in-out_forwards]">
-            <ColorBends 
+            <ColorBends
               gradientColors={[ '#FFBE7B', '#FFA3A3', '#9BBAFF', '#B59BFF', '#FFA1D2', '#FFCE70' ]}
               speed={1.2}
               density={1.5}

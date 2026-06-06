@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import LiquidGlass from '../components/LiquidGlassPanel';
+import Header from '@components/layout/Header';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
 /* ============================================================
    Trang Cài Đặt AI & Nâng Cấp Gói (AI Settings & Persona)
    ============================================================ */
-const AILogic = () => {
+const AILogicPage = () => {
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
   return (
@@ -23,7 +23,7 @@ const AILogic = () => {
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
           {/* CỘT TRÁI: Cấu hình Persona & Luật (Left Column Config) */}
           <div className="xl:col-span-8 flex flex-col gap-8">
-            
+
             {/* 1. ĐỊNH DANH (IDENTITY) */}
             <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="p-8 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -55,7 +55,7 @@ const AILogic = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Bối cảnh / Giới thiệu Shop (Context)</label>
                   <textarea
@@ -178,7 +178,7 @@ const AILogic = () => {
 
           {/* CỘT PHẢI: Gói cước & Knowledge Base (Right Column Config) */}
           <div className="xl:col-span-4 flex flex-col gap-6">
-            
+
             {/* 4. GÓI CƯỚC & SỬ DỤNG (SUBSCRIPTION MAP) */}
             <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="p-6 relative overflow-hidden">
                <div className="flex justify-between items-start mb-6">
@@ -194,7 +194,7 @@ const AILogic = () => {
                     <span className="text-sm font-semibold text-slate-700">Mức sử dụng AI hôm nay</span>
                     <span className="text-xs font-bold text-slate-500"><span className="text-slate-800 text-sm">60</span> / 100 tin</span>
                   </div>
-                  
+
                   {/* Progress Bar */}
                   <div className="relative h-2.5 bg-slate-100 rounded-full w-full border border-slate-200 overflow-hidden">
                       <div className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-sky-400 to-blue-500" style={{ width: '60%' }}></div>
@@ -202,7 +202,7 @@ const AILogic = () => {
                   <p className="text-[11px] text-slate-400 mt-2 font-medium">Sẽ reset lại tiến trình vào nửa đêm.</p>
                </div>
 
-               <button 
+               <button
                   onClick={() => setIsUpgradeModalOpen(true)}
                   className="w-full flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white rounded-xl font-bold text-sm shadow-[0_4px_15px_rgba(139,92,246,0.3)] transition-all hover:scale-[1.02] active:scale-95"
                 >
@@ -259,11 +259,11 @@ const AILogic = () => {
       {isUpgradeModalOpen && (
         <div className="absolute inset-0 z-50 flex items-center justify-center p-4">
            {/* Backdrop */}
-           <div 
-             className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm cursor-pointer" 
+           <div
+             className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm cursor-pointer"
              onClick={() => setIsUpgradeModalOpen(false)}
            ></div>
-           
+
            {/* Modal Body */}
            <LiquidGlass cornerRadius={32} blurAmount={0.05} saturation={150} displacementScale={10} aberrationIntensity={1} elasticity={0.3} overLight={true} className="w-full max-w-4xl relative z-10 shadow-2xl p-8 animate-[fadeUp_0.3s_ease]">
               <div className="flex justify-between items-center mb-6">
@@ -282,7 +282,7 @@ const AILogic = () => {
                  <div className="bg-white rounded-2xl border-2 border-purple-400/40 p-6 flex flex-col shadow-[0_10px_30px_rgba(139,92,246,0.15)] relative overflow-hidden">
                     <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-violet-500 to-purple-600"></div>
                     <span className="absolute top-4 right-4 bg-purple-100 text-purple-700 text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-wider border border-purple-200">Khuyên dùng</span>
-                    
+
                     <h3 className="text-xl font-black text-slate-900 mb-2 mt-2">Gói Pro</h3>
                     <div className="flex items-end gap-1 mb-4">
                        <span className="text-3xl font-black bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">499k</span>
@@ -334,4 +334,4 @@ const AILogic = () => {
   );
 };
 
-export default AILogic;
+export default AILogicPage;

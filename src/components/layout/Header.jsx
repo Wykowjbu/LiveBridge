@@ -17,18 +17,18 @@ const Header = ({ title = "Dashboard" }) => {
            </span>
         </div>
       </div>
-      
+
       <div className="flex items-center gap-4">
         {/* Tìm kiếm (Global Search) */}
         <div className="relative group hidden sm:block">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined" style={{ fontSize: '18px' }}>search</span>
-          <input 
-            className="glass-input text-sm text-slate-800 rounded-xl pl-10 pr-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-sky-400/50 placeholder:text-slate-400 transition-all backdrop-blur-md" 
-            placeholder="Tìm kiếm..." 
+          <input
+            className="glass-input text-sm text-slate-800 rounded-xl pl-10 pr-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-sky-400/50 placeholder:text-slate-400 transition-all backdrop-blur-md"
+            placeholder="Tìm kiếm..."
             type="text"
           />
         </div>
-        
+
         {/* Các nút hành động (Action Buttons) */}
         <button className="p-2 text-slate-500 hover:text-slate-800 hover:bg-white/50 rounded-xl transition-colors relative">
           <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>notifications</span>
