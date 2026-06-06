@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Header from '../components/Header';
-import { useEulerStream } from '../hooks/useEulerStream';
-import LiquidGlass from '../components/LiquidGlassPanel';
+import Header from '@components/layout/Header';
+import { useEulerStream } from '@hooks/useEulerStream';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
 /* ============================================================
    Trang chính Dashboard - LiveBridge Studio
@@ -10,7 +10,7 @@ import LiquidGlass from '../components/LiquidGlassPanel';
    - CommentBox realtime
    - Thống kê và gợi ý AI (mock data)
    ============================================================ */
-const LiveStudioDashboard = () => {
+const LiveStudioDashboardPage = () => {
   /* ---- State quản lý TikTok ID ---- */
   const [tiktokId, setTiktokId] = useState('');
   const { isConnected, messages, error, connect, disconnect } = useEulerStream();
@@ -55,21 +55,21 @@ const LiveStudioDashboard = () => {
   return (
     <div className="flex flex-col h-full w-full">
       <Header title="LiveBridge Studio" />
-      
+
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 overflow-hidden h-full z-10 relative">
-        
+
         {/* ===============================================
             CỘT TRÁI: Kết nối & Stream Preview (Left Column)
             =============================================== */}
         <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="lg:col-span-3 p-5 flex flex-col gap-5 overflow-y-auto scrollbar-hide">
-          
+
           {/* Khu vực nhập TikTok ID (TikTok ID Input) */}
           <div className="rounded-2xl p-5 shadow-sm bg-white/60 border border-white/80">
             <h3 className="text-slate-800 text-sm font-bold mb-3 flex items-center gap-2">
               <span className="material-symbols-outlined text-[18px] text-sky-500">person_search</span>
               Kết nối TikTok Live
             </h3>
-            
+
             {/* Ô nhập ID (ID Input field) */}
             <div className="flex gap-2 mb-3">
               <div className="flex-1 relative">
@@ -100,7 +100,7 @@ const LiveStudioDashboard = () => {
 
             {/* Trạng thái kết nối (Connection Status) */}
             <div className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold ${
-              isConnected 
+              isConnected
                 ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
                 : 'bg-slate-50 text-slate-500 border border-slate-200'
             }`}>
@@ -128,10 +128,10 @@ const LiveStudioDashboard = () => {
                   </div>
                   <h3 className="text-white text-lg font-bold mb-1">Đang phát trực tiếp</h3>
                   <p className="text-slate-400 text-xs font-medium mb-4 max-w-[200px]">TikTok không hỗ trợ nhúng iframe livestream trực tiếp.</p>
-                  <a 
-                    href={`https://www.tiktok.com/@${tiktokId}/live`} 
-                    target="_blank" 
-                    rel="noreferrer" 
+                  <a
+                    href={`https://www.tiktok.com/@${tiktokId}/live`}
+                    target="_blank"
+                    rel="noreferrer"
                     className="flex items-center gap-1.5 text-sky-400 hover:text-sky-300 text-xs font-bold transition-colors bg-sky-500/10 px-4 py-2 rounded-full border border-sky-400/30"
                   >
                     <span className="material-symbols-outlined text-sm">open_in_new</span>
@@ -148,7 +148,7 @@ const LiveStudioDashboard = () => {
                 </div>
               </>
             )}
-            
+
             {/* Live badge khi đang kết nối */}
             {isConnected && (
               <div className="absolute top-4 left-4 flex gap-2">
@@ -203,7 +203,7 @@ const LiveStudioDashboard = () => {
               </button>
             </div>
           </div>
-          
+
           {/* Khu vực hiển thị bình luận (Comments Area) */}
           <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide">
             {!isConnected && messages.length === 0 ? (
@@ -252,14 +252,14 @@ const LiveStudioDashboard = () => {
               </>
             )}
           </div>
-          
+
           {/* Ô nhập tin nhắn dưới cùng (Bottom message input) */}
           <div className="p-6 border-t border-slate-200 bg-white/60 backdrop-blur-xl sticky bottom-0">
             <div className="relative">
-              <input 
-                className="w-full glass-capsule pl-5 pr-14 py-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-inner" 
-                placeholder="Nhập tin nhắn để gửi đến tất cả nền tảng..." 
-                type="text" 
+              <input
+                className="w-full glass-capsule pl-5 pr-14 py-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-inner"
+                placeholder="Nhập tin nhắn để gửi đến tất cả nền tảng..."
+                type="text"
               />
               <button className="absolute right-2 top-2 p-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full text-white hover:opacity-90 transition-opacity flex items-center justify-center border border-white/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">send</span>
@@ -294,7 +294,7 @@ const LiveStudioDashboard = () => {
                </div>
             </div>
           </div>
-          
+
           {/* Gợi ý AI (AI Assistant) */}
           <div className="flex flex-col gap-3 flex-1 min-h-0">
              <div className="flex justify-between items-center px-1">
@@ -320,4 +320,4 @@ const LiveStudioDashboard = () => {
   );
 };
 
-export default LiveStudioDashboard;
+export default LiveStudioDashboardPage;

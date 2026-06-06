@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LiquidGlass from '../components/LiquidGlassPanel';
-import ThemeToggle from '../components/ThemeToggle';
-import DynamicBackground from '../components/DynamicBackground';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
+import ThemeToggle from '@components/ui/ThemeToggle';
+import DynamicBackground from '@components/ui/DynamicBackground';
 
 /* ============================================================
    Landing Page - Glassmorphism UI + Video Background

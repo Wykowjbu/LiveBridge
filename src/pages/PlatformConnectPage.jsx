@@ -1,13 +1,13 @@
 import React from 'react';
-import Header from '../components/Header';
-import LiquidGlass from '../components/LiquidGlassPanel';
+import Header from '@components/layout/Header';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
-const PlatformConnect = () => {
+const PlatformConnectPage = () => {
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
 
       <Header title="Cài đặt & Tích hợp" />
-      
+
       <div className="flex-1 w-full max-w-6xl mx-auto pb-10 overflow-y-auto p-6 z-10 custom-scrollbar">
           <LiquidGlass cornerRadius={24} blurAmount={0.01} saturation={120} displacementScale={5} aberrationIntensity={0.5} elasticity={0.15} overLight={true} className="mb-12 p-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
@@ -35,7 +35,7 @@ const PlatformConnect = () => {
                       </div>
                       <h3 className="text-slate-800 text-xl font-extrabold mb-1">TikTok Shop</h3>
                       <p className="text-slate-500 text-xs mb-5 font-semibold">Cập nhật: 2 phút trước</p>
-                      
+
                       <div className="bg-[#f1f5f999] backdrop-blur-md border border-white/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-2xl p-3.5 mb-5">
                           <p className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5">Mã API</p>
                           <div className="flex items-center justify-between">
@@ -43,7 +43,7 @@ const PlatformConnect = () => {
                               <button className="text-slate-400 hover:text-purple-600 transition-colors bg-white shadow-sm border border-slate-200 p-1.5 rounded-lg"><span className="material-symbols-outlined text-[16px]">content_copy</span></button>
                           </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between pt-4 border-t border-slate-200/60">
                           <span className="text-sm font-semibold text-slate-700">Đồng bộ Kho hàng</span>
                           <label className="relative inline-flex items-center cursor-pointer">
@@ -67,7 +67,7 @@ const PlatformConnect = () => {
                       </div>
                       <h3 className="text-slate-800 text-xl font-extrabold mb-1">Facebook Live</h3>
                       <p className="text-slate-500 text-xs mb-5 font-semibold">Cập nhật: 1 giờ trước</p>
-                      
+
                       <div className="bg-[#f1f5f999] backdrop-blur-md border border-white/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-2xl p-3.5 mb-5">
                           <p className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5">API Key</p>
                           <div className="flex items-center justify-between">
@@ -75,7 +75,7 @@ const PlatformConnect = () => {
                               <button className="text-slate-400 hover:text-purple-600 transition-colors bg-white shadow-sm border border-slate-200 p-1.5 rounded-lg"><span className="material-symbols-outlined text-[16px]">content_copy</span></button>
                           </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between pt-4 border-t border-slate-200/60">
                           <span className="text-sm font-semibold text-slate-700">Đồng bộ Bình luận</span>
                           <label className="relative inline-flex items-center cursor-pointer">
@@ -84,7 +84,7 @@ const PlatformConnect = () => {
                           </label>
                       </div>
                   </LiquidGlass>
-                  
+
                   {/* Kết nối Shopee (Shopee) */}
                   <LiquidGlass cornerRadius={24} blurAmount={0.02} saturation={120} displacementScale={8} aberrationIntensity={1} elasticity={0.2} overLight={true} className="p-6 relative group transition-all hover:-translate-y-1">
                       <div className="flex items-start justify-between mb-5">
@@ -99,7 +99,7 @@ const PlatformConnect = () => {
                       </div>
                       <h3 className="text-slate-800 text-xl font-extrabold mb-1">Shopee</h3>
                       <p className="text-slate-500 text-xs mb-5 font-semibold">Cập nhật: 15 phút trước</p>
-                      
+
                        <div className="bg-[#f1f5f999] backdrop-blur-md border border-white/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] rounded-2xl p-3.5 mb-5">
                           <p className="text-[10px] uppercase tracking-wider text-slate-500 font-extrabold mb-1.5">API Key</p>
                           <div className="flex items-center justify-between">
@@ -107,7 +107,7 @@ const PlatformConnect = () => {
                               <button className="text-slate-400 hover:text-purple-600 transition-colors bg-white shadow-sm border border-slate-200 p-1.5 rounded-lg"><span className="material-symbols-outlined text-[16px]">content_copy</span></button>
                           </div>
                       </div>
-                      
+
                       <div className="flex items-center justify-between pt-4 border-t border-slate-200/60">
                           <span className="text-sm font-semibold text-slate-700">Đồng bộ Sản phẩm</span>
                           <label className="relative inline-flex items-center cursor-pointer">
@@ -123,4 +123,4 @@ const PlatformConnect = () => {
   );
 };
 
-export default PlatformConnect;
+export default PlatformConnectPage;

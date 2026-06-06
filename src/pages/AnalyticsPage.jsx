@@ -1,14 +1,14 @@
 import React from 'react';
-import Header from '../components/Header';
-import LiquidGlass from '../components/LiquidGlassPanel';
+import Header from '@components/layout/Header';
+import LiquidGlass from '@components/ui/LiquidGlassPanel';
 
-const Analytics = () => {
+const AnalyticsPage = () => {
   return (
     <div className="flex flex-col h-full w-full">
       <Header title="Phân tích dữ liệu" />
-      
+
       <div className="flex-1 overflow-y-auto w-full max-w-[1440px] mx-auto p-6 custom-scrollbar">
-        
+
         <div className="flex flex-wrap items-end justify-between gap-4 pb-10">
             <div className="flex flex-col gap-2">
                 <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight text-slate-900">Phân Tích Hiệu Suất Live</h1>
@@ -137,7 +137,7 @@ const Analytics = () => {
                         <circle cx="40" cy="50" fill="#0ea5e9" r="1.5"></circle>
                         <circle cx="80" cy="15" fill="#0ea5e9" r="1.5"></circle>
                     </svg>
-                    
+
                     <div className="absolute left-[calc(60%+2rem)] top-[25%] -translate-x-1/2 -translate-y-[120%] pb-2 z-20">
                         <div className="rounded-xl bg-white/80 backdrop-blur-xl border border-white px-3 py-2 text-sm font-bold text-slate-900 shadow-sm">
                             <span className="text-sky-500">235.000.000₫</span> <span className="text-slate-500 text-xs ml-1 font-medium">@ 35m</span>
@@ -200,4 +200,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;
+export default AnalyticsPage;
