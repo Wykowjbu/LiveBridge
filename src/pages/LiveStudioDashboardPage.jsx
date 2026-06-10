@@ -10,25 +10,128 @@ import LiquidGlass from '@components/ui/LiquidGlassPanel';
    - CommentBox realtime
    - Thống kê và gợi ý AI (mock data)
    ============================================================ */
+const BE_URL = 'http://localhost:3001';
+
 const LiveStudioDashboardPage = () => {
   /* ---- State quản lý TikTok ID ---- */
   const [tiktokId, setTiktokId] = useState('');
-  const { isConnected, messages, error, connect, disconnect } = useEulerStream();
+  const { isConnected, messages, error, connect, disconnect, roomId } = useEulerStream();
   const messagesEndRef = useRef(null);
+
+  /* ---- Reply state ---- */
+  const [replyTo, setReplyTo] = useState(null); // { nickname, uniqueId }
+  const [replyText, setReplyText] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const isConnectingRef = useRef(false);
+  const [replyStatus, setReplyStatus] = useState(null); // 'ok' | 'error'
+  const [authToken, setAuthToken] = useState(() => localStorage.getItem('lb_token'));
+  const [backendSessionId, setBackendSessionId] = useState(() => localStorage.getItem('lb_session_id'));
 
   /* ---- Tự động cuộn xuống comment mới nhất ---- */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  /* ---- Sync roomId lên BE session khi Eulerstream trả về ---- */
+  useEffect(() => {
+    if (!roomId || !backendSessionId || !authToken) return;
+    fetch(`${BE_URL}/sessions/${backendSessionId}/room-id`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authToken}` },
+      body: JSON.stringify({ roomId }),
+    }).catch(() => {});
+  }, [roomId, backendSessionId, authToken]);
+
+  /* ---- Auto login/register nếu chưa có token ---- */
+  const ensureAuth = async () => {
+    if (authToken) return authToken;
+    const creds = { email: 'live@livebridge.local', password: 'livebridge2024' };
+    let res = await fetch(`${BE_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(creds),
+    });
+    if (!res.ok) {
+      res = await fetch(`${BE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(creds),
+      });
+    }
+    const data = await res.json();
+    const token = data.token;
+    if (token) {
+      localStorage.setItem('lb_token', token);
+      setAuthToken(token);
+    }
+    return token;
+  };
+
   /* ---- Xử lý kết nối/ngắt kết nối ---- */
-  const handleToggleConnect = () => {
+  const handleToggleConnect = async () => {
+    if (isConnectingRef.current) return;
     if (isConnected) {
       disconnect();
-    } else {
-      if (tiktokId.trim()) {
-        connect(tiktokId.trim());
+      if (backendSessionId && authToken) {
+        fetch(`${BE_URL}/sessions/${backendSessionId}/end`, {
+          method: 'PUT',
+          headers: { Authorization: `Bearer ${authToken}` },
+        }).catch(() => {});
       }
+      setBackendSessionId(null);
+      localStorage.removeItem('lb_session_id');
+    } else {
+      if (!tiktokId.trim()) return;
+      isConnectingRef.current = true;
+      connect(tiktokId.trim());
+      try {
+        const token = await ensureAuth();
+        const res = await fetch(`${BE_URL}/sessions/start`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ tiktokUniqueId: tiktokId.trim() }),
+        });
+        const data = await res.json();
+        if (data.sessionId) {
+          setBackendSessionId(data.sessionId);
+          localStorage.setItem('lb_session_id', data.sessionId);
+        }
+      } catch (err) {
+        console.warn('[BE] Session start failed:', err.message);
+      } finally {
+        isConnectingRef.current = false;
+      }
+    }
+  };
+
+  /* ---- Gửi reply lên TikTok Live ---- */
+  const handleSendReply = async () => {
+    if (!replyText.trim() || !backendSessionId || !authToken) return;
+    setIsSending(true);
+    setReplyStatus(null);
+    try {
+      const res = await fetch(`${BE_URL}/ai/reply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${authToken}` },
+        body: JSON.stringify({
+          sessionId: backendSessionId,
+          replyText: replyText.trim(),
+          mentionUser: replyTo?.uniqueId || undefined,
+          roomId: roomId || undefined,
+        }),
+      });
+      if (res.ok) {
+        setReplyText('');
+        setReplyTo(null);
+        setReplyStatus('ok');
+        setTimeout(() => setReplyStatus(null), 2000);
+      } else {
+        setReplyStatus('error');
+      }
+    } catch {
+      setReplyStatus('error');
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -244,6 +347,17 @@ const LiveStudioDashboardPage = () => {
                           {commentText}
                         </p>
                       </div>
+                      {/* Reply button - hiện khi hover */}
+                      <button
+                        onClick={() => {
+                          setReplyTo({ nickname: displayName, uniqueId: msg.uniqueId || displayName });
+                          setReplyText('');
+                        }}
+                        className="opacity-0 group-hover:opacity-100 mt-1.5 flex items-center gap-1 text-[11px] text-indigo-500 hover:text-indigo-700 font-semibold transition-all"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">reply</span>
+                        Reply
+                      </button>
                     </div>
                   </div>
                   );
@@ -254,16 +368,53 @@ const LiveStudioDashboardPage = () => {
           </div>
 
           {/* Ô nhập tin nhắn dưới cùng (Bottom message input) */}
-          <div className="p-6 border-t border-slate-200 bg-white/60 backdrop-blur-xl sticky bottom-0">
-            <div className="relative">
-              <input
-                className="w-full glass-capsule pl-5 pr-14 py-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-inner"
-                placeholder="Nhập tin nhắn để gửi đến tất cả nền tảng..."
-                type="text"
-              />
-              <button className="absolute right-2 top-2 p-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full text-white hover:opacity-90 transition-opacity flex items-center justify-center border border-white/40 shadow-sm">
-                <span className="material-symbols-outlined text-[20px]">send</span>
-              </button>
+          <div className="border-t border-slate-200 bg-white/60 backdrop-blur-xl sticky bottom-0">
+            {/* Reply-to indicator */}
+            {replyTo && (
+              <div className="flex items-center gap-2 px-5 py-2 bg-indigo-50 border-b border-indigo-100 text-xs text-indigo-600 font-medium">
+                <span className="material-symbols-outlined text-[14px]">reply</span>
+                Đang reply <span className="font-bold">@{replyTo.uniqueId}</span>
+                <button onClick={() => setReplyTo(null)} className="ml-auto text-slate-400 hover:text-slate-600 transition-colors">
+                  <span className="material-symbols-outlined text-[14px]">close</span>
+                </button>
+              </div>
+            )}
+            {/* Status toast */}
+            {replyStatus === 'ok' && (
+              <div className="px-5 py-1.5 bg-emerald-50 text-emerald-600 text-xs font-semibold flex items-center gap-1 border-b border-emerald-100">
+                <span className="material-symbols-outlined text-[14px]">check_circle</span> Đã gửi lên TikTok Live
+              </div>
+            )}
+            {replyStatus === 'error' && (
+              <div className="px-5 py-1.5 bg-red-50 text-red-600 text-xs font-semibold flex items-center gap-1 border-b border-red-100">
+                <span className="material-symbols-outlined text-[14px]">error</span> Gửi thất bại — kiểm tra BE hoặc cookies
+              </div>
+            )}
+            <div className="p-6">
+              <div className="relative">
+                <input
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && !isSending && handleSendReply()}
+                  className="w-full glass-capsule pl-5 pr-14 py-4 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-300 focus:bg-white transition-all shadow-inner"
+                  placeholder={replyTo ? `Reply @${replyTo.uniqueId}...` : 'Nhập tin nhắn để gửi đến TikTok Live...'}
+                  type="text"
+                  disabled={isSending}
+                />
+                <button
+                  onClick={handleSendReply}
+                  disabled={isSending || !replyText.trim() || !backendSessionId}
+                  className="absolute right-2 top-2 p-2 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full text-white hover:opacity-90 transition-opacity flex items-center justify-center border border-white/40 shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  <span className="material-symbols-outlined text-[20px]">{isSending ? 'hourglass_empty' : 'send'}</span>
+                </button>
+              </div>
+              {!backendSessionId && isConnected && (
+                <p className="text-xs text-amber-500 mt-2 font-medium flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[13px]">warning</span>
+                  BE chưa kết nối — reply sẽ không hoạt động
+                </p>
+              )}
             </div>
           </div>
         </LiquidGlass>

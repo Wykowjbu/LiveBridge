@@ -25,10 +25,39 @@ function normalizeMessage(raw) {
 
 const CHAT_TYPES = new Set(['chat', 'CHAT', 'WebcastChatMessage']);
 
+// Extract roomId from any Eulerstream message format
+// Eulerstream wraps: { messages: [{type, data: {roomId, ...}}], timestamp }
+function extractRoomId(data) {
+  // Top-level direct
+  if (data?.roomId) return data.roomId;
+  if (data?.room_id) return data.room_id;
+
+  // Dig into messages array (main Eulerstream format)
+  const firstMsg = Array.isArray(data?.messages) ? data.messages[0] : null;
+  if (firstMsg) {
+    const d = firstMsg.data || firstMsg;
+    if (d?.roomId) return d.roomId;
+    if (d?.room_id) return d.room_id;
+    if (d?.roomInfo?.id) return d.roomInfo.id;   // ← format thực tế
+    if (d?.roomInfo?.roomId) return d.roomInfo.roomId;
+    if (d?.common?.roomId) return d.common.roomId;
+  }
+
+  // Single message format: { type: 'roomInfo', data: { roomInfo: { id } } }
+  const d = data?.data;
+  if (d?.roomId) return d.roomId;
+  if (d?.room_id) return d.room_id;
+  if (d?.roomInfo?.id) return d.roomInfo.id;     // ← format thực tế
+  if (d?.roomInfo?.roomId) return d.roomInfo.roomId;
+
+  return null;
+}
+
 export const useEulerStream = (uniqueId) => {
   const [isConnected, setIsConnected] = useState(false);
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState(null);
+  const [roomId, setRoomId] = useState(null);
 
   const wsRef = useRef(null);
   const apiKey = "euler_YjdkM2FlMDQxZTk1NWU1OWM2MzM2MjRkNTgwYjI0Yjk0YWNhNTRjNzMzMTUyYzYyYzE3YzFi";
@@ -54,6 +83,13 @@ export const useEulerStream = (uniqueId) => {
       ws.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
+
+          // Extract roomId từ bất kỳ message nào
+          const rid = extractRoomId(data);
+          if (rid) {
+            console.log('[Eulerstream ROOM_ID]', rid);
+            setRoomId(String(rid));
+          }
 
           // DEBUG: log raw payload — xem format thật, xóa sau khi confirm
           console.log('[Eulerstream RAW]', data);
@@ -117,7 +153,8 @@ export const useEulerStream = (uniqueId) => {
       wsRef.current.close();
       wsRef.current = null;
       setIsConnected(false);
-      setMessages([]); // chỉ clear khi user chủ động ngắt
+      setMessages([]);
+      setRoomId(null);
     }
   };
 
@@ -134,5 +171,5 @@ export const useEulerStream = (uniqueId) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { isConnected, messages, error, connect, disconnect };
+  return { isConnected, messages, error, connect, disconnect, roomId };
 };
