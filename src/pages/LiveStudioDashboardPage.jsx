@@ -2,6 +2,85 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from '@components/layout/Header';
 import { useEulerStream } from '@hooks/useEulerStream';
 import LiquidGlass from '@components/ui/LiquidGlassPanel';
+import { loadAISettings } from '@/utils/aiSettings';
+import { isNearBottom } from '@/utils/scroll';
+
+const AI_API_URL = import.meta.env.VITE_AI_API_URL || 'http://localhost:20128/v1';
+const AI_MODEL = import.meta.env.VITE_AI_MODEL || 'oc/mimo-v2.5-free';
+const AI_FALLBACK_MODEL = import.meta.env.VITE_AI_FALLBACK_MODEL || 'gemini/gemini-3.1-flash-lite-preview';
+const AI_API_KEY = import.meta.env.VITE_AI_API_KEY || 'sk-4362950855100528-3pcfmz-cfebc509';
+const CACHE_STOP_WORDS = new Set(['toi', 'tui', 'minh', 'em', 'anh', 'chi', 'ban', 'shop', 'muon', 'can', 'hoi', 'nhe', 'nha', 'a', 'ah', 'oi', 'co', 'khong', 'ko', 'k']);
+
+function getCommentCacheKey(text) {
+  const normalized = text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const words = normalized.split(' ').filter(Boolean);
+  if (words.includes('mua') || words.includes('chot') || words.includes('order')) return 'intent:buy';
+
+  const usefulWords = words.filter(word => !CACHE_STOP_WORDS.has(word));
+  return usefulWords.length ? usefulWords.sort().join(' ') : normalized;
+}
+
+async function askLocalAI(comment, aiSettings) {
+  const shopName = aiSettings.shopName?.trim() || 'shop';
+  const context = aiSettings.context?.trim() || 'Chưa có bối cảnh shop.';
+  const chatUrl = AI_API_URL.endsWith('/chat/completions')
+    ? AI_API_URL
+    : `${AI_API_URL.replace(/\/$/, '')}/chat/completions`;
+
+  const callModel = async (model) => {
+    const response = await fetch(chatUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${AI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model,
+        stream: false,
+        temperature: 0.4,
+        max_tokens: 180,
+        messages: [
+          {
+            role: 'system',
+            content: `Bạn là trợ lý livestream bán hàng của "${shopName}". Bối cảnh shop: ${context}. Trả lời tiếng Việt, ngắn gọn, tự nhiên như shop đang chat live. Tối đa 2 câu. Không bịa thông tin ngoài bối cảnh; nếu thiếu thông tin thì mời khách inbox hoặc để lại thông tin.`,
+          },
+          {
+            role: 'user',
+            content: `Khách comment: "${comment}". Hãy trả lời ngay cho khách.`,
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) throw new Error(await response.text());
+
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content?.trim();
+    if (!reply) throw new Error(`Model ${model} không trả nội dung`);
+    return reply;
+  };
+
+  const models = [AI_MODEL, AI_FALLBACK_MODEL].filter((model, index, list) => model && list.indexOf(model) === index);
+  let lastError;
+
+  for (const model of models) {
+    try {
+      return await callModel(model);
+    } catch (err) {
+      lastError = err;
+    }
+  }
+
+  throw lastError;
+}
 
 /* ============================================================
    Trang chính Dashboard - LiveBridge Studio
@@ -13,13 +92,110 @@ import LiquidGlass from '@components/ui/LiquidGlassPanel';
 const LiveStudioDashboardPage = () => {
   /* ---- State quản lý TikTok ID ---- */
   const [tiktokId, setTiktokId] = useState('');
+  const [aiSettings] = useState(loadAISettings);
+  const [aiReplies, setAiReplies] = useState({});
+  const [showScrollToBottom, setShowScrollToBottom] = useState(false);
   const { isConnected, messages, error, connect, disconnect } = useEulerStream();
+  const commentsRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const shouldAutoScrollRef = useRef(true);
+  const processedMessageIdsRef = useRef(new Set());
+  const replyCacheRef = useRef(new Map());
 
   /* ---- Tự động cuộn xuống comment mới nhất ---- */
   useEffect(() => {
+    if (messages.length === 0) {
+      shouldAutoScrollRef.current = true;
+      setShowScrollToBottom(false);
+      return;
+    }
+
+    if (shouldAutoScrollRef.current) {
+      setShowScrollToBottom(false);
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      setShowScrollToBottom(true);
+    }
+  }, [messages.length, aiReplies]);
+
+  const handleCommentScroll = () => {
+    const atBottom = isNearBottom(commentsRef.current);
+    shouldAutoScrollRef.current = atBottom;
+    setShowScrollToBottom(!atBottom && messages.length > 0);
+  };
+
+  const scrollToLatestComment = () => {
+    shouldAutoScrollRef.current = true;
+    setShowScrollToBottom(false);
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  };
+
+  useEffect(() => {
+    if (messages.length === 0) {
+      processedMessageIdsRef.current.clear();
+      setAiReplies({});
+      return;
+    }
+
+    messages.forEach((msg, idx) => {
+      const commentText = (msg.comment || '').trim();
+      const messageId = msg._id || `${idx}-${msg.uniqueId || msg.nickname || 'guest'}-${commentText}`;
+      if (!commentText || processedMessageIdsRef.current.has(messageId)) return;
+
+      processedMessageIdsRef.current.add(messageId);
+      const displayName = msg.nickname || msg.uniqueId || 'Anonymous';
+      const cacheKey = getCommentCacheKey(commentText);
+
+      setAiReplies(prev => ({
+        ...prev,
+        [messageId]: {
+          displayName,
+          sourceText: commentText,
+          status: 'loading',
+          reply: 'AI đang trả lời...',
+        },
+      }));
+
+      (async () => {
+        let cachedReply = replyCacheRef.current.get(cacheKey);
+        const reused = Boolean(cachedReply);
+
+        try {
+          if (!cachedReply) {
+            cachedReply = askLocalAI(commentText, aiSettings);
+            replyCacheRef.current.set(cacheKey, cachedReply);
+          }
+
+          const reply = await cachedReply;
+          replyCacheRef.current.set(cacheKey, reply);
+          setAiReplies(prev => ({
+            ...prev,
+            [messageId]: {
+              displayName,
+              sourceText: commentText,
+              status: 'done',
+              reused,
+              reply,
+            },
+          }));
+        } catch (err) {
+          if (replyCacheRef.current.get(cacheKey) === cachedReply) {
+            replyCacheRef.current.delete(cacheKey);
+          }
+
+          setAiReplies(prev => ({
+            ...prev,
+            [messageId]: {
+              displayName,
+              sourceText: commentText,
+              status: 'error',
+              reply: `AI lỗi: ${err.message || 'không gọi được API local'}`,
+            },
+          }));
+        }
+      })();
+    });
+  }, [messages, aiSettings]);
 
   /* ---- Xử lý kết nối/ngắt kết nối ---- */
   const handleToggleConnect = () => {
@@ -205,7 +381,7 @@ const LiveStudioDashboardPage = () => {
           </div>
 
           {/* Khu vực hiển thị bình luận (Comments Area) */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide">
+          <div ref={commentsRef} onScroll={handleCommentScroll} className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-hide">
             {!isConnected && messages.length === 0 ? (
               /* Trạng thái chưa kết nối (Not connected state) */
               <div className="h-full flex flex-col items-center justify-center text-center px-6">
@@ -224,34 +400,73 @@ const LiveStudioDashboardPage = () => {
                   const displayName = msg.nickname || msg.uniqueId || 'Anonymous';
                   const avatarChar = displayName.charAt(0).toUpperCase();
                   const commentText = msg.comment || '(sticker / gift)';
+                  const messageId = msg._id || `${idx}-${msg.uniqueId || msg.nickname || 'guest'}-${msg.comment || ''}`;
+                  const aiReply = aiReplies[messageId];
                   return (
-                  <div key={idx} className="flex gap-3 group animate-[fadeIn_0.3s_ease-out]">
-                    {/* Avatar */}
-                    <div className="size-10 rounded-full flex-shrink-0 bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center shadow-sm border-2 border-white">
-                      <span className="text-white text-xs font-bold">{avatarChar}</span>
-                    </div>
+                    <React.Fragment key={messageId}>
+                      <div className="flex gap-3 group animate-[fadeIn_0.3s_ease-out]">
+                        {/* Avatar */}
+                        <div className="size-10 rounded-full flex-shrink-0 bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center shadow-sm border-2 border-white">
+                          <span className="text-white text-xs font-bold">{avatarChar}</span>
+                        </div>
 
-                    {/* Nội dung bình luận */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-slate-800 text-sm font-bold truncate">{displayName}</span>
-                        {msg.uniqueId && msg.uniqueId !== displayName && (
-                          <span className="text-[10px] text-slate-400 font-medium">@{msg.uniqueId}</span>
-                        )}
+                        {/* Nội dung bình luận */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-slate-800 text-sm font-bold truncate">{displayName}</span>
+                            {msg.uniqueId && msg.uniqueId !== displayName && (
+                              <span className="text-[10px] text-slate-400 font-medium">@{msg.uniqueId}</span>
+                            )}
+                          </div>
+                          <div className="message-glass p-3 rounded-tr-2xl rounded-br-2xl rounded-bl-sm rounded-tl-2xl">
+                            <p className={`text-sm leading-relaxed break-words ${msg.comment ? 'text-slate-700' : 'text-slate-400 italic'}`}>
+                              {commentText}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="message-glass p-3 rounded-tr-2xl rounded-br-2xl rounded-bl-sm rounded-tl-2xl">
-                        <p className={`text-sm leading-relaxed break-words ${msg.comment ? 'text-slate-700' : 'text-slate-400 italic'}`}>
-                          {commentText}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+
+                      {aiReply && (
+                        <div className="flex justify-end pl-12 animate-[fadeIn_0.3s_ease-out]">
+                          <div className={`max-w-[85%] rounded-2xl rounded-br-sm px-4 py-3 shadow-sm border ${
+                            aiReply.status === 'error'
+                              ? 'bg-red-50/90 border-red-200 text-red-600'
+                              : 'bg-gradient-to-br from-indigo-500 to-sky-500 border-white/40 text-white'
+                          }`}>
+                            <div className={`mb-2 rounded-xl px-3 py-2 text-xs leading-relaxed ${
+                              aiReply.status === 'error'
+                                ? 'bg-white/70 text-red-500'
+                                : 'bg-white/15 text-white/75'
+                            }`}>
+                              <span className="font-bold">{aiReply.displayName}</span>: {aiReply.sourceText}
+                            </div>
+                            <p className={`text-sm leading-relaxed break-words ${aiReply.status === 'loading' ? 'animate-pulse' : ''}`}>
+                              {aiReply.reply}
+                            </p>
+                            {aiReply.reused && (
+                              <p className="mt-1 text-[10px] font-semibold text-white/70">Dùng lại câu trả lời cũ</p>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </React.Fragment>
                   );
                 })}
                 <div ref={messagesEndRef} />
               </>
             )}
           </div>
+
+          {showScrollToBottom && (
+            <button
+              type="button"
+              aria-label="Cuộn xuống bình luận mới nhất"
+              onClick={scrollToLatestComment}
+              className="absolute left-1/2 bottom-28 z-20 size-11 -translate-x-1/2 rounded-full bg-slate-900/85 text-white shadow-lg shadow-slate-900/20 ring-1 ring-white/60 backdrop-blur-md transition hover:bg-slate-800"
+            >
+              <span className="material-symbols-outlined text-[26px] leading-none">keyboard_arrow_down</span>
+            </button>
+          )}
 
           {/* Ô nhập tin nhắn dưới cùng (Bottom message input) */}
           <div className="p-6 border-t border-slate-200 bg-white/60 backdrop-blur-xl sticky bottom-0">

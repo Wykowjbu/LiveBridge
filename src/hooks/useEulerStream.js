@@ -24,6 +24,7 @@ function normalizeMessage(raw) {
 }
 
 const CHAT_TYPES = new Set(['chat', 'CHAT', 'WebcastChatMessage']);
+let messageSeq = 0;
 
 export const useEulerStream = (uniqueId) => {
   const [isConnected, setIsConnected] = useState(false);
@@ -86,7 +87,10 @@ export const useEulerStream = (uniqueId) => {
             const chatOnly = rawList.filter(m => !m.type || CHAT_TYPES.has(m.type));
             if (chatOnly.length === 0) return;
 
-            const normalized = chatOnly.map(normalizeMessage);
+            const normalized = chatOnly.map(m => ({
+              ...normalizeMessage(m),
+              _id: `${Date.now()}-${messageSeq++}`,
+            }));
             setMessages(prev => [...prev, ...normalized].slice(-100));
           }
         } catch (err) {

@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import Header from '@components/layout/Header';
 import LiquidGlass from '@components/ui/LiquidGlassPanel';
+import { loadAISettings, saveAISettings } from '@/utils/aiSettings';
 
 /* ============================================================
    Trang Cài Đặt AI & Nâng Cấp Gói (AI Settings & Persona)
    ============================================================ */
 const AILogicPage = () => {
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [aiSettings, setAiSettings] = useState(loadAISettings);
+
+  const updateAISetting = (field, value) => {
+    setAiSettings(prev => {
+      const next = { ...prev, [field]: value };
+      saveAISettings(next);
+      return next;
+    });
+  };
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden selection:bg-purple-500/20 selection:text-purple-600">
@@ -40,7 +50,8 @@ const AILogicPage = () => {
                     <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Tên hiển thị / Tên Shop</label>
                     <input
                       type="text"
-                      defaultValue="LiveBridge Official Store"
+                      value={aiSettings.shopName}
+                      onChange={(e) => updateAISetting('shopName', e.target.value)}
                       className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-300 transition-all shadow-inner"
                       placeholder="Nhập tên shop của bạn..."
                     />
@@ -60,7 +71,8 @@ const AILogicPage = () => {
                   <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Bối cảnh / Giới thiệu Shop (Context)</label>
                   <textarea
                     rows={4}
-                    defaultValue="Shop chuyên bán phụ kiện điện thoại, tai nghe, cáp sạc cam kết chính hãng. Khách mua trên livestream được freeship mọi đơn từ 500k. Đơn hàng sẽ được đóng gói và giao trong 24h. Bảo hành 1 đổi 1 trong 30 ngày."
+                    value={aiSettings.context}
+                    onChange={(e) => updateAISetting('context', e.target.value)}
                     className="w-full bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-300 transition-all shadow-inner resize-none"
                     placeholder="Mô tả các thông tin tổng quan về shop để AI hiểu và trả lời khách hàng..."
                   />
