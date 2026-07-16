@@ -10,6 +10,7 @@ const Sidebar = () => {
     { name: 'Đơn hàng', path: '/app/orders', icon: 'local_shipping' },
     { name: 'Sản phẩm', path: '/app/products', icon: 'inventory_2' },
     { name: 'Phân tích', path: '/app/analytics', icon: 'analytics' },
+    { name: 'Phản hồi', path: '/app/feedback', icon: 'feedback' },
     { name: 'Cài đặt AI', path: '/app/ai-settings', icon: 'psychology' },
     { name: 'Kết nối', path: '/app/platform-connect', icon: 'hub' },
   ];

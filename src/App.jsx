@@ -7,6 +7,7 @@ import MessageInboxPage from '@pages/MessageInboxPage';
 import OrderManagerConsolePage from '@pages/OrderManagerConsolePage';
 import InventoryManagerPage from '@pages/InventoryManagerPage';
 import AnalyticsPage from '@pages/AnalyticsPage';
+import FeedbackPage from '@pages/FeedbackPage';
 import PlatformConnectPage from '@pages/PlatformConnectPage';
 import AILogicPage from '@pages/AILogicPage';
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="orders" element={<OrderManagerConsolePage />} />
         <Route path="products" element={<InventoryManagerPage />} />
         <Route path="analytics" element={<AnalyticsPage />} />
+        <Route path="feedback" element={<FeedbackPage />} />
         <Route path="platform-connect" element={<PlatformConnectPage />} />
         <Route path="ai-settings" element={<AILogicPage />} />
       </Route>

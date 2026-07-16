@@ -28,9 +28,10 @@ function getCommentCacheKey(text) {
   return usefulWords.length ? usefulWords.sort().join(' ') : normalized;
 }
 
-async function askLocalAI(comment, aiSettings) {
+async function askLocalAI(comment, aiSettings, product) {
   const shopName = aiSettings.shopName?.trim() || 'shop';
   const context = aiSettings.context?.trim() || 'Chưa có bối cảnh shop.';
+  const productContext = `Sản phẩm đang ghim: ${product.name}; SKU: ${product.sku}; giá: ${product.price}; tồn kho: ${product.stock}.`;
   const chatUrl = AI_API_URL.endsWith('/chat/completions')
     ? AI_API_URL
     : `${AI_API_URL.replace(/\/$/, '')}/chat/completions`;
@@ -50,7 +51,7 @@ async function askLocalAI(comment, aiSettings) {
         messages: [
           {
             role: 'system',
-            content: `Bạn là trợ lý livestream bán hàng của "${shopName}". Bối cảnh shop: ${context}. Trả lời tiếng Việt, ngắn gọn, tự nhiên như shop đang chat live. Tối đa 2 câu. Không bịa thông tin ngoài bối cảnh; nếu thiếu thông tin thì mời khách inbox hoặc để lại thông tin.`,
+            content: `Bạn là trợ lý livestream bán hàng của "${shopName}". Bối cảnh shop: ${context}. ${productContext} Dựa vào thông tin sản phẩm đang ghim khi trả lời câu hỏi về sản phẩm, giá hoặc tồn kho. Trả lời tiếng Việt, ngắn gọn, tự nhiên như shop đang chat live. Tối đa 2 câu. Không bịa thông tin ngoài bối cảnh; nếu thiếu thông tin thì mời khách inbox hoặc để lại thông tin.`,
           },
           {
             role: 'user',
@@ -92,6 +93,12 @@ async function askLocalAI(comment, aiSettings) {
 const LiveStudioDashboardPage = () => {
   /* ---- State quản lý TikTok ID ---- */
   const [tiktokId, setTiktokId] = useState('');
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [pinnedProduct, setPinnedProduct] = useState({
+    name: 'Áo khoác Denim Vintage Wash', sku: 'DJ-042-BLU', price: '450.000đ', stock: '8',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuApgnwkjsu3dJ95-eCPSyvGnodjqT69-VMX5D-8_0c3m0-_jkszAYVZP8N4yiu0gIz1SoANOf_KbYBa5lC-0BWtK7c1Y-3BkU_4MFRjoLYTGEzgxPBoiF8YjrISTe4h51WSFRSh6ywaF6h23LGsWNnF9mMX5ZutM03tbkWsKFlLxZFBN6QzkHsKbdk5yRwOnL1Ot-8t2ne5cW92J9HHhRus0L3wJR4mpOjx3I1JzHuujTbSevrYlSA3TwYLTSREA2LLCFXTCVeMDr01',
+  });
+  const [productForm, setProductForm] = useState(pinnedProduct);
   const [aiSettings] = useState(loadAISettings);
   const [aiReplies, setAiReplies] = useState({});
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
@@ -144,7 +151,7 @@ const LiveStudioDashboardPage = () => {
 
       processedMessageIdsRef.current.add(messageId);
       const displayName = msg.nickname || msg.uniqueId || 'Anonymous';
-      const cacheKey = getCommentCacheKey(commentText);
+      const cacheKey = `${pinnedProduct.sku}|${pinnedProduct.price}|${pinnedProduct.stock}:${getCommentCacheKey(commentText)}`;
 
       setAiReplies(prev => ({
         ...prev,
@@ -162,7 +169,7 @@ const LiveStudioDashboardPage = () => {
 
         try {
           if (!cachedReply) {
-            cachedReply = askLocalAI(commentText, aiSettings);
+            cachedReply = askLocalAI(commentText, aiSettings, pinnedProduct);
             replyCacheRef.current.set(cacheKey, cachedReply);
           }
 
@@ -195,7 +202,7 @@ const LiveStudioDashboardPage = () => {
         }
       })();
     });
-  }, [messages, aiSettings]);
+  }, [messages, aiSettings, pinnedProduct]);
 
   /* ---- Xử lý kết nối/ngắt kết nối ---- */
   const handleToggleConnect = () => {
@@ -206,6 +213,12 @@ const LiveStudioDashboardPage = () => {
         connect(tiktokId.trim());
       }
     }
+  };
+
+  const handleAddProduct = (event) => {
+    event.preventDefault();
+    setPinnedProduct(productForm);
+    setIsProductModalOpen(false);
   };
 
   /* ---- Mock data cho AI Suggestions (Dữ liệu mẫu cho gợi ý AI) ---- */
@@ -491,19 +504,24 @@ const LiveStudioDashboardPage = () => {
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center px-1">
               <h3 className="text-slate-500 text-xs font-bold uppercase tracking-widest">Đang ghim</h3>
-              <span className="text-xs text-indigo-600 font-bold cursor-pointer">Đổi sản phẩm</span>
+              <div className="flex items-center gap-3">
+                <button type="button" onClick={() => { setProductForm(pinnedProduct); setIsProductModalOpen(true); }} className="flex items-center gap-1 rounded-lg bg-indigo-600 px-2.5 py-1 text-xs font-bold text-white transition-colors hover:bg-indigo-500">
+                  <span className="material-symbols-outlined text-sm">add</span> Thêm sản phẩm
+                </button>
+                <span className="text-xs text-indigo-600 font-bold cursor-pointer">Đổi sản phẩm</span>
+              </div>
             </div>
             <div className="rounded-2xl border border-indigo-100 p-4 shadow-sm relative overflow-hidden bg-indigo-50/80">
                <div className="absolute top-3 right-3 z-10">
-                 <span className="glass-capsule bg-red-100 border-red-200 text-red-600 text-[10px] font-bold px-2.5 py-1 animate-pulse">CÒN 8</span>
+                 <span className="glass-capsule bg-red-100 border-red-200 text-red-600 text-[10px] font-bold px-2.5 py-1 animate-pulse">CÒN {pinnedProduct.stock}</span>
                </div>
                <div className="flex gap-4 relative z-10">
-                 <div className="w-24 h-24 bg-cover bg-center rounded-xl shrink-0 border border-white" style={{ backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuApgnwkjsu3dJ95-eCPSyvGnodjqT69-VMX5D-8_0c3m0-_jkszAYVZP8N4yiu0gIz1SoANOf_KbYBa5lC-0BWtK7c1Y-3BkU_4MFRjoLYTGEzgxPBoiF8YjrISTe4h51WSFRSh6ywaF6h23LGsWNnF9mMX5ZutM03tbkWsKFlLxZFBN6QzkHsKbdk5yRwOnL1Ot-8t2ne5cW92J9HHhRus0L3wJR4mpOjx3I1JzHuujTbSevrYlSA3TwYLTSREA2LLCFXTCVeMDr01")' }}></div>
+                 <div className="w-24 h-24 bg-cover bg-center rounded-xl shrink-0 border border-white" style={{ backgroundImage: `url("${pinnedProduct.image}")` }}></div>
                  <div className="flex flex-col justify-center">
-                   <h4 className="text-slate-800 font-bold text-sm leading-snug mb-1">Áo khoác Denim Vintage Wash</h4>
-                   <p className="text-slate-500 text-xs font-mono">SKU: DJ-042-BLU</p>
+                   <h4 className="text-slate-800 font-bold text-sm leading-snug mb-1">{pinnedProduct.name}</h4>
+                   <p className="text-slate-500 text-xs font-mono">SKU: {pinnedProduct.sku}</p>
                    <div className="flex items-end gap-2 mt-2">
-                     <span className="text-slate-800 font-black text-xl">450.000đ</span>
+                     <span className="text-slate-800 font-black text-xl">{pinnedProduct.price}</span>
                    </div>
                  </div>
                </div>
@@ -531,6 +549,43 @@ const LiveStudioDashboardPage = () => {
           </div>
         </LiquidGlass>
       </div>
+
+      {isProductModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
+          <form onSubmit={handleAddProduct} className="w-full max-w-lg rounded-3xl border border-white/70 bg-white p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-indigo-600">Sản phẩm ghim</p>
+                <h2 className="mt-1 text-2xl font-black text-slate-900">Thêm sản phẩm</h2>
+              </div>
+              <button type="button" onClick={() => setIsProductModalOpen(false)} aria-label="Đóng" className="rounded-xl p-2 text-slate-500 hover:bg-slate-100"><span className="material-symbols-outlined">close</span></button>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <label className="sm:col-span-2 text-sm font-bold text-slate-700">Tên sản phẩm
+                <input required value={productForm.name} onChange={(e) => setProductForm({ ...productForm, name: e.target.value })} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-medium outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100" placeholder="Ví dụ: Áo thun cổ tròn" />
+              </label>
+              <label className="text-sm font-bold text-slate-700">SKU
+                <input required value={productForm.sku} onChange={(e) => setProductForm({ ...productForm, sku: e.target.value })} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-medium outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100" placeholder="SP-001" />
+              </label>
+              <label className="text-sm font-bold text-slate-700">Tồn kho
+                <input required min="0" type="number" value={productForm.stock} onChange={(e) => setProductForm({ ...productForm, stock: e.target.value })} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-medium outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100" />
+              </label>
+              <label className="sm:col-span-2 text-sm font-bold text-slate-700">Giá bán
+                <input required value={productForm.price} onChange={(e) => setProductForm({ ...productForm, price: e.target.value })} className="mt-1.5 w-full rounded-xl border border-slate-200 px-3 py-2.5 font-medium outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100" placeholder="450.000đ" />
+              </label>
+              <label className="sm:col-span-2 text-sm font-bold text-slate-700">Ảnh sản phẩm
+                <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && setProductForm({ ...productForm, image: URL.createObjectURL(e.target.files[0]) })} className="mt-1.5 block w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-indigo-100 file:px-3 file:py-1.5 file:font-bold file:text-indigo-700" />
+              </label>
+            </div>
+
+            <div className="mt-7 flex justify-end gap-3">
+              <button type="button" onClick={() => setIsProductModalOpen(false)} className="rounded-xl px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-100">Hủy</button>
+              <button type="submit" className="rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-indigo-500">Lưu và ghim sản phẩm</button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };
